@@ -1,0 +1,126 @@
+/* BODY */
+#body {
+    display:flex;
+    flex-direction: column;
+    margin:0;
+    padding:0;
+    overflow:hidden;
+}
+
+/* HEADER */
+#header {
+    display: flex;
+    justify-content: flex-end;
+    position : fixed;
+    top : 0;
+    left : 0;
+    right: 0;
+    margin:0;
+    padding:0;
+    width: 100vw;
+    height: 8vh;
+    border-radius: 0px 0px 10px 10px;
+    background: #E1022A;
+    align-items: center;
+}
+
+#header_logo {
+    /*display: flex;*/
+    width: 11rem; /*1rem=16px*/
+    height: 1.5rem;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 25px;
+    font-style: italic;
+    font-weight: 700;
+    background-color : #111110;
+}
+
+/* SECTION */
+#section{
+    display: flex;
+    position:relative;
+    margin:0;
+    padding-top:8vh;
+    flex-direction: column;
+    justify-content: center;
+}
+#section_top{
+    display:flex;
+    margin:0;
+    height:43vh;
+    justify-content: center;
+    align-items: center;
+    background: rgba(57, 69, 241, 0.25);
+}
+#section_bottom{
+    display: flex;
+    height:33vh;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.25);
+}
+#custom-modify-btn{
+    display: flex;
+    margin: 2%;
+    margin-bottom: 0;
+    width: 22rem;
+    height: 15vh;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+
+    border-radius: 1.25rem;
+    background: #E1022A;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+    color: #FFF;
+
+    text-align: center;
+    font-family: Inter;
+    font-size: 1.875rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+#custom-new-btn{
+    display: flex;
+    margin:3vh;
+
+    width: 22rem;
+    height: 15vh;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+    flex-shrink: 0;
+
+    border-radius: 1.25rem;
+    background: #EE7603;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
+    color: #FFF;
+
+    text-align: center;
+    font-family: Inter;
+    font-size: 1.875rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+/* FOOTER */
+#footer {
+    display: flex;
+    position : fixed;
+    bottom:0;
+    left:0;
+    right:0;
+    display: flex;
+    width: 100vw;
+    height:4vh;
+    border-radius: 10px 10px 0px 0px;
+    background: #E1022A;
+}

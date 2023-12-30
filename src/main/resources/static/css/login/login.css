@@ -1,0 +1,236 @@
+#header {
+    display: flex;
+    position : absolute;
+    padding-top : 15px;
+    padding-bottom : 15px;
+    height: 2rem;
+    justify-content: flex-end;
+    align-items: center;
+    flex-shrink: 0;
+
+
+    top : 0;
+    left : 0;
+    right: 0;
+    width: 100vw;
+
+    background: #E1022A;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+
+#header_sk {
+    position : absolute;
+    top : 10px;
+    left : 20px;
+    width: 40px;
+    height: 40px;
+
+    animation: ghost 0.8s /* 속도 */
+    linear 0s   /* 처음부터 끝까지 일정 속도로 진행 */
+    infinite alternate; /* 무한 반복 */
+}
+
+@keyframes ghost {
+    0% {top: 5px; opacity : 1} /* 처음 위치 */
+    100% {top: 15px; opacity : 0.5} /* 마지막 위치 */
+}
+
+#header_logo {
+    width: 137px;
+    height: 24px;
+    margin-right: 3%;
+    color: #FFF;
+    text-align: center;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+    font-family: Inter;
+    font-size: 1.5rem;
+    font-style: italic;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.section_top_image {
+    width: min(90%, 450px);
+    height: min(80%, 300px);
+    flex-shrink: 0;
+
+    border-radius: 30px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+
+}
+
+#section_top {
+    display: flex;
+    position:absolute;
+    height: 346px;
+    padding-top : 15px;
+    padding-bottom : 15px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    gap: 20px;
+    top : 4rem;
+    left : 0;
+    right: 0;
+
+    width: 100vw;
+    background: white;
+
+    overflow: visible;
+    flex-wrap:nowrap;
+    animation: bannermove 30s linear infinite;
+}
+
+@keyframes bannermove {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(-70%, 0);
+    }
+}
+
+#section_bottom {
+    display: flex;
+    position:absolute;
+    height: 284px;
+    padding-top : 15px;
+    padding-bottom : 15px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 35px;
+    flex-shrink: 0;
+
+    top : 455px;
+    left : 0;
+    right: 0;
+    width: 100vw;
+    background: white;
+
+    overflow-x: hidden;
+    border-top: 0.1rem darkgray solid;
+}
+
+#user_login {
+    display: flex;
+    width: 20%;
+    min-width: 230px;
+    max-width: 280px;
+    height: 40px;
+    padding: 15px 81px;
+    justify-content: center;
+    align-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 20px;
+    background: #E1022A;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+
+    cursor: pointer;
+}
+
+#admin_login {
+    display: flex;
+    width: 20%;
+    min-width: 230px;
+    max-width: 280px;
+    height: 40px;
+    padding: 15px 81px;
+    justify-content: center;
+    align-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 20px;
+    background: #EE7603;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+
+    cursor: pointer;
+
+}
+
+#question {
+    display: flex;
+    width: 20%;
+    min-width: 230px;
+    max-width: 280px;
+    height: 40px;
+    padding: 15px 81px;
+    justify-content: center;
+    align-items: center;
+
+    flex-shrink: 0;
+
+    border-radius: 20px;
+    background: darkgray;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+
+    cursor: pointer;
+
+}
+
+#footer {
+    display: flex;
+    position : fixed;
+    height: 1rem;
+    padding-top : 15px;
+    padding-bottom : 15px;
+    justify-content: center;
+    align-items: center;
+
+    background: #E1022A;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.30);
+
+    bottom :0;
+    left : 0;
+    right: 0;
+    width: 100vw;
+}
+
+#text1 {
+    flex-shrink: 0;
+
+    color: #FFF;
+    font-family: Inter;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+#text2 {
+    flex-shrink: 0;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+#text3 {
+    flex-shrink: 0;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+#footer_text {
+    width: 400px;
+    height: 20px;
+
+    color: darkgray;
+    text-align: center;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+    font-family: Inter;
+    font-size: 17px;
+    font-style: italic;
+    font-weight: 700;
+    line-height: normal;
+}

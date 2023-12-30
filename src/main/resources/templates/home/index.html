@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- HTML 파일 문서 호환성을 edge버전으로 통일-->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> <!-- HTML 4.0.1 버전 기준 문자인코딩 방식 정의 -->
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale = 1.0, user-scalable=no"> <!-- 현재 사용자가 접속한 디바이스의 가로 세로 길이에 맞게 앱 사이즈를 조절함. 초기, 최대, 최소 비율은 모두 1이며, 사용자가 드레그로 크기 조정 불가능-->
+
+  <link rel = "stylesheet" href = "css/init.css">
+  <link rel = "stylesheet" href = "css/login/login.css">
+  <link rel = "stylesheet" href = "css/OP/EndReport.css">
+
+  <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+  <script> Kakao.init('2e39201190179fe7cd5eb25903daba8a'); </script> <!--SDK를 초기화 (애플리케이션>앱설정>앱키:JAVASCRIPTKEY -->
+
+  <script src = "../../JavaScript/loginOPWithKakao.js"></script>
+  <script src = "../../JavaScript/loginWithKakaoForAdmin.js"></script>
+  <script src = "../../JavaScript/unlinkWithKakao.js"></script>
+  <script src = "../../JavaScript/shareMessage.js"></script>
+  <script src = "../../JavaScript/sendToMe.js"></script>
+  <script src = "../../JavaScript/sendFriends.js"></script>
+  <script src = "../../JavaScript/getFriendUuid.js"></script>
+  <script src = "../../JavaScript/refreshAccessToken.js"></script>
+  <script src = "../../JavaScript/questionFunction.js"></script>
+  <script src = "../../JavaScript/endReport.js"></script>
+  <script src = "../../JavaScript/loginAram.js"></script>
+  <script src = "../../JavaScript/loadingOn.js"></script>
+  <script src = "../../JavaScript/loadingOff.js"></script>
+
+  <title>SK GHOST</title>
+
+</head>
+
+<body id = "body">
+<!-- 메인 해더-->
+<header id = "header">
+  <img id = "header_sk" src="css/images/Ghost.png" alt = "location images"> <!-- GHOST 트레이드 마크 -->
+  <span id = "header_logo">SK GHOST</span> <!-- GHOST text -->
+</header>
+
+<!-- 전체 seciton은 top과 bottom으로 구성된다.-->
+<section id = "section_top">
+  <!-- 추가할 이미지가 있다면 class는 아래와 같이 동일하게 하며, 이미지의 경로만 변경하여 아래 누적하여 추가하면 됨.-->
+  <img class = "section_top_image" src="css/images/Main1.jpg" alt = "location images">
+  <img class = "section_top_image" src="css/images/Main2.jpg" alt = "location images">
+  <img class = "section_top_image" src="css/images/Main3.jpg" alt = "location images">
+  <img class = "section_top_image" src="css/images/Main1.jpg" alt = "location images">
+  <img class = "section_top_image" src="css/images/Main2.jpg" alt = "location images">
+  <img class = "section_top_image" src="css/images/Main3.jpg" alt = "location images">
+</section>
+
+<section id = "section_bottom">
+  <!-- 사용자 로그인 버튼 -->
+  <button id = "user_login" onClick="loginOPWithKakao()">
+    <span id = "text1">OP Login</span>
+  </button>
+
+  <!-- 운영자 로그인 버튼  -->
+  <button id = "admin_login" onClick="loginWithKakaoForAdmin()">
+    <span id = "text2">Admin Login</span>
+  </button>
+
+  <!-- 질문 하기 버튼  -->
+  <button id = "question" onClick="questionFunction()">
+    <span id = "text3">Please ask me</span>
+  </button>
+</section>
+
+<!-- 메인 푸터  -->
+<footer id = "footer">
+  <span id ="footer_text">You are best</span>
+</footer>
+<!--
+<a id="custom-login-btn" href="javascript:loginWithKakao()">
+    <img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" width="222"/>
+</a>
+
+<a id="kakaotalk-sharing-btn" href="javascript:shareMessage()">
+    <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
+         alt="카카오톡 공유 보내기 버튼"/>
+</a>
+
+<button onClick="sendToMe()">"send to me"</button>
+<button onClick="unlinkWithKakao()">UNLINK</button>
+<p id="token-result"></p>
+<button className="api-btn" onClick="sendToFriends()">친구에게 메시지 보내기</button>
+-->
+</body>
+</html>
