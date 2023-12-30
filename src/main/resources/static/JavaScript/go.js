@@ -1,3 +1,3 @@
 function go(){
-    console.log("깃 저장소 변경 테스트1")
+    console.log("깃허브 저장소 이동으로 인해 Dev 브랜치 생성 테스트")
 }
