@@ -26,7 +26,7 @@ function loginOPWithKakao() {
                 let results = xhr_check.responseText;
 
                 if (results === "False") { // DB에 등록되지 않은 사용자이므로 경고창 후 로그인 차단
-                    alert("시스템에 등록되지 않은 사람입니다." + "\nGHOST 팀에게 문의해 주세요.")
+                    alert("You are not registered in the system.\nContact the Ghost Team.")
                     loadingOff()
                     button.disabled = false;
                     button.style.opacity = 1; // 투명도를 0.5로 설정
@@ -35,7 +35,7 @@ function loginOPWithKakao() {
                 else {
                     let checkedName = results.split(" ")[0]; // 사용자의 프로필 설정 이름
                     let hashValue = results.split(" ")[1]; // 서버에서 발급 받아 전달 받은 랜덤 uuid 값이며 이 값을 다시 서버에 요청하여 정상적으로 OP 페이지에 접속하도록 요청
-                    alert("환영합니다 " + checkedName + "님");
+                    alert("Welcome, Manager " + checkedName);
                     loadingOff()
                     button.disabled = false;
                     button.style.opacity = 1; // 투명도를 0.5로 설정
@@ -49,8 +49,8 @@ function loginOPWithKakao() {
                     // 로그인 시도 한 사용자의 전화번호(고유값)를 parsing해서 -> 서버로 데이터 전송(AJAX) -> 서버에서 DB 쿼리로 접근해서 DB 있는지 없는지 판단
                     // -> 서버에서 판단 값을 가진 payload를 AJAX의 onload로 전송 -> True이면 redirect로 출근 보고 페이지로 이동 / 만약 false이면 알람창으로 로그인 실패 알림.
                     // false에서 unlink로 외부 서비스 연결 막아 로그인 차단.
-                    //alert(authObj.id)
-                    alert("login :" + JSON.stringify(authObj));
+                    // alert(authObj.id)
+                    // alert("login :" + JSON.stringify(authObj));
                     console.log("처음 로그인 시 설정된 토큰" + Kakao.Auth.getAccessToken());
                     console.log("처음 로그인 시 발급 받은 리프레시 토큰" + userRefreshToken);
 
@@ -81,7 +81,7 @@ function loginOPWithKakao() {
                             let results = xhr_check.responseText;
 
                             if (results === "False") { // DB에 등록되지 않은 사용자이므로 경고창 후 로그인 차단
-                                alert("시스템에 등록되지 않은 사람입니다." + "\nGHOST 팀에게 문의해 주세요.")
+                                alert("You are not registered in the system.\nContact the Ghost Team.")
                                 loadingOff()
                                 button.disabled = false;
                                 button.style.opacity = 1; // 투명도를 0.5로 설정
@@ -91,7 +91,7 @@ function loginOPWithKakao() {
                                 let checkedName = results.split(" ")[0]; // 사용자의 프로필 설정 이름
                                 let hashValue = results.split(" ")[1]; // 서버에서 발급 받아 전달 받은 랜덤 uuid 값이며 이 값을 다시 서버에 요청하여 정상적으로 OP 페이지에 접속하도록 요청
                                 //loginAram(payload.kakao_account.profile.profile_image_url, checkedName);
-                                alert("환영합니다 " + checkedName + "님");
+                                alert("Welcome, Manager " + checkedName);
                                 loadingOff()
                                 button.disabled = false;
                                 button.style.opacity = 1; // 투명도를 0.5로 설정
@@ -117,7 +117,7 @@ function loginOPWithKakao() {
 
                 },
                 fail: async function (err) { // 로그인 실패시 오류 값 반환
-                    alert("시스템에 등록되지 않은 사람입니다." + "\nGHOST 팀에게 문의해 주세요.")
+                    alert("You are not registered in the system.\nContact the Ghost Team.")
                     loadingOff()
                     button.disabled = false;
                     button.style.opacity = 1; // 투명도를 0.5로 설정

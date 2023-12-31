@@ -3,25 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale = 1.0, user-scalable=no"> <!-- 현재 사용자가 접속한 디바이스의 가로 세로 길이에 맞게 앱 사이즈를 조절함. 초기, 최대, 최소 비율은 모두 1이며, 사용자가 드레그로 크기 조정 불가능-->
   <title>Document</title>
   <title>SK GHOST OP</title>
+  <!-- 현재 사용자가 접속한 디바이스의 가로 세로 길이에 맞게 앱 사이즈를 조절함. 초기, 최대, 최소 비율은 모두 1이며, 사용자가 드레그로 크기 조정 불가능-->
   <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
-  <!--    <script>-->
-  <!--        // SDK를 초기화 합니다. 애플리케이션 > 앱 설정 > 앱 키 : JAVASCRIPT KEY 입력하세요-->
-  <!--        Kakao.init('2e39201190179fe7cd5eb25903daba8a');-->
-  <!--        //console.log(Kakao.isInitialized()); SDK 초기화 여부를 판단합니다.-->
-  <!--    </script>-->
+
+  <!-- CSS 선언 -->
   <link rel = "stylesheet" href = "css/OP/OP.css">
   <link rel = "stylesheet" href = "css/OP/EndReport.css">
 
+  <!-- 카카오 API를 사용하기 위한 라이브러리 선언-->
   <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
   <script>
-    // SDK를 초기화 합니다. 애플리케이션 > 앱 설정 > 앱 키 : JAVASCRIPT KEY 입력하세요
-    Kakao.init('2e39201190179fe7cd5eb25903daba8a');
+    Kakao.init('2e39201190179fe7cd5eb25903daba8a'); // SDK를 초기화 합니다. 애플리케이션 > 앱 설정 > 앱 키 : JAVASCRIPT KEY 입력하세요
     //console.log(Kakao.isInitialized()); SDK 초기화 여부를 판단합니다.
   </script>
 
+  <!-- 자바스크립트 함수 선언 -->
   <script src = "../../JavaScript/go.js"></script>
   <script src = "../../JavaScript/loginOPWithKakao.js"></script>
   <script src = "../../JavaScript/loginWithKakaoForAdmin.js"></script>
@@ -38,7 +36,6 @@
 </head>
 
 <body id = "body">
-
 <!--header-->
 <header id = "header"> <!-- div 와  <header>의 차이란?>? -->
   <img id = "header_sk" src="css/images/Ghost.png" alt = "location images"> <!-- GHOST 트레이드 마크 -->
@@ -68,13 +65,14 @@
 
 </body>
 <script>
-
+  /*
   Kakao.Auth.getStatusInfo(function(statusObj) {
     if (statusObj.status === 'connected') {
       loginAram(statusObj.user.kakao_account.profile.profile_image_url, statusObj.user.properties.nickname)
 
     }
   })
+  */
 </script>
 
 </html>
