@@ -21,7 +21,10 @@ import java.nio.charset.StandardCharsets;
 class HomeTest {
     @Autowired    //Autowired를 이용해 필요한 빈을 주입받을 수 있다.
     private MockMvc mockMvc;
-    private V1service v1service;
+    @Autowired
+    private V1service v1service; //new
+    @Autowired
+    private Home homecontroller; //new
 
     @Test
     public void test_doHome() throws Exception {
@@ -36,15 +39,40 @@ class HomeTest {
     }
 
     @Test
-    void checkOfUser() throws Exception {
-        MvcResult result = mockMvc.perform(get("/"))
+    void test_checkOfUser() throws Exception {
+
+        String requestBody = "{\"Who\":\"jpwoo327@kakao.com\"}";
+
+        // POST 요청 수행
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/check")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
 
-        String content = result.getResponse().getContentAsString();
-
-        System.out.println("Test checkOfUser is good");
+        // 결과 확인
+        String content = new String(result.getResponse().getContentAsByteArray(), StandardCharsets.UTF_8);
         System.out.println(content);
+        System.out.println("Test checkOfUser_validUser is good");
+
+//        V1service v1serviceMock = mock(V1service.class);
+        // 특정 메서드가 호출될 때 반환할 값을 지정
+//        when(v1service.userList()).thenReturn(Collections.singletonList(
+//                Collections.singletonMap("id", "validUserId")
+//        ));
+//        // HTTP 요청 수행
+//        MvcResult result = (MvcResult) mockMvc.perform(MockMvcRequestBuilders.post("/check")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content("{\"Who\":\"validUserId\"}"))
+//                .andExpect(MockMvcResultMatchers.status().isOk())
+//                .andExpect(MockMvcResultMatchers.content().string("ValidUser validUserId"))
+//                .andReturn();
+//
+//        String content = result.getResponse().getContentAsString();
+//
+//        System.out.println("Test checkOfUser_validUser is good");
+//        System.out.println(content);
     }
 
     @Test
