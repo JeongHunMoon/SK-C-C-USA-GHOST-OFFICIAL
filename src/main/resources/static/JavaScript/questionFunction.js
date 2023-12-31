@@ -1,25 +1,26 @@
-// 로그인을 통한 사용자 검증 > 이름 추출 후 text 파일 생성 > 정보 입력 받아 sendToFriend로 메시지 전송 (나는 우동균 에게만 보내기) > 다시 main으로 리다이랙트
-
+// 질문하기 함수
 function questionFunction() {
-    const button = document.getElementById("question")
-    button.disabled = true;
-    button.style.opacity = 0.7; // 투명도를 0.5로 설정
+    let button = document.getElementById("question")
+    button.disabled = true; // 질문하기 버튼을 (Main 에서 3번째 버튼) 누르면 해당 태그가 비활성화 > 더블 클릭을 막기 위함.
+    button.style.opacity = 0.5; // 투명도를 0.5로 설정
 
+    // 사용자가 카카오 로그인이 되어 있는지 판단한다.
     Kakao.Auth.getStatusInfo(function(statusObj) {
+        // 사용자가 이미 로그인한 상태입니다.
         if (statusObj.status === 'connected') {
-            // 사용자가 이미 로그인한 상태입니다.
-            console.log(statusObj)
-            console.log(statusObj.user.kakao_account.profile.nickname)
-
             let userForAsking = statusObj.user.kakao_account.profile.nickname// 사용자의 프로필 설정 이름
+            // 사용지로 부터 질문을 입력 받는다.
             let userInput = prompt("Hello, manager " + userForAsking + "." + "\nAsk me!", "");
 
+            // 만약 질문한 내용이 있는 경우
             if (userInput != null) {
-                loadingOn()
+                loadingOn() // 로딩 창 on
+
+                // 관리자 (문정훈, 우동균)에게 메시지가 전송된다.
                 Kakao.API.request({
                     url: '/v1/api/talk/friends/message/default/send',
                     data: {
-                        receiver_uuids: ['CzoJOAExCTgBLRwkEyISIhUmFzsKOgoyCjkBSA'],
+                        receiver_uuids: ['CzgPOws9Cz0KJhciEiYeKxMhGDQFNQU9BTYOWQ'], // 우동균 uuid CzoJOAExCTgBLRwkEyISIhUmFzsKOgoyCjkBSA
                         template_object: {
                             object_type: 'text',  // 'text'로 설정하여 텍스트만 보내기
                             text: userInput,
@@ -40,14 +41,21 @@ function questionFunction() {
                     },
                 });
             }
+
+            // 사용자가 취소 버튼을 누른 경우
             else {
                 alert("It's been canceled.");
             }
-            button.disabled = false;
-            button.style.opacity = 1; // 투명도를 0.5로 설정
+            button.disabled = false; // 버튼 활성화
+            button.style.opacity = 1; // 투명도를 1로 설정
 
-        } else {
-            loadingOn()
+        }
+
+        // 사용자가 로그인이 안되어 있던 경우 > 로그인을 먼저 시킨다.
+        else {
+            loadingOn() // 로그인을 처리되는 동안 로딩창 on
+
+            // 카카오 로그인 함수 호출
             Kakao.Auth.login({
                 success: function (authObj) {
                     Kakao.Auth.setAccessToken(authObj.access_token); // 로그인시 발급된 토큰으로 설정
@@ -58,33 +66,37 @@ function questionFunction() {
                     xhr.open('GET', url, true); // REST API로 url에 통신하여 내 친구 목록 Parsing.
                     xhr.setRequestHeader('Authorization', 'Bearer ' + authObj.access_token);// 헤더에 Authorization 추가
                     xhr.send();
-                    xhr.onload = function () { // 로그인 시도한 사용자의 프로필 정보 가져오기
+
+                    // 로그인 시도한 사용자의 프로필 정보 가져오기
+                    xhr.onload = function () {
                         let payload = JSON.parse(xhr.responseText) // 서버로부터 전송 받은 페이로드를 parsing
                         let nowUser = payload.kakao_account.email; // 사용자 카카오 계정
 
                         // 이 계정이 등록되어 있는 DB 조회하여 판단.
-                        const xhr_check = new XMLHttpRequest(); // REST API 통신을 위한 객체
-                        let infor = {"Who" : nowUser}
-                        xhr_check.open('POST', '/checkForasking', true);
-                        xhr_check.setRequestHeader("Content-Type", "application/json");
-                        xhr_check.send(JSON.stringify(infor))
+                        let xhr_check = new XMLHttpRequest(); // REST API 통신을 위한 객체
+                        let infor = {"Who" : nowUser} // 서버로 사용자의 카카오 id를 요청하여 DB에 등록되어 있는지 검증한다.
+                        xhr_check.open('POST', '/checkForasking', true); // REST 정의
+                        xhr_check.setRequestHeader("Content-Type", "application/json"); // 헤더 설정
+                        xhr_check.send(JSON.stringify(infor)) // REST 요청
 
-                        // 대기 시간을 설정하거나, 서버 응답에 대한 추가 로직을 작성할 수 있습니다.
+                        // REST 응답
                         xhr_check.onload = function () {
-                            let results = xhr_check.responseText;
+                            let results = xhr_check.responseText; // 서버의 payload
 
-                            if (results === "False") { // DB에 등록되지 않은 사용자이므로 경고창 후 로그인 차단
+                            // DB에 등록되지 않은 사용자이므로 경고창 후 로그인 차단
+                            if (results === "False") {
                                 alert("You are not registered in the system.\nContact the Ghost Team.")
                                 loadingOff()
                                 button.disabled = false;
                                 button.style.opacity = 1; // 투명도를 0.5로 설정
                                 unlinkWithKakao() // 추후 이 코드 활성화 시켜 ROC이외 외부 인원을 차단시켜야함.
                             }
+
+                            // 서버에 등록된 ROC 사람인 경우
                             else {
                                 loadingOff()
                                 let userForAsking = results// 사용자의 프로필 설정 이름
                                 let userInput = prompt("Hello, manager " + userForAsking + "." + "\nAsk me!", "");
-
 
                                 if (userInput != null) {
                                     loadingOn()
@@ -128,7 +140,7 @@ function questionFunction() {
                                 else {
                                     alert("It's been canceled.");
                                     button.disabled = false;
-                                    button.style.opacity = 1; // 투명도를 0.5로 설정
+                                    button.style.opacity = 1; // 투명도를 1로 설정
                                 }
                             }
                         };

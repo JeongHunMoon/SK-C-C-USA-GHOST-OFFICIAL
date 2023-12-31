@@ -1,4 +1,4 @@
-//템플릿을 통해 수동체크로 메시지 전송(자동 전송이 안되는 경우 사용될 수 있음) 이상 적이라면 해당 함수 삭제 예정
+//템플릿을 통해 수동체크로 친구에게 메시지 전송(사용 안함. > 활용 예정)
 function shareMessage() {
     Kakao.Share.sendDefault({
         objectType: 'text',
