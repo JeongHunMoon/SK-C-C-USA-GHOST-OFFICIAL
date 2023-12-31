@@ -74,7 +74,7 @@ function questionFunction() {
                             let results = xhr_check.responseText;
 
                             if (results === "False") { // DB에 등록되지 않은 사용자이므로 경고창 후 로그인 차단
-                                alert("시스템에 등록되지 않은 사람입니다." + "\nGHOST 팀에게 문의해 주세요.")
+                                alert("You are not registered in the system.\nContact the Ghost Team.")
                                 loadingOff()
                                 button.disabled = false;
                                 button.style.opacity = 1; // 투명도를 0.5로 설정
@@ -135,7 +135,7 @@ function questionFunction() {
                     }
                 },
                 fail: async function (err) { // 로그인 실패시 오류 값 반환
-                    alert("시스템에 등록되지 않은 사람입니다." + "\nGHOST 팀에게 문의해 주세요.")
+                    alert("You are not registered in the system.\nContact the Ghost Team.")
                     loadingOff()
                     button.disabled = false;
                     button.style.opacity = 1; // 투명도를 0.5로 설정
