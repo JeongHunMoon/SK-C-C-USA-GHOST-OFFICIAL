@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-
 <mapper namespace="GHOST.sk_ghost.dao.V1Dao">
 
     <!-- 전체 사용자 조회 -->

@@ -4,7 +4,7 @@ function loginOPWithKakao() {
     let nowUser = null           // authObj.user_id // 현재 로그인을 시도한 사람의 카카오 id를 받아오기.
     let button = document.getElementById("user_login") //로그인 버튼을 비활성화 하기 위한 태그 가져오기
     button.disabled = true;     // 버튼 비활성화
-    button.style.opacity = 0.7; // 투명도를 0.5로 설정
+    button.style.opacity = 0.5; // 투명도를 0.5로 설정
     loadingOn() // 로딩창 함수 호출
 
     //최초 사용자가 이미 카카오 로그인이 되어있는지 판단.
@@ -65,7 +65,7 @@ function loginOPWithKakao() {
 
                     Kakao.Auth.setAccessToken(authObj.access_token); // 사용자 처음 로그인시 발급된 토큰으로 설정
                     userRefreshToken = authObj.refresh_token // refresh token 값 저장.
-                    //refreshAccessToken(userRefreshToken) // > 삭제 요망
+                    //refreshAccessToken(userRefreshToken) // > 삭제 필요
 
                     // 로그인한 사용자 정보 가져오는 REST
                     let url = 'https://kapi.kakao.com/v2/user/me'
@@ -76,7 +76,6 @@ function loginOPWithKakao() {
 
                     xhr.onload = function () { // 로그인 시도한 사용자의 프로필 정보 가져오기
                         let payload = JSON.parse(xhr.responseText) // 서버로부터 전송 받은 페이로드를 parsing
-                        console.log(payload.kakao_account.email); // 사용자 카카오 게정 확인
                         nowUser = payload.kakao_account.email; // 사용자 카카오 계정
 
                         // 이 계정이 등록 되어 있는지 DB를 조회하여 판단.
