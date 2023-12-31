@@ -55,15 +55,7 @@ public class Home {
 
         List<Map<String, String>> lists = v1service.shiftAdminList(); // 금일의 대응자 admin을 조회한다.
 
-        /*
-         * 현재는 모든 내용을 그대로 리스트로 반환하지만, 금일의 대응자만 추출하여 list로 만들어 전달해야한다.
-         * Elec 테이블에서 오늘의 날짜를 가져온다. 현재 시간을 가져온다. 08시 기준 07~09시 까지를 Day로 판단한 후, data = 12/1, shift = D 하면
-         * 1차, 2차 대응자가 조회되며, 이를 left join friend하면
-         * id, name, data, shift, priority, uuid 테이블이 만들어진다.(12/1일 D에 해당하는 전극 운영자만 추출됨
-         *
-         * 위 과정을 7공정에 대해 모두 수행하여 List<Map<String, String>> 으로 만든다.
-         * */
-        System.out.println("조회되 금일 담당 대응자 분들 > " + lists);
+        System.out.println("조회된 금일 담당 대응자 분들 > " + lists);
 
         return ResponseEntity.ok(lists);
     }
@@ -79,7 +71,7 @@ public class Home {
 
         // 정상적으로 해쉬가 일치하므로 사용자르 OP 페이지로 이동시킨다.
         if (hashValue.equals(uuid)) {
-            model.addAttribute("uuid", hashValue);
+            model.addAttribute("uuid", hashValue); //model에 key를 uuid, value를 hashValue로 담아서 프론트로 보냄
             hashValue = null;
             return "home/OP";
         }
