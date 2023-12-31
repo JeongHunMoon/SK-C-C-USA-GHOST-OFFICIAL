@@ -1,8 +1,8 @@
-// Access token을 갱신하는 함수.
+// Access token을 갱신하는 함수. > 사용 안하는 함수
 function refreshAccessToken(refreshToken) { // 현재 가지고 있는 refresh token을 전달하면
     console.log("전달 받은 리프레시 토큰", refreshToken)
-    const clientId = 'ea824815503273f372ee072a86ee2fa5';
-    const clientSecret = 'vX05Pr1kZujPDGJUc5Si8aEZW7LRuqcp';
+    const clientId = 'ea824815503273f372ee072a86ee2fa5'; // REST API Key > 암호화 필요.
+    const clientSecret = 'vX05Pr1kZujPDGJUc5Si8aEZW7LRuqcp'; // 우리 플랫폼의 Secret > 암호화 필요.
     const xhr = new XMLHttpRequest();
     const url = `https://kauth.kakao.com/oauth/token?grant_type=refresh_token&client_id=${clientId}&client_secret=${clientSecret}&refresh_token=${refreshToken}`;
 

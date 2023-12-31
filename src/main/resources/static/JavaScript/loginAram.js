@@ -1,3 +1,4 @@
+
 function loginAram(profile, name) {
     const loginAlarmDiv = document.createElement('div');
     loginAlarmDiv.id = 'loginAlarm';
@@ -117,11 +118,13 @@ function loginAram(profile, name) {
         styleSheet.addRule('nameSpanAnimation', nameSpanKeyframes, styleSheet.cssRules.length);
     }
 
+    /*
     // 0.2초 후에 오디오 재생
     setTimeout(function () {
         let audio = new Audio('/sound/sound2.mp3');
         audio.play();
     }, 200);
+    */
 
     // 10초 후에 생성된 요소 제거
     setTimeout(function () {

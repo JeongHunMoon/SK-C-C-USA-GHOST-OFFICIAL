@@ -1,7 +1,7 @@
 function endReport() {
-    // Crate a wrapper for the input fields
+    // 동적으로 DOM 트리에 퇴근 보고를 위한 HTML 태그르 생성 한다.
     let inputWrapper = document.createElement('div');
-    inputWrapper.id = 'inputWrapper';
+    inputWrapper.id = 'inputWrapper'; // 위 태그에 id를 부여한다.
     inputWrapper.innerHTML = `
         <div class="inputRow">
             <div class="inputColumn">
@@ -49,40 +49,45 @@ function endReport() {
         <button id="cancelButton" onclick="cancelInput()">Cancel</button>
     `;
 
-    // Append the input fields to the body
+    // 현재 이 함수가 실행된 html dom에 자식으로 태그를 추가한다.
     document.body.appendChild(inputWrapper);
 }
 
 function submitValues() {
-    // Get the input values
+    // 사용자가 퇴근 보고를 위해 입력한 값을 코드로 받아온다.
     let values = [];
     for (let i = 1; i <= 8; i++) {
         let inputValue = document.getElementById('value' + i).value.trim();
         values.push(inputValue);
     }
 
-    // Check if values are valid numbers
+    // 퇴근 보고에 입력되는 숫자가 숫자만 들어왔는지 체크한다.
     for (let i = 0; i < values.length; i++) {
         if (!isValidNumber(values[i])) {
             alert('Please enter valid numeric values.');
             return; // Stop execution if values are not valid
         }
     }
+
+    // 사용자가 입력한 값을 가져온 후, DOM에서 퇴근 보고 태그를 삭제한다.
     document.body.removeChild(document.getElementById('inputWrapper'));
 
     // Log the values to the console
     console.log('Values:', values);
 
+    // 사용자가 입력하지 란에 대해서는 0으로 기입한다.
     for (let i = 0; i < values.length; i++) {
         if (values[i] === "") {
             values[i] = 0
         }
     }
 
+    // 퇴근 보고 템플릿
     let endReportText = "SOP: New " + values[0] + ", Done " + values[2] + ", Open " + values[4] + ", Transferred " + values[6]
         + "\nITS: New " + values[1] + ", Done " + values[3] + ", Waiting " + values[5] + ", Transferred " + values[7]
     console.log(endReportText)
 
+    // 해당 퇴근 보고는 나에게 전송된다.
     Kakao.API.request({
         url: '/v2/api/talk/memo/default/send',
         data: {
@@ -107,6 +112,7 @@ function submitValues() {
         });
 }
 
+// 시용자가 퇴근 보고 취소를 누르는 경우
 function cancelInput() {
     // Clear input fields
     for (let i = 1; i <= 8; i++) {
@@ -117,6 +123,7 @@ function cancelInput() {
     document.body.removeChild(document.getElementById('inputWrapper'));
 }
 
+// 입력된 값이 공백이거나 숫자이면 true를 반화한다. 그 이외 값은 잘못된 입력으로 간주한다.  
 function isValidNumber(value) {
     // Check if the value is a valid number
     return !isNaN(value) || value === '';

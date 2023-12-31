@@ -1,6 +1,7 @@
+// 로딩 페이지를 보여주는 함수
 function loadingOn() {
     // 전체 화면을 덮기 위한 div 요소 생성
-    var overlay = document.createElement("div");
+    let overlay = document.createElement("div");
     overlay.id = "overlay";
 
     // 스타일 설정
@@ -12,7 +13,7 @@ function loadingOn() {
     overlay.style.backgroundColor = "rgba(0, 0, 0, 0.5)"; // 투명도 0.5
 
     // 이미지를 생성하고 속성 설정
-    var image = document.createElement("img");
+    let image = document.createElement("img");
     image.id = "lodgin";
     image.src = "css/images/loading.gif";
     image.alt = "location images";
@@ -33,7 +34,7 @@ function loadingOn() {
     overlay.appendChild(image);
 
     // "header_sk_loding" 이미지 생성 및 스타일 설정
-    var headerSkLoding = document.createElement("img");
+    let headerSkLoding = document.createElement("img");
     headerSkLoding.id = "header_sk_loding";
     headerSkLoding.src = "css/images/Ghost.png";
     headerSkLoding.alt = "location images";

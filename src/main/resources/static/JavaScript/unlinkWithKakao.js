@@ -1,9 +1,9 @@
-// 카카오톡 => 계정 => 외부 서비에서 GHOST 등록을 해제 하는 코드(관리자 운영)
+// ROC 사람이 아닌 사람이 로그인 시도한 경우 호출됨 > 로그아웃 처리
 function unlinkWithKakao() {
     Kakao.API.request({
         url: '/v1/user/unlink',
         success: function (response) {
-            alert("unlink :" + JSON.stringify(response));
+            alert("Goodbye :)");
         },
         fail: function (error) {
             console.log(error);
