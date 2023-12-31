@@ -1,17 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- HTML 파일 문서 호환성을 edge버전으로 통일-->
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> <!-- HTML 4.0.1 버전 기준 문자인코딩 방식 정의 -->
-  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale = 1.0, user-scalable=no"> <!-- 현재 사용자가 접속한 디바이스의 가로 세로 길이에 맞게 앱 사이즈를 조절함. 초기, 최대, 최소 비율은 모두 1이며, 사용자가 드레그로 크기 조정 불가능-->
+  <!-- 현재 사용자가 접속한 디바이스의 가로 세로 길이에 맞게 앱 사이즈를 조절함. 초기, 최대, 최소 비율은 모두 1이며, 사용자가 드레그로 크기 조정 불가능-->
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale = 1.0, user-scalable=no">
 
+  <!-- CSS 정의 -->
   <link rel = "stylesheet" href = "css/init.css">
   <link rel = "stylesheet" href = "css/login/login.css">
   <link rel = "stylesheet" href = "css/OP/EndReport.css">
 
+  <!-- 카카오 API를 사용하기 위한 라이브러리 선언-->
   <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
   <script> Kakao.init('2e39201190179fe7cd5eb25903daba8a'); </script> <!--SDK를 초기화 (애플리케이션>앱설정>앱키:JAVASCRIPTKEY -->
 
+  <!-- 자바스크립트 함수 정의 -->
   <script src = "../../JavaScript/loginOPWithKakao.js"></script>
   <script src = "../../JavaScript/loginWithKakaoForAdmin.js"></script>
   <script src = "../../JavaScript/unlinkWithKakao.js"></script>
@@ -26,7 +31,7 @@
   <script src = "../../JavaScript/loadingOn.js"></script>
   <script src = "../../JavaScript/loadingOff.js"></script>
 
-  <title>SK GHOST</title>
+  <title>SK GHOST MAIN</title>
 
 </head>
 
@@ -69,20 +74,5 @@
 <footer id = "footer">
   <span id ="footer_text">You are best</span>
 </footer>
-<!--
-<a id="custom-login-btn" href="javascript:loginWithKakao()">
-    <img src="//k.kakaocdn.net/14/dn/btqCn0WEmI3/nijroPfbpCa4at5EIsjyf0/o.jpg" width="222"/>
-</a>
-
-<a id="kakaotalk-sharing-btn" href="javascript:shareMessage()">
-    <img src="https://developers.kakao.com/assets/img/about/logos/kakaotalksharing/kakaotalk_sharing_btn_medium.png"
-         alt="카카오톡 공유 보내기 버튼"/>
-</a>
-
-<button onClick="sendToMe()">"send to me"</button>
-<button onClick="unlinkWithKakao()">UNLINK</button>
-<p id="token-result"></p>
-<button className="api-btn" onClick="sendToFriends()">친구에게 메시지 보내기</button>
--->
 </body>
 </html>

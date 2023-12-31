@@ -1,4 +1,4 @@
-// 나에게 카카오톡 메시지 보내기
+// 나에게 카카오톡 메시지 보내기 백업 함수
 function sendToMe_Origin() {
 
     Kakao.API.request({
