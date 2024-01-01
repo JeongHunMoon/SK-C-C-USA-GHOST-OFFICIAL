@@ -15,9 +15,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import java.nio.charset.StandardCharsets;
 
-
-
-
 @SpringBootTest(classes = SkGhostApplication.class) //SpringBootTest() 에 파라미터로 어떤 Spring 어플리케이션을 테스트하는지 명시한다.
 @AutoConfigureMockMvc //
 class HomeTest {
@@ -126,7 +123,7 @@ class HomeTest {
     }
 
     @Test
-    void test_checkForasking() throws Exception {
+    void checkForasking() throws Exception {
 //        MvcResult result = mockMvc.perform(get("/"))
 //                .andExpect(MockMvcResultMatchers.status().isOk())
 //                .andReturn();
@@ -138,7 +135,7 @@ class HomeTest {
     }
 
     @Test
-    void test_getMe() throws Exception {
+    void getMe() throws Exception {
 //        MvcResult result = mockMvc.perform(get("/"))
 //                .andExpect(MockMvcResultMatchers.status().isOk())
 //                .andReturn();
