@@ -76,7 +76,7 @@ class HomeTest {
     }
 
     @Test
-    void goingToWork() throws Exception {
+    void test_goingToWork() throws Exception {
         String requestBody = "{\"shift\":\"not\"}";
 
         // POST 요청 수행
@@ -94,19 +94,37 @@ class HomeTest {
     }
 
     @Test
-    void goToOpPage() throws Exception {
-//        MvcResult result = mockMvc.perform(get("/"))
-//                .andExpect(MockMvcResultMatchers.status().isOk())
-//                .andReturn();
-//
-//        String content = result.getResponse().getContentAsString();
-//
-//        System.out.println("Test goToOpPage is good");
-//        System.out.println(content);
+    void test_goToOpPage_NoneMatched() throws Exception {
+        MvcResult result = mockMvc.perform(get("/OP")
+                        .param("uuid", java.util.UUID.randomUUID().toString()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        System.out.println("Test doHome is good");
+        System.out.println(content);
     }
 
     @Test
-    void checkForasking() throws Exception {
+    void test_goToOpPage_Matched() throws Exception {
+        String uuid = java.util.UUID.randomUUID().toString();
+        String hashValue = uuid;
+
+        MvcResult result = mockMvc.perform(get("/OP")
+                        .param("uuid", uuid))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        System.out.println("Test doHome is good");
+        System.out.println(content);
+
+    }
+
+    @Test
+    void test_checkForasking() throws Exception {
         String requestBody = "{\"Who\":\"jpwoo327@kakao.com\"}";
 
         // POST 요청 수행
@@ -124,7 +142,7 @@ class HomeTest {
     }
 
     @Test
-    void getMe() throws Exception {
+    void test_getMe() throws Exception {
         String requestBody = "{\"id\":\"jpwoo327@kakao.com\"}";
 
         // POST 요청 수행
