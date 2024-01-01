@@ -12,9 +12,11 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import java.nio.charset.StandardCharsets;
+
+
+
 
 @SpringBootTest(classes = SkGhostApplication.class) //SpringBootTest() 에 파라미터로 어떤 Spring 어플리케이션을 테스트하는지 명시한다.
 @AutoConfigureMockMvc //
@@ -76,7 +78,7 @@ class HomeTest {
     }
 
     @Test
-    void goingToWork() throws Exception {
+    void test_goingToWork() throws Exception {
         String requestBody = "{\"shift\":\"not\"}";
 
         // POST 요청 수행
@@ -94,19 +96,37 @@ class HomeTest {
     }
 
     @Test
-    void goToOpPage() throws Exception {
-//        MvcResult result = mockMvc.perform(get("/"))
-//                .andExpect(MockMvcResultMatchers.status().isOk())
-//                .andReturn();
-//
-//        String content = result.getResponse().getContentAsString();
-//
-//        System.out.println("Test goToOpPage is good");
-//        System.out.println(content);
+    void test_goToOpPage_NoneMatched() throws Exception {
+        MvcResult result = mockMvc.perform(get("/OP")
+                .param("uuid", java.util.UUID.randomUUID().toString()))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        System.out.println("Test doHome is good");
+        System.out.println(content);
     }
 
     @Test
-    void checkForasking() throws Exception {
+    void test_goToOpPage_Matched() throws Exception {
+        String uuid = java.util.UUID.randomUUID().toString();
+        String hashValue = uuid;
+
+        MvcResult result = mockMvc.perform(get("/OP")
+                .param("uuid", uuid))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        String content = result.getResponse().getContentAsString();
+
+        System.out.println("Test doHome is good");
+        System.out.println(content);
+
+    }
+
+    @Test
+    void test_checkForasking() throws Exception {
 //        MvcResult result = mockMvc.perform(get("/"))
 //                .andExpect(MockMvcResultMatchers.status().isOk())
 //                .andReturn();
@@ -118,7 +138,7 @@ class HomeTest {
     }
 
     @Test
-    void getMe() throws Exception {
+    void test_getMe() throws Exception {
 //        MvcResult result = mockMvc.perform(get("/"))
 //                .andExpect(MockMvcResultMatchers.status().isOk())
 //                .andReturn();
