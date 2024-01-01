@@ -107,25 +107,37 @@ class HomeTest {
 
     @Test
     void checkForasking() throws Exception {
-//        MvcResult result = mockMvc.perform(get("/"))
-//                .andExpect(MockMvcResultMatchers.status().isOk())
-//                .andReturn();
-//
-//        String content = result.getResponse().getContentAsString();
-//
-//        System.out.println("Test checkForasking is good");
-//        System.out.println(content);
+        String requestBody = "{\"Who\":\"jpwoo327@kakao.com\"}";
+
+        // POST 요청 수행
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/checkForasking")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        // 결과 확인
+        String content = new String(result.getResponse().getContentAsByteArray(), StandardCharsets.UTF_8);
+        System.out.println(content);
+        System.out.println("checkForasking Success");
     }
 
     @Test
     void getMe() throws Exception {
-//        MvcResult result = mockMvc.perform(get("/"))
-//                .andExpect(MockMvcResultMatchers.status().isOk())
-//                .andReturn();
-//
-//        String content = result.getResponse().getContentAsString();
-//
-//        System.out.println("Test getMe is good");
-//        System.out.println(content);
+        String requestBody = "{\"id\":\"jpwoo327@kakao.com\"}";
+
+        // POST 요청 수행
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post("/getMe")
+                        .content(requestBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andReturn();
+
+        // 결과 확인
+        String content = new String(result.getResponse().getContentAsByteArray(), StandardCharsets.UTF_8);
+        System.out.println(content);
+        System.out.println("getMe Success");
     }
 }
