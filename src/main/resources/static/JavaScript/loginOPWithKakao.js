@@ -60,12 +60,13 @@ function loginOPWithKakao() {
                     // false에서 unlink로 외부 서비스 연결 막아 로그인 차단.
                     // alert(authObj.id)
                     // alert("login :" + JSON.stringify(authObj));
-                    console.log("처음 로그인 시 설정된 토큰" + Kakao.Auth.getAccessToken());
-                    console.log("처음 로그인 시 발급 받은 리프레시 토큰" + userRefreshToken);
 
                     Kakao.Auth.setAccessToken(authObj.access_token); // 사용자 처음 로그인시 발급된 토큰으로 설정
                     userRefreshToken = authObj.refresh_token // refresh token 값 저장.
                     //refreshAccessToken(userRefreshToken) // > 삭제 필요
+
+                    console.log("처음 로그인 시 설정된 토큰" + Kakao.Auth.getAccessToken());
+                    console.log("처음 로그인 시 발급 받은 리프레시 토큰" + userRefreshToken);
 
                     // 로그인한 사용자 정보 가져오는 REST
                     let url = 'https://kapi.kakao.com/v2/user/me'

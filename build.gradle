@@ -22,6 +22,7 @@ repositories {
 }
 
 dependencies {
+	//프로젝트 최초 생성시 디폴트 의존성
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3'
@@ -36,6 +37,19 @@ dependencies {
 	implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
 	// 암호화 알고리즘 의존성 추가
 	implementation group: 'org.bouncycastle', name: 'bcprov-jdk15on', version: '1.69'
+
+	//Junit 테스트 의존성 추가
+	testImplementation 'org.junit.platform:junit-platform-launcher'
+	testImplementation 'org.junit.jupiter:junit-jupiter-api'
+	testImplementation 'org.junit.jupiter:junit-jupiter-engine'
+	testImplementation 'org.junit.jupiter:junit-jupiter-params'
+
+//	testImplementation(platform("org.junit:junit-bom:5.10.1"))
+//	testRuntimeOnly("org.junit.platform:junit-platform-launcher") {
+//		because("Only needed to run tests in a version of IntelliJ IDEA that bundles older versions")
+//	}
+//	testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+//	testRuntimeOnly("org.junit.vintage:junit-vintage-engine")
 
 }
 

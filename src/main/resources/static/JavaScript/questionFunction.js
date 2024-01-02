@@ -25,8 +25,8 @@ function questionFunction() {
                             object_type: 'text',  // 'text'로 설정하여 텍스트만 보내기
                             text: userInput,
                             link: {
-                                web_url: 'http://3.145.154.90:8080',
-                                mobile_web_url: 'http://3.145.154.90:8080',
+                                web_url: 'https://www.ghostalpharetta.com',
+                                mobile_web_url: 'https://www.ghostalpharetta.com',
                             },
                         },
                     },
@@ -112,8 +112,8 @@ function questionFunction() {
                                                     description: userForAsking,
                                                     image_url: 'http://mud-kage.kakao.co.kr/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
                                                     link: {
-                                                        web_url: 'https://developers.kakao.com',
-                                                        mobile_web_url: 'https://developers.kakao.com',
+                                                        web_url: 'https://www.ghostalpharetta.com',
+                                                        mobile_web_url: 'https://www.ghostalpharetta.com',
                                                     },
                                                 },
                                                 social: {
