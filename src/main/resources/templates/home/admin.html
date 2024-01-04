@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- HTML 파일 문서 호환성을 edge버전으로 통일-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> <!-- HTML 4.0.1 버전 기준 문자인코딩 방식 정의 -->
+    <!-- 현재 사용자가 접속한 디바이스의 가로 세로 길이에 맞게 앱 사이즈를 조절함. 초기, 최대, 최소 비율은 모두 1이며, 사용자가 드레그로 크기 조정 불가능-->
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale = 1.0, user-scalable=no">
+
+    <!-- CSS 정의 -->
+    <link rel = "stylesheet" href = "css/init.css">
+    <link rel = "stylesheet" href = "css/admin/admin.css">
+
+    <!-- 카카오 API를 사용하기 위한 라이브러리 선언-->
+    <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script> Kakao.init('2e39201190179fe7cd5eb25903daba8a'); </script> <!--SDK를 초기화 (애플리케이션>앱설정>앱키:JAVASCRIPTKEY -->
+
+    <!-- 자바스크립트 함수 정의 -->
+    <script src = "../../JavaScript/unlinkWithKakao.js"></script>
+    <script src = "../../JavaScript/loginAram.js"></script>
+    <script src = "../../JavaScript/loadingOn.js"></script>
+    <script src = "../../JavaScript/loadingOff.js"></script>
+    <script src = "../../JavaScript/imageModal.js" defer></script>
+
+    <title>SK GHOST ADMIN</title>
+
+</head>
+
+<body id = "body">
+<!-- 메인 해더-->
+<header id = "header">
+    <img id = "header_sk" src="css/images/Ghost.png" alt = "location images"> <!-- GHOST 트레이드 마크 -->
+    <span id = "header_logo">SK GHOST Admin</span> <!-- GHOST text -->
+</header>
+
+<!-- 전체 seciton은 top과 bottom으로 구성된다.-->
+<section id="section_top">
+    <div id="image-container">
+        <!-- 추가할 이미지가 있다면 class는 아래와 같이 동일하게 하며, 이미지의 경로만 변경하여 아래 누적하여 추가하면 됨.-->
+        <div id="mon">
+            <table id="mon_table" border = "1" style="border-collapse: collapse;">
+                <!-- 구분 -->
+                <tr>
+                    <td rowspan="2">Part</td> <td rowspan="2">Priority</td> <td>Monday</td> <td colspan="5">11/30, 2023</td>
+                </tr>
+                <tr>
+                    <td>N</td> <td>D</td> <td>E</td>
+                </tr>
+
+                <!-- 전극 -->
+                <tr>
+                    <td rowspan="2">ELEC</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 조립 -->
+                <tr>
+                    <td rowspan="2">CELL</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 화성 -->
+                <tr>
+                    <td rowspan="2">FORM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 모듈 -->
+                <tr>
+                    <td rowspan="2">PACK</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- WMS -->
+                <tr>
+                    <td rowspan="3">WMS</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>3</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+
+                <!-- Collections -->
+                <tr>
+                    <td rowspan="2">Colle</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- Common -->
+                <tr>
+                    <td rowspan="2">COMM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="tue">
+            <table id="tue_table" border = "1" style="border-collapse: collapse;">
+                <!-- 구분 -->
+                <tr>
+                    <td rowspan="2">Part</td> <td rowspan="2">Priority</td> <td>Monday</td> <td colspan="5">11/30, 2023</td>
+                </tr>
+                <tr>
+                    <td>N</td> <td>D</td> <td>E</td>
+                </tr>
+
+                <!-- 전극 -->
+                <tr>
+                    <td rowspan="2">ELEC</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 조립 -->
+                <tr>
+                    <td rowspan="2">CELL</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 화성 -->
+                <tr>
+                    <td rowspan="2">FORM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 모듈 -->
+                <tr>
+                    <td rowspan="2">PACK</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- WMS -->
+                <tr>
+                    <td rowspan="3">WMS</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>3</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- Collections -->
+                <tr>
+                    <td rowspan="2">Colle</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- Common -->
+                <tr>
+                    <td rowspan="2">COMM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="wed">
+            <table id="wed_table" border = "1" style="border-collapse: collapse;">
+                <!-- 구분 -->
+                <tr>
+                    <td rowspan="2">Part</td> <td rowspan="2">Priority</td> <td>Monday</td> <td colspan="5">11/30, 2023</td>
+                </tr>
+                <tr>
+                    <td>N</td> <td>D</td> <td>E</td>
+                </tr>
+
+                <!-- 전극 -->
+                <tr>
+                    <td rowspan="2">ELEC</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 조립 -->
+                <tr>
+                    <td rowspan="2">CELL</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 화성 -->
+                <tr>
+                    <td rowspan="2">FORM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 모듈 -->
+                <tr>
+                    <td rowspan="2">PACK</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- WMS -->
+                <tr>
+                    <td rowspan="3">WMS</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>3</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- Collections -->
+                <tr>
+                    <td rowspan="2">Colle</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- Common -->
+                <tr>
+                    <td rowspan="2">COMM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="thu">
+            <table id="thu_table" border = "1" style="border-collapse: collapse;">
+                <!-- 구분 -->
+                <tr>
+                    <td rowspan="2">Part</td> <td rowspan="2">Priority</td> <td>Monday</td> <td colspan="5">11/30, 2023</td>
+                </tr>
+                <tr>
+                    <td>N</td> <td>D</td> <td>E</td>
+                </tr>
+
+                <!-- 전극 -->
+                <tr>
+                    <td rowspan="2">ELEC</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 조립 -->
+                <tr>
+                    <td rowspan="2">CELL</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 화성 -->
+                <tr>
+                    <td rowspan="2">FORM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 모듈 -->
+                <tr>
+                    <td rowspan="2">PACK</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- WMS -->
+                <tr>
+                    <td rowspan="3">WMS</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>3</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- Collections -->
+                <tr>
+                    <td rowspan="2">Colle</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- Common -->
+                <tr>
+                    <td rowspan="2">COMM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="fri">
+            <table id="fri_table" border = "1" style="border-collapse: collapse;">
+                <!-- 구분 -->
+                <tr>
+                    <td rowspan="2">Part</td> <td rowspan="2">Priority</td> <td>Monday</td> <td colspan="5">11/30, 2023</td>
+                </tr>
+                <tr>
+                    <td>N</td> <td>D</td> <td>E</td>
+                </tr>
+
+                <!-- 전극 -->
+                <tr>
+                    <td rowspan="2">ELEC</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 조립 -->
+                <tr>
+                    <td rowspan="2">CELL</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 화성 -->
+                <tr>
+                    <td rowspan="2">FORM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 모듈 -->
+                <tr>
+                    <td rowspan="2">PACK</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- WMS -->
+                <tr>
+                    <td rowspan="3">WMS</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>3</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- Collections -->
+                <tr>
+                    <td rowspan="2">Colle</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- Common -->
+                <tr>
+                    <td rowspan="2">COMM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="sat">
+            <table id="sat_table" border = "1" style="border-collapse: collapse;">
+                <!-- 구분 -->
+                <tr>
+                    <td rowspan="2">Part</td> <td rowspan="2">Priority</td> <td>Monday</td> <td colspan="5">11/30, 2023</td>
+                </tr>
+                <tr>
+                    <td>N</td> <td>D</td> <td>E</td>
+                </tr>
+
+                <!-- 전극 -->
+                <tr>
+                    <td rowspan="2">ELEC</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 조립 -->
+                <tr>
+                    <td rowspan="2">CELL</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 화성 -->
+                <tr>
+                    <td rowspan="2">FORM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 모듈 -->
+                <tr>
+                    <td rowspan="2">PACK</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- WMS -->
+                <tr>
+                    <td rowspan="3">WMS</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>3</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- Collections -->
+                <tr>
+                    <td rowspan="2">Colle</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- Common -->
+                <tr>
+                    <td rowspan="2">COMM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+            </table>
+        </div>
+
+        <div id="sun">
+            <table id="sun_table" border = "1" style="border-collapse: collapse;">
+                <!-- 구분 -->
+                <tr>
+                    <td rowspan="2">Part</td> <td rowspan="2">Priority</td> <td>Monday</td> <td colspan="5">11/30, 2023</td>
+                </tr>
+                <tr>
+                    <td>N</td> <td>D</td> <td>E</td>
+                </tr>
+
+                <!-- 전극 -->
+                <tr>
+                    <td rowspan="2">ELEC</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 조립 -->
+                <tr>
+                    <td rowspan="2">CELL</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 화성 -->
+                <tr>
+                    <td rowspan="2">FORM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- 모듈 -->
+                <tr>
+                    <td rowspan="2">PACK</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- WMS -->
+                <tr>
+                    <td rowspan="3">WMS</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>3</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- Collections -->
+                <tr>
+                    <td rowspan="2">Colle</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+
+                <!-- Common -->
+                <tr>
+                    <td rowspan="2">COMM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+                <tr>
+                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- 메인 푸터  -->
+<footer id = "footer">
+    <!-- 스케줄 수정 -->
+    <button id = "modify_schedule" onClick="loginOPWithKakao()">
+        <span id = "text1">Modify</span>
+    </button>
+
+    <!-- 스케줄 생 -->
+    <button id = "new_schedule" onClick="loginWithKakaoForAdmin()">
+        <span id = "text2">New</span>
+    </button>
+</footer>
+</body>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        let container = document.getElementById('image-container');
+
+        container.addEventListener('wheel', function (e) {
+            container.scrollLeft += e.deltaY;
+            e.preventDefault();
+        });
+    });
+</script>
+</html>

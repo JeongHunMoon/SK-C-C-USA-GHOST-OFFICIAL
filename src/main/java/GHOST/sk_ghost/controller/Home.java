@@ -113,4 +113,9 @@ public class Home {
         }
         return ResponseEntity.ok("False"); //DB에 없는 사용자가 로그인을 시도했기에 접근을 차단한다.
     }
+
+    @GetMapping("/admin")
+    public String tempAdminPage(Model model) {
+        return "home/admin";
+    }
 }
