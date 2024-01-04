@@ -10,7 +10,7 @@ function sendFriends() {
     let xhr_friend = new XMLHttpRequest(); // DB에서 금일 담당 대응자를 조회하기 위한 REST 통신을 위한 AJXA 객체
     let friendInfor = {"shift": "not"}; // 의미 없는 POST request 객체 > 개선 필요
 
-    xhr_friend.open('POST', '/goingToWork', true); // RSET 정의
+    xhr_friend.open('POST', '/goingToWork', true); // REST 정의
     xhr_friend.setRequestHeader("Content-Type", "application/json"); // 해더 정의
     xhr_friend.send(JSON.stringify(friendInfor)) // REST Request
 

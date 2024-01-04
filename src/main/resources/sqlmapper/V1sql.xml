@@ -5,20 +5,19 @@
 
 <mapper namespace="GHOST.sk_ghost.dao.V1Dao">
 
-    <!-- 전체 사용자 조회 -->
+    <!-- 사용자 조회 -->
     <select id="userList" resultType="map">
-        select * from user_info
+        SELECT id,name,process from member
     </select>
 
     <!-- 금일 담당 운영 대응자 조회 -->
     <select id="shiftAdminList" resultType="map">
-        SELECT CAST(es.id AS CHAR) AS id, es.name, CAST(es.date AS CHAR) AS date, es.shift, f.uuid, CAST(es.priority AS CHAR) AS priority, CAST(ui.process AS CHAR) AS process
-        FROM elec_shift es
-        INNER JOIN friend f ON es.id = f.id
-        LEFT JOIN user_info ui ON es.id = ui.id  -- 추가: user_info 테이블과의 조인
-        WHERE es.priority IN (1, 2) AND (DATE_FORMAT(CURDATE(), "%Y-%m-%d") = DATE_FORMAT(es.date, "%Y-%m-%d"))
-        ORDER BY es.priority;
-
+        SELECT mem.id, admin.name, CAST(admin.date as CHAR) as date, admin.shift, mem.uuid, admin.priority, mem.process
+        FROM member mem
+        LEFT JOIN admin_shift admin
+        ON mem.name = admin.name
+        WHERE admin.priority IN (1,2)
+        AND (DATE_FORMAT(CURDATE(), "%Y-%m-%d") = DATE_FORMAT(admin.date, "%Y-%m-%d"))
     </select>
 </mapper>
 
