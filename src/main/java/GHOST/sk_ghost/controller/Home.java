@@ -126,4 +126,18 @@ public class Home {
     public String tempAdminPage(Model model) {
         return "home/admin";
     }
+
+
+
+
+    @PostMapping("/getSchedule")
+    public ResponseEntity<List<Map<String, String>>> getSchedule(@RequestBody Map<String, String> requestBody) {
+        String dateInfo = requestBody.get("date"); // 무의미 데이터 무시하세요.
+
+        List<Map<String, String>> lists = v1service.oneDateSchedule(dateInfo); // 금일의 대응자 admin을 조회한다.
+
+        System.out.println("조희 결과> " + lists);
+
+        return ResponseEntity.ok(lists);
+    }
 }

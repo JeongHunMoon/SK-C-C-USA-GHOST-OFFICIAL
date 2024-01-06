@@ -20,11 +20,13 @@
     <script src = "../../JavaScript/loginAram.js"></script>
     <script src = "../../JavaScript/loadingOn.js"></script>
     <script src = "../../JavaScript/loadingOff.js"></script>
-    <script src = "../../JavaScript/imageModal.js" defer></script>
-
+    <script src = "../../JavaScript/adminDateSearch.js"></script>
+    <script src = "../../JavaScript/scheduleCard.js"></script>
     <title>SK GHOST ADMIN</title>
 
 </head>
+<script>
+</script>
 
 <body id = "body">
 <!-- 메인 해더-->
@@ -33,507 +35,20 @@
     <span id = "header_logo">SK GHOST Admin</span> <!-- GHOST text -->
 </header>
 
+<section id = "section_date">
+    <form id = "dateForm">
+        <input type="date" id="date-range-start" name="date-range-start"> <!-- 시작일 -->
+        <span> to </span>
+        <input type="date" id="date-range-end" name="date-range-end"> <!-- 종료일 -->
+        <input type="submit" id = "date_submit" value="Submit">
+    </form>
+
+
+</section>
 <!-- 전체 seciton은 top과 bottom으로 구성된다.-->
 <section id="section_top">
     <div id="image-container">
-        <!-- 추가할 이미지가 있다면 class는 아래와 같이 동일하게 하며, 이미지의 경로만 변경하여 아래 누적하여 추가하면 됨.-->
-        <div id="mon">
-            <table id="mon_table" border = "1" style="border-collapse: collapse;">
-                <!-- 구분 -->
-                <tr>
-                    <td rowspan="2">Part</td> <td rowspan="2">Priority</td> <td>Monday</td> <td colspan="5">11/30, 2023</td>
-                </tr>
-                <tr>
-                    <td>N</td> <td>D</td> <td>E</td>
-                </tr>
 
-                <!-- 전극 -->
-                <tr>
-                    <td rowspan="2">ELEC</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 조립 -->
-                <tr>
-                    <td rowspan="2">CELL</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 화성 -->
-                <tr>
-                    <td rowspan="2">FORM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 모듈 -->
-                <tr>
-                    <td rowspan="2">PACK</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- WMS -->
-                <tr>
-                    <td rowspan="3">WMS</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>3</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-
-                <!-- Collections -->
-                <tr>
-                    <td rowspan="2">Colle</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- Common -->
-                <tr>
-                    <td rowspan="2">COMM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-            </table>
-        </div>
-
-        <div id="tue">
-            <table id="tue_table" border = "1" style="border-collapse: collapse;">
-                <!-- 구분 -->
-                <tr>
-                    <td rowspan="2">Part</td> <td rowspan="2">Priority</td> <td>Monday</td> <td colspan="5">11/30, 2023</td>
-                </tr>
-                <tr>
-                    <td>N</td> <td>D</td> <td>E</td>
-                </tr>
-
-                <!-- 전극 -->
-                <tr>
-                    <td rowspan="2">ELEC</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 조립 -->
-                <tr>
-                    <td rowspan="2">CELL</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 화성 -->
-                <tr>
-                    <td rowspan="2">FORM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 모듈 -->
-                <tr>
-                    <td rowspan="2">PACK</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- WMS -->
-                <tr>
-                    <td rowspan="3">WMS</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>3</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- Collections -->
-                <tr>
-                    <td rowspan="2">Colle</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- Common -->
-                <tr>
-                    <td rowspan="2">COMM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-            </table>
-        </div>
-
-        <div id="wed">
-            <table id="wed_table" border = "1" style="border-collapse: collapse;">
-                <!-- 구분 -->
-                <tr>
-                    <td rowspan="2">Part</td> <td rowspan="2">Priority</td> <td>Monday</td> <td colspan="5">11/30, 2023</td>
-                </tr>
-                <tr>
-                    <td>N</td> <td>D</td> <td>E</td>
-                </tr>
-
-                <!-- 전극 -->
-                <tr>
-                    <td rowspan="2">ELEC</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 조립 -->
-                <tr>
-                    <td rowspan="2">CELL</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 화성 -->
-                <tr>
-                    <td rowspan="2">FORM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 모듈 -->
-                <tr>
-                    <td rowspan="2">PACK</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- WMS -->
-                <tr>
-                    <td rowspan="3">WMS</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>3</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- Collections -->
-                <tr>
-                    <td rowspan="2">Colle</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- Common -->
-                <tr>
-                    <td rowspan="2">COMM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-            </table>
-        </div>
-
-        <div id="thu">
-            <table id="thu_table" border = "1" style="border-collapse: collapse;">
-                <!-- 구분 -->
-                <tr>
-                    <td rowspan="2">Part</td> <td rowspan="2">Priority</td> <td>Monday</td> <td colspan="5">11/30, 2023</td>
-                </tr>
-                <tr>
-                    <td>N</td> <td>D</td> <td>E</td>
-                </tr>
-
-                <!-- 전극 -->
-                <tr>
-                    <td rowspan="2">ELEC</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 조립 -->
-                <tr>
-                    <td rowspan="2">CELL</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 화성 -->
-                <tr>
-                    <td rowspan="2">FORM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 모듈 -->
-                <tr>
-                    <td rowspan="2">PACK</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- WMS -->
-                <tr>
-                    <td rowspan="3">WMS</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>3</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- Collections -->
-                <tr>
-                    <td rowspan="2">Colle</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- Common -->
-                <tr>
-                    <td rowspan="2">COMM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-            </table>
-        </div>
-
-        <div id="fri">
-            <table id="fri_table" border = "1" style="border-collapse: collapse;">
-                <!-- 구분 -->
-                <tr>
-                    <td rowspan="2">Part</td> <td rowspan="2">Priority</td> <td>Monday</td> <td colspan="5">11/30, 2023</td>
-                </tr>
-                <tr>
-                    <td>N</td> <td>D</td> <td>E</td>
-                </tr>
-
-                <!-- 전극 -->
-                <tr>
-                    <td rowspan="2">ELEC</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 조립 -->
-                <tr>
-                    <td rowspan="2">CELL</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 화성 -->
-                <tr>
-                    <td rowspan="2">FORM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 모듈 -->
-                <tr>
-                    <td rowspan="2">PACK</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- WMS -->
-                <tr>
-                    <td rowspan="3">WMS</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>3</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- Collections -->
-                <tr>
-                    <td rowspan="2">Colle</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- Common -->
-                <tr>
-                    <td rowspan="2">COMM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-            </table>
-        </div>
-
-        <div id="sat">
-            <table id="sat_table" border = "1" style="border-collapse: collapse;">
-                <!-- 구분 -->
-                <tr>
-                    <td rowspan="2">Part</td> <td rowspan="2">Priority</td> <td>Monday</td> <td colspan="5">11/30, 2023</td>
-                </tr>
-                <tr>
-                    <td>N</td> <td>D</td> <td>E</td>
-                </tr>
-
-                <!-- 전극 -->
-                <tr>
-                    <td rowspan="2">ELEC</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 조립 -->
-                <tr>
-                    <td rowspan="2">CELL</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 화성 -->
-                <tr>
-                    <td rowspan="2">FORM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 모듈 -->
-                <tr>
-                    <td rowspan="2">PACK</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- WMS -->
-                <tr>
-                    <td rowspan="3">WMS</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>3</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- Collections -->
-                <tr>
-                    <td rowspan="2">Colle</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- Common -->
-                <tr>
-                    <td rowspan="2">COMM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-            </table>
-        </div>
-
-        <div id="sun">
-            <table id="sun_table" border = "1" style="border-collapse: collapse;">
-                <!-- 구분 -->
-                <tr>
-                    <td rowspan="2">Part</td> <td rowspan="2">Priority</td> <td>Monday</td> <td colspan="5">11/30, 2023</td>
-                </tr>
-                <tr>
-                    <td>N</td> <td>D</td> <td>E</td>
-                </tr>
-
-                <!-- 전극 -->
-                <tr>
-                    <td rowspan="2">ELEC</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 조립 -->
-                <tr>
-                    <td rowspan="2">CELL</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 화성 -->
-                <tr>
-                    <td rowspan="2">FORM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- 모듈 -->
-                <tr>
-                    <td rowspan="2">PACK</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- WMS -->
-                <tr>
-                    <td rowspan="3">WMS</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>3</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- Collections -->
-                <tr>
-                    <td rowspan="2">Colle</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-
-                <!-- Common -->
-                <tr>
-                    <td rowspan="2">COMM</td> <td>1</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-                <tr>
-                    <td>2</td> <td>누구?</td> <td>누구?</td> <td>누구?</td>
-                </tr>
-            </table>
-        </div>
     </div>
 </section>
 
@@ -552,13 +67,67 @@
 </body>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        let container = document.getElementById('image-container');
+    adminDateSearch();
 
-        container.addEventListener('wheel', function (e) {
-            container.scrollLeft += e.deltaY;
-            e.preventDefault();
+    // 시작일과 종료일의 input 요소를 가져옴
+    const startDateInput = document.getElementById('date-range-start');
+    const endDateInput = document.getElementById('date-range-end');
+
+    startDateInput.value = getCurrentDate();
+    endDateInput.value = getCurrEndDate()
+
+    // 시작일과 종료일의 값을 가져옴
+    const startDateString = startDateInput.value;
+    const endDateString = endDateInput.value;
+
+    // 값을 console에 출력
+    const startDate = new Date(startDateString);
+    const endDate = new Date(endDateString);
+    console.log('시작일:', startDateString);
+    console.log('종료일:', endDateString);
+    //console.log(getDates(startDate, endDate));
+    let cards = getDates(startDate, endDate);
+    console.log(cards)
+
+    async function processCards() {
+        for (let card of cards) {
+            await processCard(card);
+        }
+    }
+
+    // 각 날짜에 대한 비동기 작업을 수행하는 함수
+    function processCard(card) {
+        return new Promise(resolve => {
+            let xhr1 = new XMLHttpRequest();
+            let payloadFront = {"date": card};
+            xhr1.open('POST', '/getSchedule', true);
+            xhr1.setRequestHeader("Content-Type", "application/json");
+            xhr1.send(JSON.stringify(payloadFront));
+
+            xhr1.onload = function () {
+                let results = JSON.parse(xhr1.response);
+                console.log(results);
+
+                const dateString = results[0]?.date || "";
+                let dayOfWeek = "";
+
+                if (dateString) {
+                    const dateObject = new Date(`${dateString}T00:00:00-05:00`);
+                    const options = {weekday: 'short', timeZone: 'America/New_York'};
+                    const dayOfWeekString = dateObject.toLocaleDateString('en-US', options);
+                    dayOfWeek = dayOfWeekString;
+                }
+
+                // DOM 에서 동적으로 카드르 만들어 배열에 저장. 붙이기는 정렬 후 한번에 수행하게 됨.
+                scheduleCard(results, dayOfWeek, card);
+
+                resolve();
+            }
         });
-    });
+    }
+
+    // 비동기 작업을 순차적으로 실행
+    processCards();
+
 </script>
 </html>
