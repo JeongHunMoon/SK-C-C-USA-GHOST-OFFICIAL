@@ -142,6 +142,15 @@
     text-align: center; /* 텍스트를 가운데 정렬합니다. */
 }
 
+.schedule_card input {
+    /* 원하는 스타일을 여기에 추가하세요 */
+    width: 90%;
+    height: 90%;
+    margin: 0;
+    padding: 0;
+    /* 추가적인 스타일을 필요에 따라 설정하세요 */
+}
+
 /* 추가된 스타일 */
 #imageModal {
     display: none;
