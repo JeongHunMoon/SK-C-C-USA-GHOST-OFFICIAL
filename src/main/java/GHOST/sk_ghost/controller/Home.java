@@ -154,5 +154,32 @@ public class Home {
         return ResponseEntity.ok("save success");
     }
 
+    //Create시 ROC멤버 아닌 사람 입력 검증을 위해 member 모두 불러옴
+    @PostMapping("/checktypo")
+    public ResponseEntity<String> checkTypo(@RequestBody Map<String, String> requestBody) {
+        String who = requestBody.get("CheckTypo"); // 프론트에서 보낸 입력값.
+        List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
+        // System.out.println("ROC Member" + lists);
+
+        // 로그인한 사용자가 올바른지 검증
+        for (Map<String, String> list : lists) {
+            String rocMember = list.get("id"); // ROC인원의 id
+            String processInfo = list.get("process");
+
+            // 로그인 요청한 사용자가 OP인 경우만 OP 페이지 접속 허가 > 운영자는 OP 페이지 접속 불가.
+            if (rocMember.equals(who) && processInfo.equals("OP")) {
+                hashValue = UUID.randomUUID().toString(); // 해쉬값 생성 후 이 사용자에게 부여한다.(사용자를 식별하는 역할)
+                return ResponseEntity.ok(list.get("name")+ "!@#$%" +hashValue); //정상적으로 DB에 있는 사용자이므로 생성된 해쉬를 프론트로 전달한다.
+            }
+
+            //OP, 운영자 모두 Admin Login 가능해야 함.
+//            List<String> allowedProcesses = Arrays.asList("OP", "전극", "조립", "화성", "모듈", "WMS", "공통", "수집");
+//            else if(rocMember.equals(who) && allowedProcesses.contains(processInfo)){
+//                hashValue = UUID.randomUUID().toString(); // 해쉬값 생성 후 이 사용자에게 부여한다.(사용자를 식별하는 역할)
+//                return ResponseEntity.ok(list.get("name")+ "!@#$%" +hashValue); //정상적으로 DB에 있는 사용자이므로 생성된 해쉬를 프론트로 전달한다.
+//            }
+        }
+        return ResponseEntity.ok("False"); //DB에 없는 사용자가 로그인을 시도했기에 접근을 차단한다.
+    }
 
 }
