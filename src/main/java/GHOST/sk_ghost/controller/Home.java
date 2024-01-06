@@ -140,4 +140,19 @@ public class Home {
 
         return ResponseEntity.ok(lists);
     }
+
+    @GetMapping("/createSchedule")
+    public String tempAdminCreateSchedulePage(Model model) {
+        return "home/create";
+    }
+
+
+    //DB 저장을 위한 Controller
+    @PostMapping("/saveSchedule")
+    public ResponseEntity<String> saveScheduleInsert(@RequestBody Map<String, String> requestBody) throws Exception {
+        v1service.saveSchedule(requestBody);
+        return ResponseEntity.ok("save success");
+    }
+
+
 }

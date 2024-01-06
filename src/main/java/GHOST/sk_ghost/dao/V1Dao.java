@@ -12,4 +12,7 @@ public interface V1Dao {
     public List<Map<String, String>> shiftAdminList();
 
     public List<Map<String, String>> oneDateSchedule(String dateInfo);
+
+    //DB에 삽입
+    public int saveSchedule(Map<String, String> scheduleData) throws Exception;
 }
