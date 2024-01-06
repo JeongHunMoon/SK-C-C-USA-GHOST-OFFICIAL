@@ -1,7 +1,5 @@
 package GHOST.sk_ghost.controller;
 
-import GHOST.sk_ghost.dao.V1Dao;
-import org.springframework.web.servlet.view.RedirectView;
 import GHOST.sk_ghost.service.V1service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -17,6 +14,7 @@ import java.util.UUID;
 @Controller
 public class Home {
     private String hashValue = null; // OP 가 로그인 시 서버에서 접근 가능하도록 해쉬 생성
+    private String newhashValue = null;
 
     @Autowired
     V1service v1service; // Service 호출을 위한 객체
@@ -154,5 +152,30 @@ public class Home {
         return ResponseEntity.ok("save success");
     }
 
+    @GetMapping("/newSchedule")
+    public String tempCS(Model model) {
+        return "home/newSchedule";
+    }
+
+    @GetMapping("/judgeNewSchedule")
+    public String judgeNewSchedule(@RequestParam(value = "user", required = true) String user, Model model) {
+        System.out.println(user);
+        // 해쉬가 없다면 400 오류 페이지 반환
+        if (newhashValue == null) {
+            //newhashValue = UUID.randomUUID().toString();
+            // DB 조회하여 가장 마지막 날짜 + 1을 반환한다.
+
+
+            model.addAttribute("new", newhashValue); //model에 key를 uuid, value를 hashValue로 담아서 프론트로 보냄
+            model.addAttribute("date", "2024-12-12"); //model에 key를 uuid, value를 hashValue로 담아서 프론트로 보냄
+            return "home/newSchedule";
+        }
+
+        // 누군가 이미 생성 중이라면 아무도 접근 하지 못하게 차단한다.
+        else {
+            System.out.println("누군가 이미 생성 중입니다.");
+            return "home/admin";
+        }
+    }
 
 }
