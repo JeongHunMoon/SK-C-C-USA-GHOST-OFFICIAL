@@ -8,7 +8,6 @@
     align-items: center;
     flex-shrink: 0;
 
-
     top : 0;
     left : 0;
     right: 0;
@@ -50,29 +49,64 @@
     line-height: normal;
 }
 
-#section_top {
+
+#section_date {
+    flex-direction: row; /* 가로로 나열하도록 설정 */
     display: flex;
     position:absolute;
-    height: 80%;
+    height: 1.5rem;
     padding-top : 15px;
     padding-bottom : 15px;
+    justify-content: flex-end;
     align-items: center;
-    justify-content: center;
     flex-shrink: 0;
-    gap: 20px;
+    gap: 8px;
     top : 4rem;
     left : 0;
     right: 0;
 
     width: 100vw;
+    background: lightblue;
+}
+
+#date_submit {
+    margin-right: 10px;
+}
+
+#date-range-start, #date-range-end {
+    max-width: 200px;
+    width: 35%;
+}
+
+
+#section_top {
+    display: flex;
+    position:absolute;
+    height: 75%;
+    min-height: 600px;
+    max-height: 1000px;
+    padding-top : 10px;
+    padding-bottom : 20px;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    gap: 20px;
+    top : 7rem;
+    left : 0;
+    right: 0;
+
+    width: 100vw;
     background: white;
+    overflow-y: visible;
 
     /*animation: bannermove 30s linear infinite;*/
 }
 
 #image-container {
-    display: flex;
+    display: flex; /* flex container로 설정 */
+    flex-direction: row; /* 가로로 나열하도록 설정 */
     width: max-content; /* 이미지의 총 너비에 맞춰서 부모 컨테이너의 크기를 동적으로 설정 */
+
     height: 100%;
     gap: 20px; /* 각 테이블 간의 간격을 조절 */
     margin: 0 10px; /* 양쪽 마진을 추가하여 테이블이 화면 양 끝에 붙지 않도록 함 */
@@ -84,8 +118,10 @@
 
 }
 
-#mon, #tue, #wed, #thu, #fri, #sat, #sun{
-    width: min(100%, 450px);
+.schedule_div {
+    max-width: 450px; /* 최대 너비 */
+    width: 100%; /* 최대 크기보다 작은 경우 100%로 설정 */
+
     height: 100%;
     flex-shrink: 0;
     display: flex;
@@ -93,13 +129,16 @@
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
-#mon_table, #tue_table, #wed_table, #thu_table, #fri_table, #sat_table, #sun_table{
+.schedule_card{
     width: 100%;
     height: 100%;
     margin: 0;
 }
 
-#mon_table td, #tue_table td, #wed_table td, #thu_table td, #fri_table td, #sat_table td, #sun_table td{
+.schedule_card td{
+    width: 100px; /* 원하는 너비 값으로 변경 */
+    max-height: 20px;
+    height: auto;
     text-align: center; /* 텍스트를 가운데 정렬합니다. */
 }
 

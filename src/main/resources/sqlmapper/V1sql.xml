@@ -19,5 +19,16 @@
         WHERE admin.priority IN (1,2)
         AND (DATE_FORMAT(CURDATE(), "%Y-%m-%d") = DATE_FORMAT(admin.date, "%Y-%m-%d"))
     </select>
+
+    <!-- 해당 날짜의 운영자 스케줄 조희 -->
+    <select id="oneDateSchedule" resultType="map">
+        select A.name, CAST(A.date as CHAR) as date, A.shift, A.priority, B.process
+        FROM admin_shift A
+        LEFT JOIN member B
+        on A.name = B.name
+        where A.date = #{dateInfo}
+    </select>
+
+
 </mapper>
 

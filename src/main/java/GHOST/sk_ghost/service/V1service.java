@@ -19,4 +19,10 @@ public class V1service {
         List<Map<String, String>> list = v1Dao.shiftAdminList();
         return list;
     }
+
+
+    public List<Map<String, String>> oneDateSchedule(String dateInfo) {
+        List<Map<String, String>> list = v1Dao.oneDateSchedule(dateInfo);
+        return list;
+    }
 }
