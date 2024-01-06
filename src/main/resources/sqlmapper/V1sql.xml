@@ -29,6 +29,9 @@
         where A.date = #{dateInfo}
     </select>
 
+    <insert id="saveSchedule" parameterType="java.util.Map">
+        insert into admin_shift (name,date,shift,priority) values (#{name}, #{date}, #{shift}, #{priority} )
+    </insert>
 
 </mapper>
 
