@@ -30,7 +30,7 @@ function createScheduleCard(results, dfe, date) {
     const dateHeader = headerRow.insertCell();
     dateHeader.colSpan = 2;
     dateHeader.textContent = date;
-
+    dateHeader.setAttribute('id', "dateInfo");
 
     // 날짜 행 추가
     const dateRow = table.insertRow();
