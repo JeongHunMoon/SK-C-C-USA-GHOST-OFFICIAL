@@ -30,7 +30,15 @@
     </select>
 
     <insert id="saveSchedule" parameterType="java.util.Map">
-        insert into admin_shift (name,date,shift,priority) values (#{name}, #{date}, #{shift}, #{priority} )
+        insert into admin_shift (name,date,shift,priority)
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="date != null">#{date},</if>
+            <if test="shift != null">#{shift},</if>
+            <if test="priority != null">#{priority}</if>
+        </trim>
+<!--        (#{name}, #{date}, #{shift}, #{priority} )-->
     </insert>
 
 </mapper>
