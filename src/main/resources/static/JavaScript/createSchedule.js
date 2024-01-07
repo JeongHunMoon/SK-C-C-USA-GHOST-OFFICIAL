@@ -3,7 +3,8 @@ function createSchedule() {
     //!!!!!공정별로 구분해서 작성한 이유 : 본인 공정만 등록/수정할 수 있도록 하는 기능을 추후 개발 가능성 고려
 
     //날짜 값 (동적으로 생성 된 값을 받아와야 함)
-    let date = document.getElementById("date").innerText;
+    let sample1 = document.getElementById("2024-01-01ELEC1").value
+    console.log(sample1)
 
     //변수 가변으로 생성하기위한 객체
     let dynamicVariablesELEC = {};
