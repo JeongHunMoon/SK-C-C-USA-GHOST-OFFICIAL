@@ -524,7 +524,13 @@ function createScheduleCard(results, dfe, date) {
     comm_2_E.appendChild(inputTag)
 
 
+    //form 태그 생성
+    const formTag = document.createElement('form')
+    formTag.id = "createForm"
+
     // 테이블을 div에 추가
-    schedule_div.appendChild(table)
+
+    formTag.appendChild(table)
+    schedule_div.appendChild(formTag)
     Container.appendChild(schedule_div);
 }
