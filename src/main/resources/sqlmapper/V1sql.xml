@@ -41,5 +41,10 @@
 <!--        (#{name}, #{date}, #{shift}, #{priority} )-->
     </insert>
 
+    <!-- shift_admin 조회 -->
+    <select id="adminShiftLastDate" resultType="String">
+        SELECT date from admin_shift
+    </select>
+
 </mapper>
 

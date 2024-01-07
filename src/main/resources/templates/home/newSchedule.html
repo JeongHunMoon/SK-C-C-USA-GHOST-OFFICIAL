@@ -23,7 +23,7 @@
     <script src = "../../JavaScript/createScheduleCard.js"></script>
     <script src = "../../JavaScript/createCardStored.js"></script>
 
-    <title>New Admin</title>
+    <title>New Schedule</title>
 
 </head>
 <script>
@@ -38,9 +38,6 @@
 
 <section id = "section_date">
     <h1 id="slider-value">1</h1>
-    <form id = "dateForm">
-        <input type="submit" id = "date_submit" value="Submit">
-    </form>
 </section>
 <!-- 전체 seciton은 top과 bottom으로 구성된다.-->
 <section id="section_top">
@@ -52,8 +49,45 @@
 <!-- 메인 푸터  -->
 <footer id = "footer">
     <input type="range" id="slider" name="slider" min="1" max="7" value="1" step="1" oninput="updateValue()">
+    <form id = "doneForm">
+        <input type="submit" id = "doneBtn" value="Done">
+    </form>
+
+    <form id = "startForm">
+        <input type="submit" id = "startBtn" value="Start?">
+    </form>
 </footer>
 </body>
+
+<!-- 최초 접속 시 고유 UUID 생성 -->
+<script>
+
+</script>
+<!-- 현재 브라우저를 나갈 시 경고 창 띄우기 -->
+<script>
+
+</script>
+
+
+<!-- getCurrentDate => 오늘 날짜 불러오는 함수 지정 -->
+<script>
+    document.getElementById('slider').disabled = true; // 활성화
+    document.getElementById('startBtn').disabled = true; // 활성화
+    document.getElementById('doneForm').style.display = 'none'; // 제출 버튼 비활성화
+    document.getElementById('doneBtn').style.display = 'none'; // 제출 버튼 비활성화
+    function getCurrentDate() {
+        const today = new Date();
+        const year = today.getFullYear();
+        let month = today.getMonth() + 1;
+        let day = today.getDate();
+
+        // 한 자리수인 경우 앞에 0을 추가
+        month = month < 10 ? '0' + month : month;
+        day = day < 10 ? '0' + day : day;
+
+        return `${year}-${month}-${day}`;
+    }
+</script>
 
 <!-- 카드 마우스 흴 이벤트 -->
 <script>
@@ -70,52 +104,72 @@
 
 <!-- 처음 페이지가 실행되면 DB에서 가장 마지막 날짜 + 1 날짜를 가져옴 + default 1개 출력  -->
 <script>
-    let date = "2024-02-25";
-
-    let newYorkTimeZone = "America/New_York";
-
-    // 주어진 날짜를 Date 객체로 변환하고 뉴욕 시간으로 설정
-    let dateInNewYork = new Date(date + "T00:00:00");
-    dateInNewYork.toLocaleString("en-US", { timeZone: newYorkTimeZone });
-
-    // 날짜의 요일을 가져오기
-    let dayOfWeek = dateInNewYork.toLocaleDateString("en-US", { weekday: "long" });
-    Container.appendChild(createCardStored([], dayOfWeek, date))
-
-</script>
-
-<!-- 처음 페이지가 실행되면 DB에서 가장 마지막 날짜 + 1 날짜를 가져옴 + default 1개 출력  -->
-<script>
+    let date = null;
+    let dayOfWeek = null;
     let cardInfo = []
 
-    let startDate = new Date(date);
-    let endDate = new Date(startDate);
-    endDate.setDate(startDate.getDate() + 6);
+    // 이 계정이 등록되어 있는 DB 조회하여 판단.
+    let xhr1 = new XMLHttpRequest(); // REST API 통신을 위한 객체
+    xhr1.open('POST', '/adminShiftLastDate', true); // REST 정의
+    xhr1.setRequestHeader("Content-Type", "application/json"); // 요청 해더 정의 > payload는 Json
+    xhr1.send(JSON.stringify({"date" : date})) // 서버로 POST 전송
 
-    let dateArray = [];
+    // 서버 응답
+    xhr1.onload = function () {
+        let results = xhr1.responseText; // 서버에서 전달 받은 payload
+        if (results === "False") {
+            alert("DB에 스케줄 정보가 없습니다. \n오늘 날짜를 기준으로 만드세요!")
+            date = getCurrentDate();
+        }
+        else { date = results }
 
-    // 현재 컨테이너 안에 모든 카드 지우기.
-    while (startDate <= endDate) {
-        let formattedDate = startDate.toISOString().split('T')[0];
-        dateArray.push(formattedDate);
-        startDate.setDate(startDate.getDate() + 1);
-    }
-
-    // DB에서 조회된 날짜 + 7일 정보 저장.
-    for(let dateVal of dateArray) {
-        console.log(dateVal)
         let newYorkTimeZone = "America/New_York";
 
         // 주어진 날짜를 Date 객체로 변환하고 뉴욕 시간으로 설정
-        let dateInNewYork = new Date(dateVal + "T00:00:00");
+        let dateInNewYork = new Date(date + "T00:00:00");
         dateInNewYork.toLocaleString("en-US", { timeZone: newYorkTimeZone });
 
         // 날짜의 요일을 가져오기
-        let dayOfWeek = dateInNewYork.toLocaleDateString("en-US", { weekday: "long" });
-        cardInfo.push(createCardStored([], dayOfWeek, dateVal))
-    }
-    console.log(cardInfo)
+        dayOfWeek = dateInNewYork.toLocaleDateString("en-US", { weekday: "long" });
+        Container.appendChild(createCardStored([], dayOfWeek, date))
 
+
+        //처음 페이지가 실행되면 DB에서 가장 마지막 날짜 + 1 날짜를 가져옴 + default 1개 출력
+        cardInfo = []
+        let dateArray = [];
+
+        let startDate = new Date(date);
+        let endDate = new Date(startDate);
+        endDate.setDate(startDate.getDate() + 6);
+
+        // 7일 날짜 정보
+        while (startDate <= endDate) {
+            let formattedDate = startDate.toISOString().split('T')[0];
+            dateArray.push(formattedDate);
+            startDate.setDate(startDate.getDate() + 1);
+        }
+
+        // DB에서 조회된 날짜 + 7일 정보 저장.
+        for(let dateVal of dateArray) {
+            console.log(dateVal)
+            let newYorkTimeZone = "America/New_York";
+
+            // 주어진 날짜를 Date 객체로 변환하고 뉴욕 시간으로 설정
+            let dateInNewYork = new Date(dateVal + "T00:00:00");
+            dateInNewYork.toLocaleString("en-US", { timeZone: newYorkTimeZone });
+
+            // 날짜의 요일을 가져오기
+            let dayOfWeek = dateInNewYork.toLocaleDateString("en-US", { weekday: "long" });
+            cardInfo.push(createCardStored([], dayOfWeek, dateVal))
+        }
+        console.log(cardInfo)
+        document.getElementById('slider').disabled = false; // 활성화
+        document.getElementById('startBtn').disabled = false; // 활성화
+    }
+</script>
+
+<!-- 슬라이더가 움직일 때마다 감지하여 호출되는 함수 -->
+<script>
     // JavaScript 코드
     function updateValue() {
         const slider = document.getElementById('slider');
@@ -138,16 +192,86 @@
     }
 </script>
 
+<!-- 슬라이더 설정후 Start 버튼 클릭시 이벤트 -->
 <script>
-    const dateForm = document.getElementById('dateForm');
+    const dateForm = document.getElementById('startForm');
+    let beforeUnloadHandler = null;
 
     // submit 이벤트가 발생하면 실행되는 함수
     dateForm.addEventListener('submit', function(event) {
         // 폼의 기본 동작을 막음 (페이지 새로고침 방지)
         event.preventDefault();
-        let num = document.getElementById('slider-value');
 
-        // 슬라이더랑, submit숨기고, 5일치를 입력하세요 문구 띄우기
+        //UUID 없다면 포커싱 주고, UUID 생성
+        let restXhr = new XMLHttpRequest();
+        restXhr.open("POST", "/newScheUUIDJudge", true);
+        restXhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        restXhr.send(JSON.stringify({"Who" : "gkrry1424@naver.com"}))
+
+        restXhr.onload = function() {
+            // 생성 가능 하므로 스케줄 생성 페이지로 해당 운영자님을 이동시킨다.
+
+            if (restXhr.responseText === "NO") {
+                // UUID 생성 후 포커스 주기
+                // 이벤트 리스너 등록
+                beforeUnloadHandler = function (e) {
+                    let confirmationMessage = '앱이 종료됩니다.';
+                    let xhr = new XMLHttpRequest();
+                    xhr.open("POST", "/newScheUUIDRemove", true);
+                    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+                    // 사용자가 확인을 눌렀을 경우
+                    if (confirm(confirmationMessage)) {
+                        // UUID 제거
+                        xhr.send(JSON.stringify({ "Who" : "gkrry1424@naver.com" }));
+                    }
+
+                    xhr.onload = function() {
+                        console.log("서버 작업 완료")
+                    }
+
+                    e.returnValue = confirmationMessage;
+                    return confirmationMessage;
+                };
+
+                window.addEventListener('beforeunload', beforeUnloadHandler);
+
+                document.getElementById('slider').style.display = 'none';
+                document.getElementById('startForm').style.display = 'none'; // 제출 버튼 비활성화
+                document.getElementById('startBtn').style.display = 'none'; // 제출 버튼 비활성화
+
+                document.getElementById('doneForm').style.display = 'block'; // 제출 버튼 비활성화
+                document.getElementById('doneBtn').style.display = 'block'; // 제출 버튼 비활성화
+
+                // image-container 내부의 모든 input 태그 가져오기
+                const inputElements = document.querySelectorAll('#image-container input');
+
+                // 가져온 input 태그들을 순회하면서 비활성화
+                inputElements.forEach(input => {
+                    input.disabled = false;
+                });
+            }
+            // 누군가 이미 생성 중임.
+            else {
+                alert("현재 xxx매니저님이 생성 중입니다. 나중에 다시 시도해주세요")
+                window.location.href = "/admin"
+            }
+        }
+    })
+</script>
+
+<!-- 디비에 입력된 값을 저장하는 함수 호출 부 -->
+<script>
+    const doneForm2 = document.getElementById('doneForm');
+
+    // submit 이벤트가 발생하면 실행되는 함수
+    doneForm2.addEventListener('submit', function(event) {
+        // 폼의 기본 동작을 막음 (페이지 새로고침 방지)
+        event.preventDefault();
+        window.removeEventListener('beforeunload', beforeUnloadHandler);
+        alert("동햄 함수 on")
+
+        window.location.href = "/admin"
     })
 </script>
 </html>
