@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="GHOST.sk_ghost.dao.V1Dao">
+
+    <!-- 사용자 조회 -->
+    <select id="userList" resultType="map">
+        SELECT id,name,process from member
+    </select>
+    <!-- 운영자 스케줄 조회 -->
+    <select id="adminShiftListAll" resultType="map">
+        SELECT name,date,shift,priority from admin_shift
+    </select>
+    <!-- 금일 담당 운영 대응자 조회 -->
+    <select id="shiftAdminList" resultType="map">
+        SELECT mem.id, admin.name, CAST(admin.date as CHAR) as date, admin.shift, mem.uuid, admin.priority, mem.process
+        FROM member mem
+        LEFT JOIN admin_shift admin
+        ON mem.name = admin.name
+        WHERE admin.priority IN (1,2)
+        AND (DATE_FORMAT(CURDATE(), "%Y-%m-%d") = DATE_FORMAT(admin.date, "%Y-%m-%d"))
+    </select>
+
+    <!-- 해당 날짜의 운영자 스케줄 조희 -->
+    <select id="oneDateSchedule" resultType="map">
+        select A.name, CAST(A.date as CHAR) as date, A.shift, A.priority, B.process
+        FROM admin_shift A
+        LEFT JOIN member B
+        on A.name = B.name
+        where A.date = #{dateInfo}
+    </select>
+
+    <insert id="saveSchedule" parameterType="java.util.List">
+        insert into admin_shift (name,date,shift,priority)
+        values
+        <foreach collection="list" item="listItem" separator=",">
+            (
+            #{listItem.name},
+            #{listItem.date},
+            #{listItem.shift},
+            #{listItem.priority}
+            )
+        </foreach>
+    </insert>
+
+    <!-- shift_admin 조회 -->
+    <select id="adminShiftLastDate" resultType="String">
+        SELECT date from admin_shift
+    </select>
+
+</mapper>
+
