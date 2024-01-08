@@ -22,6 +22,7 @@
     <script src = "../../JavaScript/loadingOff.js"></script>
     <script src = "../../JavaScript/createScheduleCard.js"></script>
     <script src = "../../JavaScript/createCardStored.js"></script>
+    <script src = "../../JavaScript/savedwithSession.js"></script>
 
     <title>New Schedule</title>
 
@@ -49,12 +50,17 @@
 <!-- 메인 푸터  -->
 <footer id = "footer">
     <input type="range" id="slider" name="slider" min="1" max="7" value="1" step="1" oninput="updateValue()">
+
+    <form id = "startForm">
+        <input type="submit" id = "startBtn" value="Start?">
+    </form>
+
     <form id = "doneForm">
         <input type="submit" id = "doneBtn" value="Done">
     </form>
 
-    <form id = "startForm">
-        <input type="submit" id = "startBtn" value="Start?">
+    <form id = "saveForm">
+        <input type="submit" id = "saveBtn" value="Save">
     </form>
 </footer>
 </body>
@@ -63,18 +69,16 @@
 <script>
 
 </script>
-<!-- 현재 브라우저를 나갈 시 경고 창 띄우기 -->
-<script>
-
-</script>
-
 
 <!-- getCurrentDate => 오늘 날짜 불러오는 함수 지정 -->
 <script>
-    document.getElementById('slider').disabled = true; // 활성화
-    document.getElementById('startBtn').disabled = true; // 활성화
+    document.getElementById('slider').disabled = true; // 비활성화
+    document.getElementById('startBtn').disabled = true; // 비활성화
     document.getElementById('doneForm').style.display = 'none'; // 제출 버튼 비활성화
     document.getElementById('doneBtn').style.display = 'none'; // 제출 버튼 비활성화
+    document.getElementById('saveForm').style.display = 'none'; // 제출 버튼 비활성화
+    document.getElementById('saveBtn').style.display = 'none'; // 제출 버튼 비활성화
+
     function getCurrentDate() {
         const today = new Date();
         const year = today.getFullYear();
@@ -165,6 +169,80 @@
         console.log(cardInfo)
         document.getElementById('slider').disabled = false; // 활성화
         document.getElementById('startBtn').disabled = false; // 활성화
+
+
+        // 백업 검사. 기존에 작업하던 값이 있었다면 백업한다.
+        let saved_xhr = new XMLHttpRequest();
+        saved_xhr.open('POST', '/getSavedData', true);
+        saved_xhr.setRequestHeader("Content-Type", "application/json");
+
+        saved_xhr.send(JSON.stringify({"id": "gkrry1424@naver.com"}));
+
+        saved_xhr.onload = function () {
+            let results = saved_xhr.responseText;
+
+            // JSON 형식의 문자열을 배열로 파싱
+            let savedDataArray = JSON.parse(results);
+            console.log("+++++++++++++++++서버에서 전달 받은 세션")
+            console.log(savedDataArray)
+
+            // 저장된 데이터가 없음.
+            if (savedDataArray.length !== 0) {
+                // 기존의 요소 다 지우기
+                let imageContainer = document.getElementById("image-container");
+                while (imageContainer.firstChild) {
+                    imageContainer.removeChild(imageContainer.firstChild);
+                }
+
+
+                // 주어진 날짜를 Date 객체로 변환하고 뉴욕 시간으로 설정
+                // 날짜의 요일을 가져오기
+                let newYorkTimeZone = "America/New_York";
+
+                // 집합으로 중복 날짜 제거
+                let mySet = new Set();
+                for(let i = 0; i < savedDataArray.length; i++) {
+                    mySet.add(savedDataArray[i][0])
+                }
+
+                let setToArray = Array.from(mySet);
+                for(let d of setToArray) {
+                    let dateInNewYork = new Date(d + "T00:00:00");
+                    dateInNewYork.toLocaleString("en-US", { timeZone: newYorkTimeZone });
+                    let dayOfWeek = dateInNewYork.toLocaleDateString("en-US", { weekday: "long" });
+                    imageContainer.appendChild(createCardStored([], dayOfWeek, d))
+                }
+
+
+                for(let i = 0; i < savedDataArray.length; i++) {
+                    document.getElementById(savedDataArray[i][1]).value = savedDataArray[i][2];
+                }
+
+                // p태그 개수 변경
+                document.getElementById("slider-value").textContent = mySet.size.toString();
+                // 슬라이드, start 버튼 비활성화
+                document.getElementById('slider').style.display = 'none'; // 제출 버튼 비활성화
+                document.getElementById('startForm').style.display = 'none'; // 제출 버튼 비활성화
+                document.getElementById('startBtn').style.display = 'none'; // 제출 버튼 비활성화
+                // saved와 done 버튼 활성화
+                document.getElementById('saveForm').style.display = 'block'; // 제출 버튼 비활성화
+                document.getElementById('saveBtn').style.display = 'block'; // 제출 버튼 비활성화
+                document.getElementById('doneForm').style.display = 'block'; // 제출 버튼 비활성화
+                document.getElementById('doneBtn').style.display = 'block'; // 제출 버튼 비활성화
+
+                const inputElements = document.querySelectorAll('#image-container input');
+
+                // 가져온 input 태그들을 순회하면서 비활성화
+                inputElements.forEach(input => {
+                    input.disabled = false;
+                });
+
+                alert("돌아온 것을 환영합니다. 마저 등록해주세요.")
+            }
+
+            // 이후에 savedDataArray를 활용하여 원하는 작업 수행
+            console.log("백언 안함"+ savedDataArray);
+        }
     }
 </script>
 
@@ -225,6 +303,9 @@
                     document.getElementById('doneForm').style.display = 'block'; // 제출 버튼 비활성화
                     document.getElementById('doneBtn').style.display = 'block'; // 제출 버튼 비활성화
 
+                    document.getElementById('saveForm').style.display = 'block'; // 제출 버튼 비활성화
+                    document.getElementById('saveBtn').style.display = 'block'; // 제출 버튼 비활성화
+
                     // image-container 내부의 모든 input 태그 가져오기
                     const inputElements = document.querySelectorAll('#image-container input');
 
@@ -276,5 +357,47 @@
         // 요청 보내기
         xhr.send();
     })
+</script>
+
+<!-- save 시 현재까지 입력 데이터 세션에 저장. -->
+<script>
+    const saveForm = document.getElementById('saveForm');
+
+    // submit 이벤트가 발생하면 실행되는 함수
+    saveForm.addEventListener('submit', function(event) {
+        // 폼의 기본 동작을 막음 (페이지 새로고침 방지)
+        event.preventDefault();
+
+        // DB 에 접속하여 해당 세션은 무조건 있음.
+        // 해당 세션에 데이터를 저장하면 됨.
+
+        //현재 DOM에서 정보들을 모두 가져온다.
+        let datas = savedwithSession()
+        console.log("프론트", datas)
+        if (datas !== "") {
+            let save_xhr = new XMLHttpRequest();
+            save_xhr.open('POST', '/saveData', true);
+            save_xhr.setRequestHeader("Content-Type", "application/json");
+
+            // datas 문자열을 서버로 직접 전송
+            save_xhr.send(JSON.stringify({ "datas": datas }));
+
+            // 서버 응답
+            save_xhr.onload = function () {
+                let results = save_xhr.responseText;
+                alert("저장 완료!")
+            };
+        }
+        else {
+            alert("저장할 값이 없습니다.")
+        }
+    })
+
+</script>
+
+<!-- 기존에 작업하던 값이 있었다면 백업한다. -->
+<script>
+
+
 </script>
 </html>
