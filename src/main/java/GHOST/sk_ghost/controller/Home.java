@@ -1,7 +1,5 @@
 package GHOST.sk_ghost.controller;
 
-import GHOST.sk_ghost.dao.V1Dao;
-import org.springframework.web.servlet.view.RedirectView;
 import GHOST.sk_ghost.service.V1service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,13 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class Home {
     private String hashValue = null; // OP 가 로그인 시 서버에서 접근 가능하도록 해쉬 생성
+    private String newhashValue = null;
 
     @Autowired
     V1service v1service; // Service 호출을 위한 객체
@@ -41,8 +39,15 @@ public class Home {
             // 로그인 요청한 사용자가 OP인 경우만 OP 페이지 접속 허가 > 운영자는 OP 페이지 접속 불가.
             if (rocMember.equals(who) && processInfo.equals("OP")) {
                 hashValue = UUID.randomUUID().toString(); // 해쉬값 생성 후 이 사용자에게 부여한다.(사용자를 식별하는 역할)
-                return ResponseEntity.ok(list.get("name") + " " + hashValue); //정상적으로 DB에 있는 사용자이므로 생성된 해쉬를 프론트로 전달한다.
+                return ResponseEntity.ok(list.get("name")+ "!@#$%" +hashValue); //정상적으로 DB에 있는 사용자이므로 생성된 해쉬를 프론트로 전달한다.
             }
+
+            //OP, 운영자 모두 Admin Login 가능해야 함.
+//            List<String> allowedProcesses = Arrays.asList("OP", "전극", "조립", "화성", "모듈", "WMS", "공통", "수집");
+//            else if(rocMember.equals(who) && allowedProcesses.contains(processInfo)){
+//                hashValue = UUID.randomUUID().toString(); // 해쉬값 생성 후 이 사용자에게 부여한다.(사용자를 식별하는 역할)
+//                return ResponseEntity.ok(list.get("name")+ "!@#$%" +hashValue); //정상적으로 DB에 있는 사용자이므로 생성된 해쉬를 프론트로 전달한다.
+//            }
         }
         return ResponseEntity.ok("False"); //DB에 없는 사용자가 로그인을 시도했기에 접근을 차단한다.
     }
@@ -113,4 +118,81 @@ public class Home {
         }
         return ResponseEntity.ok("False"); //DB에 없는 사용자가 로그인을 시도했기에 접근을 차단한다.
     }
+
+    @GetMapping("/admin")
+    public String tempAdminPage(Model model) {
+        return "home/admin";
+    }
+
+
+
+
+    @PostMapping("/getSchedule")
+    public ResponseEntity<List<Map<String, String>>> getSchedule(@RequestBody Map<String, String> requestBody) {
+        String dateInfo = requestBody.get("date"); // 무의미 데이터 무시하세요.
+
+        List<Map<String, String>> lists = v1service.oneDateSchedule(dateInfo); // 금일의 대응자 admin을 조회한다.
+
+        System.out.println("조희 결과> " + lists);
+
+        return ResponseEntity.ok(lists);
+    }
+
+    @GetMapping("/createSchedule")
+    public String tempAdminCreateSchedulePage(Model model) {
+        return "home/create";
+    }
+
+
+    //DB 저장을 위한 Controller
+    @PostMapping("/saveSchedule")
+    public ResponseEntity<String> saveScheduleInsert(@RequestBody List<Map<String, String>> requestBody) throws Exception {
+        System.out.println("Save to DB : " + requestBody);
+        try{
+            v1service.saveSchedule(requestBody);
+        }
+        catch (Exception e) {
+            return ResponseEntity.ok("Save Fail");
+        }
+        return ResponseEntity.ok("Save Success");
+    }
+
+    @GetMapping("/newSchedule")
+    public String tempCS(Model model) {
+        return "home/newSchedule";
+    }
+
+    @GetMapping("/judgeNewSchedule")
+    public String judgeNewSchedule(@RequestParam(value = "user", required = true) String user, Model model) {
+        System.out.println(user);
+        // 해쉬가 없다면 400 오류 페이지 반환
+        if (newhashValue == null) {
+            //newhashValue = UUID.randomUUID().toString();
+            // DB 조회하여 가장 마지막 날짜 + 1을 반환한다.
+
+            model.addAttribute("new", newhashValue); //model에 key를 uuid, value를 hashValue로 담아서 프론트로 보냄
+            model.addAttribute("date", "2024-12-12"); //model에 key를 uuid, value를 hashValue로 담아서 프론트로 보냄
+            return "home/newSchedule";
+        }
+
+        // 누군가 이미 생성 중이라면 아무도 접근 하지 못하게 차단한다.
+        else {
+            System.out.println("누군가 이미 생성 중입니다.");
+            return "home/admin";
+        }
+    }
+
+    //Create시 ROC멤버 아닌 사람 입력 검증을 위해 member 모두 불러옴
+    @ResponseBody
+    @PostMapping("/checktypo")
+    public Vector<String> checkTypo(@RequestBody Map<String, String> requestBody) {
+        String checkTypo = requestBody.get("CheckTypo"); // 프론트에서 보낸 입력값.
+        List<Map<String, String>> lists = v1service.userList();
+        Vector<String> ROCvector = new Vector<>();
+        for (Map<String, String> list : lists) {
+            ROCvector.add(list.get("name"));
+        }
+        return ROCvector;
+    }
+
 }
