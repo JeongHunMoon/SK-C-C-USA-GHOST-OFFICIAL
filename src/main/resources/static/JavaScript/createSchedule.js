@@ -223,25 +223,25 @@ function createSchedule() {
                         alert("오탈자를 확인해주세요")
                         return 1; //저장하지 않음)
                     } else {
-
+                        console.log(confirmedSchedule);
+                        let xhr_check_saveDB = new XMLHttpRequest(); // REST API 통신을 위한 객체
+                        xhr_check_saveDB.open('POST', '/saveSchedule', true);
+                        xhr_check_saveDB.setRequestHeader("Content-Type", "application/json"); // 요청 해더 정의 > payload는 Json
+                        xhr_check_saveDB.send(JSON.stringify(confirmedSchedule));
+                        if (xhr_check_saveDB.readyState === 4 && xhr_check_saveDB.status === 200) {
+                            alert("저장되었습니다");
+                            window.location.href = '/index';
+                        }
+                        // if (xhr_check_saveDB.readyState !== 4 && xhr_check_saveDB.status !== 200) {
+                        //     alert("저장이 불가능합니다. 관리자에게 문의해주세요.");
+                        // }
                     }
                 }
             }
         }
     }
 
-    console.log(confirmedSchedule);
-    let xhr_check_saveDB = new XMLHttpRequest(); // REST API 통신을 위한 객체
-    xhr_check_saveDB.open('POST', '/saveSchedule', true);
-    xhr_check_saveDB.setRequestHeader("Content-Type", "application/json"); // 요청 해더 정의 > payload는 Json
-    xhr_check_saveDB.send(JSON.stringify(confirmedSchedule));
-    if (xhr_check_saveDB.readyState === 4 && xhr_check_saveDB.status === 200) {
-        alert("저장되었습니다");
-        window.location.href = '/index';
-    }
-    if (xhr_check_saveDB.readyState !== 4 && xhr_check_saveDB.status !== 200) {
-        alert("저장이 불가능합니다. 관리자에게 문의해주세요.");
-    }
+
 }
 
 
