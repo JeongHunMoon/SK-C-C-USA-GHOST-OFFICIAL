@@ -3,6 +3,7 @@ package GHOST.sk_ghost.dao;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 @Mapper
 public interface V1Dao {
@@ -12,5 +13,8 @@ public interface V1Dao {
     public List<Map<String, String>> shiftAdminList();
     public List<Map<String, String>> oneDateSchedule(String dateInfo);
     //DB에 삽입
-    public int saveSchedule(Map<String, String> scheduleData);
+    public int saveSchedule(List<Map<String, String>> scheduleData);
+    // 운영자 스케줄 조회
+    public List<Map<String ,String>> adminShiftListAll();
+    public ArrayList<String> adminShiftLastDate();
 }

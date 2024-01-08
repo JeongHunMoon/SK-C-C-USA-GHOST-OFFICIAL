@@ -7,9 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 public class Home {
@@ -147,13 +146,21 @@ public class Home {
 
     //DB 저장을 위한 Controller
     @PostMapping("/saveSchedule")
-    public ResponseEntity<String> saveScheduleInsert(@RequestBody Map<String, String> requestBody) throws Exception {
+    public ResponseEntity<String> saveScheduleInsert(@RequestBody List<Map<String, String>> requestBody) throws Exception {
         System.out.println("Received request body: " + requestBody);
         try{
-            v1service.saveSchedule(requestBody);
+            // DB에서 가져온 값
+            List<Map<String, String>> dbList = v1service.adminShiftListAll();
+            // JSON 리스트에서 DB 리스트와 중복되는 항목을 제거
+            List<Map<String, String>> ignoreDuplicatedList = requestBody.stream().filter(jsonItem -> !dbList.contains(jsonItem)).collect(Collectors.toList());
+            List<Map<String, String>> duplicatedList = new ArrayList<>(requestBody);
+            duplicatedList.retainAll(dbList);
+            System.out.println("중복처리된 값 : "+duplicatedList);
+            // 중복 제거된 JSON 리스트를 저장
+            v1service.saveSchedule(ignoreDuplicatedList);
         }
         catch (Exception e) {
-            return ResponseEntity.ok("Maybe you are trying to save same Records to DB");
+            return ResponseEntity.ok("Maybe you are trying to save same Records compare to DB");
         }
         return ResponseEntity.ok("save success");
     }
@@ -184,24 +191,16 @@ public class Home {
     }
 
     //Create시 ROC멤버 아닌 사람 입력 검증을 위해 member 모두 불러옴
+    @ResponseBody
     @PostMapping("/checktypo")
-    public ResponseEntity<String> checkTypo(@RequestBody Map<String, String> requestBody) {
+    public Vector<String> checkTypo(@RequestBody Map<String, String> requestBody) {
         String checkTypo = requestBody.get("CheckTypo"); // 프론트에서 보낸 입력값.
-//        System.out.println("\n\n"+checkTypo+"\n\n");
-        List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
-        // System.out.println("ROC Member" + lists);
-
-        // 로그인한 사용자가 올바른지 검증
+        List<Map<String, String>> lists = v1service.userList();
+        Vector<String> ROCvector = new Vector<>();
         for (Map<String, String> list : lists) {
-            String rocMember = list.get("name"); // ROC인원의 name
-            //DB의 name과 일치하는 경우
-            if (rocMember.equals(checkTypo)) {
-                System.out.println("일치");
-                return ResponseEntity.ok(checkTypo);
-            }
+            ROCvector.add(list.get("name"));
         }
-        System.out.println("불일치");
-        return ResponseEntity.ok("False");
+        return ROCvector;
     }
 
 }
