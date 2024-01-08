@@ -193,70 +193,53 @@
 </script>
 
 <!-- 슬라이더 설정후 Start 버튼 클릭시 이벤트 -->
+<!-- 서버의 세션을 확인하여 한 사람 접속하도록 한다. -->
 <script>
     const dateForm = document.getElementById('startForm');
-    let beforeUnloadHandler = null;
 
     // submit 이벤트가 발생하면 실행되는 함수
     dateForm.addEventListener('submit', function(event) {
         // 폼의 기본 동작을 막음 (페이지 새로고침 방지)
         event.preventDefault();
 
-        //UUID 없다면 포커싱 주고, UUID 생성
-        let restXhr = new XMLHttpRequest();
-        restXhr.open("POST", "/newScheUUIDJudge", true);
-        restXhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        restXhr.send(JSON.stringify({"Who" : "gkrry1424@naver.com"}))
+        /*
+        * 현재 로그인 시도한 사용자의 Id가져오기.
+        * */
 
-        restXhr.onload = function() {
-            // 생성 가능 하므로 스케줄 생성 페이지로 해당 운영자님을 이동시킨다.
+        let xhr = new XMLHttpRequest();
+        xhr.open("GET", "/uniquePage?id=gkrry1424@naver.com", true);
 
-            if (restXhr.responseText === "NO") {
-                // UUID 생성 후 포커스 주기
-                // 이벤트 리스너 등록
-                beforeUnloadHandler = function (e) {
-                    let confirmationMessage = '앱이 종료됩니다.';
-                    let xhr = new XMLHttpRequest();
-                    xhr.open("POST", "/newScheUUIDRemove", true);
-                    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                let response = xhr.responseText;
 
-                    // 사용자가 확인을 눌렀을 경우
-                    if (confirm(confirmationMessage)) {
-                        // UUID 제거
-                        xhr.send(JSON.stringify({ "Who" : "gkrry1424@naver.com" }));
-                    }
+                // 받은 문자열에 따라 원하는 동작 수행
+                if (response === "true") {
+                    // id > 이름 변경
+                    alert("문정훈 매니저님 환영합니다.")
 
-                    xhr.onload = function() {
-                        console.log("서버 작업 완료")
-                    }
+                    document.getElementById('slider').style.display = 'none';
+                    document.getElementById('startForm').style.display = 'none'; // 제출 버튼 비활성화
+                    document.getElementById('startBtn').style.display = 'none'; // 제출 버튼 비활성화
 
-                    e.returnValue = confirmationMessage;
-                    return confirmationMessage;
-                };
+                    document.getElementById('doneForm').style.display = 'block'; // 제출 버튼 비활성화
+                    document.getElementById('doneBtn').style.display = 'block'; // 제출 버튼 비활성화
 
-                window.addEventListener('beforeunload', beforeUnloadHandler);
+                    // image-container 내부의 모든 input 태그 가져오기
+                    const inputElements = document.querySelectorAll('#image-container input');
 
-                document.getElementById('slider').style.display = 'none';
-                document.getElementById('startForm').style.display = 'none'; // 제출 버튼 비활성화
-                document.getElementById('startBtn').style.display = 'none'; // 제출 버튼 비활성화
-
-                document.getElementById('doneForm').style.display = 'block'; // 제출 버튼 비활성화
-                document.getElementById('doneBtn').style.display = 'block'; // 제출 버튼 비활성화
-
-                // image-container 내부의 모든 input 태그 가져오기
-                const inputElements = document.querySelectorAll('#image-container input');
-
-                // 가져온 input 태그들을 순회하면서 비활성화
-                inputElements.forEach(input => {
-                    input.disabled = false;
-                });
+                    // 가져온 input 태그들을 순회하면서 비활성화
+                    inputElements.forEach(input => {
+                        input.disabled = false;
+                    });
+                }
+                else {
+                    alert("누군가 쓰고 있음.")
+                }
             }
-            // 누군가 이미 생성 중임.
-            else {
-                alert("현재 xxx매니저님이 생성 중입니다. 나중에 다시 시도해주세요")
-                window.location.href = "/admin"
-            }
-        }
+        };
+
+        xhr.send();
     })
 </script>
 
@@ -268,10 +251,30 @@
     doneForm2.addEventListener('submit', function(event) {
         // 폼의 기본 동작을 막음 (페이지 새로고침 방지)
         event.preventDefault();
-        window.removeEventListener('beforeunload', beforeUnloadHandler);
-        alert("동햄 함수 on")
+        // JavaScript 코드
 
-        window.location.href = "/admin"
+        const userId = "gkrry1424@naver.com"; // 사용자의 아이디를 변수에 할당
+
+        // XMLHttpRequest 생성
+        const xhr = new XMLHttpRequest();
+
+        // done 엔드포인트에 GET 요청 보내기
+        xhr.open("GET", `/done?id=${userId}`, true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    console.log("정상적으로 세션 종료. 다른 사용자 접속 허용");
+                    // 여기에서 원하는 리다이렉션 로직을 추가할 수 있습니다.
+                    window.location.href = "/admin"; // 예시로 "/admin"으로 리다이렉션
+                    alert("정상적으로 저장됨.")
+                } else {
+                    console.log("외부 사용자가 종료 처리 요청함");
+                }
+            }
+        };
+
+        // 요청 보내기
+        xhr.send();
     })
 </script>
 </html>
