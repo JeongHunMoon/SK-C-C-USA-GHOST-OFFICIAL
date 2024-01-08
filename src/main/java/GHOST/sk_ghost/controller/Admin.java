@@ -8,10 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+
+import java.util.*;
 import java.time.LocalDate;
 import java.util.stream.Collectors;
 import java.time.format.DateTimeFormatter;
@@ -105,4 +103,60 @@ public class Admin {
         }
         return "home/admin";
     }
+
+
+    @PostMapping("/saveData")
+    @ResponseBody
+    public ResponseEntity<String> saveData(HttpSession session, @RequestBody Map<String, String> requestBody) {
+        if (session.getAttribute("myArray") != null) {
+            session.removeAttribute("myArray");
+        }
+
+        String datas = requestBody.get("datas");
+        boolean flag = false;
+        // '?'로 분리
+        String[] dataArray = datas.split("\\?");
+
+        // 각 문자열을 '&'로 분리하여 배열로 만들기
+        List<List<String>> result = new ArrayList<>();
+        for (String data : dataArray) {
+            String[] parts = data.split("&");
+            result.add(Arrays.asList(parts));
+            flag = true;
+        }
+
+        // 결과 확인
+        System.out.println(result);
+        System.out.println(flag);
+
+        // 아무런 값도 입력하지 않으면 세션을 만들지 않는다.
+        if (flag) {
+            // 세션에 배열 저장
+            session.setAttribute("myArray", result);
+
+            // 세션에서 배열 읽기
+            List<List<String>> savedD = (List<List<String>>) session.getAttribute("myArray");
+            System.out.println("세션에 저장된 값" + savedD);
+
+        }
+
+        return ResponseEntity.ok("Data received successfully!");
+    }
+
+    @PostMapping("/getSavedData")
+    @ResponseBody
+    public ResponseEntity<List<List<String>>> getSavedData(HttpSession session, @RequestBody Map<String, String> requestBody) {
+        String userId = requestBody.get("id");
+
+        if (session.getAttribute("myArray") != null && userId.equals(newAdminhashValue)) {
+            List<List<String>> savedD = (List<List<String>>) session.getAttribute("myArray");
+            System.out.println("저장된 세션 얻기" + savedD);
+            return ResponseEntity.ok(savedD);
+        }
+
+        System.out.println(Collections.emptyList());
+        return ResponseEntity.ok(Collections.emptyList()); // 빈 리스트 반환 또는 다른 기본값 설정
+    }
+
+
 }
