@@ -104,6 +104,10 @@
         // 날짜의 요일을 가져오기
         let dayOfWeek = dateInNewYork.toLocaleDateString("en-US", { weekday: "long" });
 
+        /*
+        * DB 조회 문 추가하기.
+        * */
+        
         scheduleCard([], dayOfWeek, card)
     }
 

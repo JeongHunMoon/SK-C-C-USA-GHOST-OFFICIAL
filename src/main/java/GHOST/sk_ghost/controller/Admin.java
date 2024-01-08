@@ -154,7 +154,7 @@ public class Admin {
             return ResponseEntity.ok(savedD);
         }
 
-        System.out.println(Collections.emptyList());
+        System.out.println("세션 안가져옴"+Collections.emptyList());
         return ResponseEntity.ok(Collections.emptyList()); // 빈 리스트 반환 또는 다른 기본값 설정
     }
 

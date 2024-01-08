@@ -23,6 +23,7 @@
     <script src = "../../JavaScript/createScheduleCard.js"></script>
     <script src = "../../JavaScript/createCardStored.js"></script>
     <script src = "../../JavaScript/savedwithSession.js"></script>
+    <script src = "../../JavaScript/createSchedule.js"></script>
 
     <title>New Schedule</title>
 
@@ -345,9 +346,9 @@
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     console.log("정상적으로 세션 종료. 다른 사용자 접속 허용");
+                    createSchedule()
+
                     // 여기에서 원하는 리다이렉션 로직을 추가할 수 있습니다.
-                    window.location.href = "/admin"; // 예시로 "/admin"으로 리다이렉션
-                    alert("정상적으로 저장됨.")
                 } else {
                     console.log("외부 사용자가 종료 처리 요청함");
                 }
