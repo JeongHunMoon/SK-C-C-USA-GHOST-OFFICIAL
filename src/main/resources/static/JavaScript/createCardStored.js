@@ -534,5 +534,14 @@ function createCardStored(results, dfe, date) {
     formTag.appendChild(table)
     schedule_div.appendChild(formTag)
 
+    // 가져온 input 태그들을 배열로 변환
+    const inputElements = Array.from(schedule_div.getElementsByTagName('input'));
+
+    // 가져온 input 태그들을 순회하면서 비활성화
+    inputElements.forEach(input => {
+        input.disabled = true;
+    });
+
+
     return schedule_div
 }

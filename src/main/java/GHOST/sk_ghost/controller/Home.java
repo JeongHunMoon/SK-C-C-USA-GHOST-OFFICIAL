@@ -14,7 +14,7 @@ import java.util.UUID;
 @Controller
 public class Home {
     private String hashValue = null; // OP 가 로그인 시 서버에서 접근 가능하도록 해쉬 생성
-    private String newhashValue = null;
+    public String newhashValue = null;
 
     @Autowired
     V1service v1service; // Service 호출을 위한 객체

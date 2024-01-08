@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 
 @Service
 public class V1service {
@@ -37,6 +38,11 @@ public class V1service {
         int result = v1Dao.saveSchedule(scheduleData);
 
         return result;
+    }
+
+    public ArrayList<String> adminShiftLastDate() {
+        ArrayList<String> list = v1Dao.adminShiftLastDate();
+        return list;
     }
 
 }
