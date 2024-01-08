@@ -147,22 +147,14 @@ public class Home {
     //DB 저장을 위한 Controller
     @PostMapping("/saveSchedule")
     public ResponseEntity<String> saveScheduleInsert(@RequestBody List<Map<String, String>> requestBody) throws Exception {
-        System.out.println("Received request body: " + requestBody);
+        System.out.println("Save to DB : " + requestBody);
         try{
-            // DB에서 가져온 값
-            List<Map<String, String>> dbList = v1service.adminShiftListAll();
-            // JSON 리스트에서 DB 리스트와 중복되는 항목을 제거
-            List<Map<String, String>> ignoreDuplicatedList = requestBody.stream().filter(jsonItem -> !dbList.contains(jsonItem)).collect(Collectors.toList());
-            List<Map<String, String>> duplicatedList = new ArrayList<>(requestBody);
-            duplicatedList.retainAll(dbList);
-            System.out.println("중복처리된 값 : "+duplicatedList);
-            // 중복 제거된 JSON 리스트를 저장
-            v1service.saveSchedule(ignoreDuplicatedList);
+            v1service.saveSchedule(requestBody);
         }
         catch (Exception e) {
-            return ResponseEntity.ok("Maybe you are trying to save same Records compare to DB");
+            return ResponseEntity.ok("Save Fail");
         }
-        return ResponseEntity.ok("save success");
+        return ResponseEntity.ok("Save Success");
     }
 
     @GetMapping("/newSchedule")
