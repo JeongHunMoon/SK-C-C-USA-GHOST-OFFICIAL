@@ -3,6 +3,8 @@ package GHOST.sk_ghost.service;
 import GHOST.sk_ghost.dao.V1Dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
@@ -27,16 +29,21 @@ public class V1service {
         return list;
     }
 
-    public int saveSchedule(Map<String, String> scheduleData) {
-//        int result = 0;
-//        try {
-//            result = v1Dao.saveSchedule(scheduleData);
-//        } catch (Exception e) {
-//            System.out.println("Fail to call v1Dao" + e.getMessage());
-//            throw new RuntimeException(e);
-//        }
-        int result = v1Dao.saveSchedule(scheduleData);
+    public List<Map<String, String>> adminShiftListAll() {
+        List<Map<String, String>> list = v1Dao.adminShiftListAll();
+        return list;
+    }
 
+    @Transactional
+    public int saveSchedule(List<Map<String, String>> scheduleData) {
+        int result = 1;
+        try {
+            v1Dao.saveSchedule(scheduleData);
+//            System.out.println("Success to call v1Dao");
+        } catch (Exception e) {
+//            System.out.println("Fail to call v1Dao" + e.getMessage());
+//            e.printStackTrace();
+        }
         return result;
     }
 
