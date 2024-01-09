@@ -9,6 +9,9 @@ version = '0.0.2-SNAPSHOT'
 
 java {
 	sourceCompatibility = '17'
+	compileJava {
+		options.compilerArgs << '-parameters'
+	}
 }
 
 configurations {
@@ -43,6 +46,9 @@ dependencies {
 	testImplementation 'org.junit.jupiter:junit-jupiter-api'
 	testImplementation 'org.junit.jupiter:junit-jupiter-engine'
 	testImplementation 'org.junit.jupiter:junit-jupiter-params'
+
+
+
 
 //	testImplementation(platform("org.junit:junit-bom:5.10.1"))
 //	testRuntimeOnly("org.junit.platform:junit-platform-launcher") {

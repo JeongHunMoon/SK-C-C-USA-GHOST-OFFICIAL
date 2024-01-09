@@ -232,31 +232,13 @@ async function createSchedule() {
 
     xhr_check_saveDB.onreadystatechange = function() {
         console.log("open")
-        if (xhr_check_saveDB.readyState === 4) {
-            if (xhr_check_saveDB.status === 200) { //반환값을 받을 필요 없으므로 서버로의 요청 성공 여부(상태 200)만 체크
-                try {
-                    alert("저장되었습니다");
-                    window.location.href = '/';
-                } catch (e) {
-                    alert("저장이 불가능합니다. 관리자에게 문의해주세요.");
-                    window.location.href = '/';
-                }
-            } else {
-                alert("서버연결이 불안정합니다. 상태코드: "+xhr_check_saveDB.status);
-                window.location.href = '/';
-            }
-            console.log("close")
+
+        if (xhr_check_saveDB.readyState === 4 && xhr_check_saveDB.status === 200 && xhr_check_saveDB.responseText === "Save Success") {
+            alert("저장되었습니다");
+            window.location.href = "/remove"; // 아이디 검증 코드 추가 필요.
+        }
+        else {
+            alert("저장이 불가능합니다. 관리자에게 문의해주세요.");
         }
     };
-    // xhr_check_saveDB.send(JSON.stringify(confirmedSchedule));
-    // if (xhr_check_saveDB.status === 200) { //반환값을 받을 필요 없으므로 서버로의 요청 성공 여부(상태 200)만 체크
-    //     try{
-    //         alert("저장되었습니다");
-    //         window.location.href = '/index';
-    //     }catch (e) {
-    //         alert("저장이 불가능합니다. 관리자에게 문의해주세요.");
-    //     }
-    // } else {
-    //     alert("서버연결이 불안정합니다. 관리자에게 문의해주세요.");
-    // }
 }

@@ -1,24 +1,18 @@
 function newBtn() {
+    Kakao.Auth.getStatusInfo(function(statusObj) {
+        let nowUserId = null;
+        let nowUserNiname = null;
 
-    //서버에서 UUID 있다면 admin으로
+        // 만약 사용자가 로그인이 되어 있는 경우
+        if (statusObj.status === 'connected') {
+            nowUserId = statusObj.user.kakao_account.email;
+            nowUserNiname = statusObj.user.kakao_account.profile.nickname
 
-    // UUID 없다면 접근 허가 newSchedule로 접근 허가
-
-    // 서버에서 현재 접근 가능한지 판단
-        // 만약 접근 가능하다면 -> 디비에서 다음 날짜를 가져온다. > new.html 페이지를 띄운다. (디비 값을 받아온다.) > 카드 생성 함수를 실행한다.
-
-    // 접근 불가능하다면, admin.html 페이지로 간다.
-    window.location.href = '/newSchedule';
-    /*
-    let xhr1 = new XMLHttpRequest();
-    xhr1.open('GET', '/judgeNewSchedule?user=문정훈', true);
-    xhr1.setRequestHeader("Content-Type", "application/json");
-    xhr1.send();
-
-    xhr1.onload = function () {
-        let results = JSON.parse(xhr1.response);
-    }
-
-    */
-
+            window.location.href = '/newSchedule?id=' + nowUserId;
+        }
+        else {
+            alert("로그인 세션이 만료되었습니다. 다시 로그인 부탁드립니다. ")
+            window.location.href = "/"
+        }
+    })
 }

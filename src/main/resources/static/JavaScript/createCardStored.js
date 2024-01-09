@@ -59,8 +59,6 @@ function createCardStored(results, dfe, date) {
         }
     });
 
-    console.log('Priority 1:', elec_info1);
-    console.log('Priority 2:', elec_info2);
 
     //// 전극 ////
     const elecRow = table.insertRow();
@@ -129,8 +127,6 @@ function createCardStored(results, dfe, date) {
         }
     });
 
-    console.log('Priority 1:', cell_info1);
-    console.log('Priority 2:', cell_info2);
 
     //// 조립 ////
     const cellRow = table.insertRow();
@@ -197,8 +193,6 @@ function createCardStored(results, dfe, date) {
         }
     });
 
-    console.log('Priority 1:', form_info1);
-    console.log('Priority 2:', form_info2);
 
     //// 화성 ////
     const formRow = table.insertRow();
@@ -267,8 +261,6 @@ function createCardStored(results, dfe, date) {
         }
     });
 
-    console.log('Priority 1:', pack_info1);
-    console.log('Priority 2:', pack_info2);
 
     //// 모듈 ////
     const packRow = table.insertRow();
@@ -335,8 +327,6 @@ function createCardStored(results, dfe, date) {
         }
     });
 
-    console.log('Priority 1:', wms_info1);
-    console.log('Priority 2:', wms_info2);
 
     //// wms ////
     const wmsRow = table.insertRow();
@@ -403,8 +393,6 @@ function createCardStored(results, dfe, date) {
         }
     });
 
-    console.log('Priority 1:', coll_info1);
-    console.log('Priority 2:', coll_info2);
 
     //// coll ////
     const collRow = table.insertRow();
@@ -471,8 +459,6 @@ function createCardStored(results, dfe, date) {
         }
     });
 
-    console.log('Priority 1:', comm_info1);
-    console.log('Priority 2:', comm_info2);
 
     //// comm ////
     const commRow = table.insertRow();
