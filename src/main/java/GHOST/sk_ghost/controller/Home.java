@@ -41,16 +41,55 @@ public class Home {
                 hashValue = UUID.randomUUID().toString(); // 해쉬값 생성 후 이 사용자에게 부여한다.(사용자를 식별하는 역할)
                 return ResponseEntity.ok(list.get("name")+ "!@#$%" +hashValue); //정상적으로 DB에 있는 사용자이므로 생성된 해쉬를 프론트로 전달한다.
             }
-
-            //OP, 운영자 모두 Admin Login 가능해야 함.
-//            List<String> allowedProcesses = Arrays.asList("OP", "전극", "조립", "화성", "모듈", "WMS", "공통", "수집");
-//            else if(rocMember.equals(who) && allowedProcesses.contains(processInfo)){
-//                hashValue = UUID.randomUUID().toString(); // 해쉬값 생성 후 이 사용자에게 부여한다.(사용자를 식별하는 역할)
-//                return ResponseEntity.ok(list.get("name")+ "!@#$%" +hashValue); //정상적으로 DB에 있는 사용자이므로 생성된 해쉬를 프론트로 전달한다.
-//            }
         }
         return ResponseEntity.ok("False"); //DB에 없는 사용자가 로그인을 시도했기에 접근을 차단한다.
     }
+
+    // 로그인 페이지로 이동시킨다.
+    @GetMapping("/admin")
+    // 호출 예시 ex) http://localhost:8080/OP?uuid=12313213dwf232fe231321 > 서버에서 발급된 해쉬가 올바르게 요청되야 OP페이지로 이동함.
+    public String goToAdminPage(@RequestParam(value = "id", required = true) String id, Model model) {
+        List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
+        System.out.println("ROC Member" + lists);
+
+        // 로그인한 사용자가 올바른지 검증
+        for (Map<String, String> list : lists) {
+            String rocMember = list.get("id"); // ROC인원의 id
+            String processInfo = list.get("process");
+
+            // 로그인 요청한 사용자가 OP인 경우만 OP 페이지 접속 허가 > 운영자는 OP 페이지 접속 불가.
+            if (rocMember.equals(id)) {
+                System.out.println(id + lists);
+                return "home/admin";
+            }
+        }
+        return "home/400";
+    }
+
+
+    // 생성 페이지 중 카드 생성 페이지로 이동시킨다.
+    @GetMapping("/newSchedule")
+    public String adminNewSchedule(@RequestParam(value = "id", required = true) String id, Model model) {
+        List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
+        System.out.println("ROC Member" + lists);
+
+        // 로그인한 사용자가 올바른지 검증
+        for (Map<String, String> list : lists) {
+            String rocMember = list.get("id"); // ROC인원의 id
+            String processInfo = list.get("process");
+
+            // 로그인 요청한 사용자가 OP인 경우만 OP 페이지 접속 허가 > 운영자는 OP 페이지 접속 불가.
+            if (rocMember.equals(id)) {
+                System.out.println(id + lists);
+                return "home/newSchedule";
+            }
+        }
+        return "home/400";
+    }
+
+
+
+
 
     //출근하기 기능이다. 디비에서 금일의 대응자님 조회하여 list로 조히하여 프론트로 전송한다.
     @PostMapping("/goingToWork")
@@ -119,14 +158,6 @@ public class Home {
         return ResponseEntity.ok("False"); //DB에 없는 사용자가 로그인을 시도했기에 접근을 차단한다.
     }
 
-    @GetMapping("/admin")
-    public String tempAdminPage(Model model) {
-        return "home/admin";
-    }
-
-
-
-
     @PostMapping("/getSchedule")
     public ResponseEntity<List<Map<String, String>>> getSchedule(@RequestBody Map<String, String> requestBody) {
         String dateInfo = requestBody.get("date"); // 무의미 데이터 무시하세요.
@@ -136,11 +167,6 @@ public class Home {
         System.out.println("조희 결과> " + lists);
 
         return ResponseEntity.ok(lists);
-    }
-
-    @GetMapping("/createSchedule")
-    public String tempAdminCreateSchedulePage(Model model) {
-        return "home/create";
     }
 
 
@@ -157,10 +183,6 @@ public class Home {
         return ResponseEntity.ok("Save Success");
     }
 
-    @GetMapping("/newSchedule")
-    public String tempCS(Model model) {
-        return "home/newSchedule";
-    }
 
     @GetMapping("/judgeNewSchedule")
     public String judgeNewSchedule(@RequestParam(value = "user", required = true) String user, Model model) {

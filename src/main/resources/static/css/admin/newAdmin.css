@@ -1,3 +1,24 @@
+/* 전체 스크롤 바 스타일 */
+::-webkit-scrollbar {
+    width: 7px; /* 스크롤 바 너비 조절 */
+}
+
+/* 스크롤 바 트랙 스타일 (배경) */
+::-webkit-scrollbar-track {
+    background-color: transparent; /* 트랙 배경색 */
+}
+
+/* 스크롤 바 핸들 스타일 */
+::-webkit-scrollbar-thumb {
+    background-color: #888; /* 밝은 회색으로 변경 */
+    border-radius: 7px; /* 핸들 모양 (둥근 모서리) */
+}
+
+/* 스크롤 마우스 오버 효과 */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa; /* 마우스 오버 시 핸들 색상 */
+}
+
 #slider {
     width: 20%;
     cursor: pointer;
@@ -238,6 +259,7 @@
     width: 100vw;
     gap: 2vw; /* 버튼 간격 설정 */
 }
+
 
 #modify_schedule,
 #new_schedule {

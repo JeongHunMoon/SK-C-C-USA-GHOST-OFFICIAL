@@ -48,34 +48,51 @@ public class Admin {
 
     @GetMapping("/uniquePage")
     @ResponseBody
-    public String uniquePage(HttpSession session, @RequestParam String id) {
+    public ResponseEntity<String> uniquePage(HttpSession session, @RequestParam String id) {
 
         /* 기본적으로 id가 맴버인지 판단. 맴버라면 아래 ㄱ
         */
 
-        // 세션이 없으면 ? 일단 uuid도 없어야함.
-        if (session == null) { newAdminhashValue = null; }
-        // 크롬에서 세션을 만들었다면,
-        //session.getAttribute("visited") != null
+        List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
+        System.out.println("ROC Member" + lists);
 
-        if (newAdminhashValue != null) {
-            System.out.println("==세션 있음.==");
-            System.out.println(newAdminhashValue);
+        // 로그인한 사용자가 올바른지 검증
+        for (Map<String, String> list : lists) {
+            String rocMember = list.get("id"); // ROC인원의 id
+            String processInfo = list.get("process");
 
-            if (newAdminhashValue.equals(id)) {
-                System.out.println("재접속");
-                return "true";
+            // 로그인 요청한 사용자가 OP인 경우만 OP 페이지 접속 허가 > 운영자는 OP 페이지 접속 불가.
+            if (rocMember.equals(id)) {
+                System.out.println(id + lists);
+                // 세션이 없으면 ? 일단 uuid도 없어야함.
+                if (session == null) { newAdminhashValue = null; }
+                // 크롬에서 세션을 만들었다면,
+                //session.getAttribute("visited") != null
+
+                if (newAdminhashValue != null) {
+                    System.out.println("==세션 있음.==");
+                    System.out.println(newAdminhashValue);
+
+                    if (newAdminhashValue.equals(id)) {
+                        System.out.println("재접속");
+                        return ResponseEntity.ok("true");
+                    }
+                    else {
+                        System.out.println("누군가 쓰고 있음." + newAdminhashValue);
+                        return ResponseEntity.ok("false");
+                    }
+                } else {
+                    System.out.println("신규 접속");
+                    newAdminhashValue = id;
+                    session.setAttribute("visited", true);
+                    return ResponseEntity.ok("true");
+                }
             }
-            else {
-                System.out.println("누군가 쓰고 있음." + newAdminhashValue);
-                return "home/admin";
-            }
-        } else {
-            System.out.println("신규 접속");
-            newAdminhashValue = id;
-            session.setAttribute("visited", true);
-            return "true";
         }
+
+        // 운영자가 아닌사람이 스케줄 생성 시도
+        System.out.println("잘못된 id 맴버" + "현재 사용자 > " + newAdminhashValue);
+        return ResponseEntity.ok("None");
     }
 
     @GetMapping("/done")
@@ -83,7 +100,7 @@ public class Admin {
     public String done(HttpSession session, @RequestParam String id) {
         // 수정된 부분
         if (newAdminhashValue != null && newAdminhashValue.equals(id)) {
-            session.invalidate();
+            session.invalidate(); // 모든 세션 제거 및 session > null
             newAdminhashValue = null;
             System.out.println("정상적으로 세션 종료. 다른 사용자 접속 허용");
         }
@@ -93,10 +110,12 @@ public class Admin {
         return "OK"; // 수정된 부분
     }
 
+    // id get으로 받고, 맴버 검증 수행 후 취소하기
     @GetMapping("/remove")
     public String remove(HttpSession session) {
-        if (session != null && session.getAttribute("visited") != null) {
+        if (session != null) {
             session.invalidate();
+            newAdminhashValue = null;
             System.out.println("세션이 성공적으로 종료되었습니다.");
         } else {
             System.out.println("세션이 이미 무효화되었거나 존재하지 않습니다.");
