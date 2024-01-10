@@ -53,6 +53,7 @@ function savedwithSession() {
     if (payload !== "") {
         payload = payload.slice(0, -1);
     }
+
     console.log(">>>>>>>>>>", payload)
     return payload
 }

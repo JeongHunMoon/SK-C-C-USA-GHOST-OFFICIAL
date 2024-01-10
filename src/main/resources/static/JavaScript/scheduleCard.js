@@ -1,12 +1,18 @@
+// 스케줄 정보가 없을 시 빈 배열 results에 전달
 function scheduleCard(results, dfe, date) {
     // 테이블을 담을 div
     const Container = document.getElementById("image-container");
 
     // 테이블 생성
     const schedule_div = document.createElement("div");
-    schedule_div.className = "schedule_div"
+    schedule_div.className = "schedule_div";
 
-    const table = document.createElement("table");
+    // results가 빈 배열인 경우에만 밝은 회색 배경 적용
+    if (results.length === 0) {
+        schedule_div.style.backgroundColor = "lightgray";
+    }
+
+    let table = document.createElement("table");
     table.className = "schedule_card"; // class 설정
     table.setAttribute("border", "1");
     table.style.borderCollapse = "collapse";

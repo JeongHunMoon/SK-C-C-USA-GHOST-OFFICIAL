@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src = "../../JavaScript/unlinkWithKakao.js"></script>
     <title>Title</title>
 </head>
 <body>
 <h1>Warning!! 잘못된 접근입니다. 로그인 후 이용해주세요!</h1>
 </body>
 <script>
+    unlinkWithKakao();
     setTimeout(function() {
         window.location.href = "/";
     }, 2000); // 2000 밀리초(2초) 후에 "/"로 이동

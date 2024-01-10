@@ -16,7 +16,7 @@ function loginWithKakaoForAdmin() {
             loadingOff();
             button.disabled = false;     // 버튼 활성화
             button.style.opacity = 1; // 투명도를 1로 설정
-            window.location.href = "/admin?id=" + nowUser
+            window.location.href = "/admin?id=" + nowUser + "&first=" +  "true";
         }
 
         // 사용자가 현재 브라우저에 카카오 로그인이 안되어 있는 경우
@@ -44,14 +44,15 @@ function loginWithKakaoForAdmin() {
                         nowUser = payload.kakao_account.email; // 사용자 카카오 계정
                         alert("welcome manager, "+ payload.properties.nickname)
                         loadingOff();
-                        window.location.href = "/admin?id=" + nowUser
+                        button.disabled = false;     // 버튼 활성화
+                        button.style.opacity = 1; // 투명도를 1로 설정
+                        window.location.href = "/admin?id=" + nowUser + "&first=" +  "true";
 
                     }
                 },
                 fail: async function (err) { // 로그인 실패시 오류 값 반환
                     alert("You are not registered in the system.\nContact the Ghost Team.")
                     loadingOff();
-
                     button.disabled = false;
                     button.style.opacity = 1; // 투명도를 0.5로 설정
                 },

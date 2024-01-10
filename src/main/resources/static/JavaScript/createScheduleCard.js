@@ -1,3 +1,4 @@
+// results가 비어 있으면 빈 빈 카드 생성
 function createScheduleCard(results, dfe, date) {
     let inputTag = null;
     // 테이블을 담을 div
