@@ -48,7 +48,10 @@ public class Home {
     // 로그인 페이지로 이동시킨다.
     @GetMapping("/admin")
     // 호출 예시 ex) http://localhost:8080/OP?uuid=12313213dwf232fe231321 > 서버에서 발급된 해쉬가 올바르게 요청되야 OP페이지로 이동함.
-    public String goToAdminPage(@RequestParam(value = "id", required = true) String id, Model model) {
+    public String goToAdminPage(
+            @RequestParam(value = "id", required = true) String id,
+            @RequestParam(value = "first", required = false) String first,
+            Model model) {
         List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
         System.out.println("ROC Member" + lists);
 
@@ -59,6 +62,11 @@ public class Home {
 
             // 로그인 요청한 사용자가 OP인 경우만 OP 페이지 접속 허가 > 운영자는 OP 페이지 접속 불가.
             if (rocMember.equals(id)) {
+                if (first != null) {
+                    // "first" 파라미터가 전달된 경우 운영자 페이지에 처음 접속한 경우이므로 Model 저달
+                    model.addAttribute("firstValue", first);
+                }
+
                 System.out.println(id + lists);
                 return "home/admin";
             }
@@ -207,14 +215,14 @@ public class Home {
     //Create시 ROC멤버 아닌 사람 입력 검증을 위해 member 모두 불러옴
     @ResponseBody
     @PostMapping("/checktypo")
-    public Vector<String> checkTypo(@RequestBody Map<String, String> requestBody) {
+    public ArrayList<String> checkTypo(@RequestBody Map<String, String> requestBody) {
         String checkTypo = requestBody.get("CheckTypo"); // 프론트에서 보낸 입력값.
         List<Map<String, String>> lists = v1service.userList();
-        Vector<String> ROCvector = new Vector<>();
+        ArrayList<String> rocALlNames = new ArrayList<>();
         for (Map<String, String> list : lists) {
-            ROCvector.add(list.get("name"));
+            rocALlNames.add(list.get("name"));
         }
-        return ROCvector;
+        return rocALlNames;
     }
 
 }

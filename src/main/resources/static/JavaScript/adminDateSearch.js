@@ -1,12 +1,4 @@
 function adminDateSearch() {
-    document.addEventListener('DOMContentLoaded', function () {
-        let container = document.getElementById('image-container');
-
-        container.addEventListener('wheel', function (e) {
-            container.scrollLeft += e.deltaY;
-            e.preventDefault();
-        });
-    });
 
     // 폼 요소를 가져옴
     const dateForm = document.getElementById('dateForm');
@@ -68,18 +60,12 @@ function adminDateSearch() {
                     xhr1.send(JSON.stringify(payloadFront));
 
                     xhr1.onload = function () {
-                        let results = JSON.parse(xhr1.response);
+                        let results = JSON.parse(xhr1.response); // 디비에서 해당 날짜의 운영자가 하나도 없는 경우 [] 반환
                         console.log(results);
 
-                        const dateString = results[0]?.date || "";
-                        let dayOfWeek = "";
-
-                        if (dateString) {
-                            const dateObject = new Date(`${dateString}T00:00:00-05:00`);
-                            const options = {weekday: 'short', timeZone: 'America/New_York'};
-                            const dayOfWeekString = dateObject.toLocaleDateString('en-US', options);
-                            dayOfWeek = dayOfWeekString;
-                        }
+                        const dateObject = new Date(`${card}T00:00:00-05:00`);
+                        const options = {weekday: 'short', timeZone: 'America/New_York'};
+                        const dayOfWeek = dateObject.toLocaleDateString('en-US', options);
 
                         // DOM 에서 동적으로 카드르 만들어 배열에 저장. 붙이기는 정렬 후 한번에 수행하게 됨.
                         scheduleCard(results, dayOfWeek, card);

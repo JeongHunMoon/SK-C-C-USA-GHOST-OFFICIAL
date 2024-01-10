@@ -32,6 +32,8 @@
 </script>
 
 <body id = "body">
+<input type="hidden" id="flagValue" th:value="${flag}" />
+<input type="hidden" id="firstValue" th:value="${firstValue}" />
 <!-- 메인 해더-->
 <header id = "header">
     <img id = "header_sk" src="css/images/Ghost.png" alt = "location images"> <!-- GHOST 트레이드 마크 -->
@@ -58,7 +60,7 @@
 <!-- 메인 푸터  -->
 <footer id = "footer">
     <!-- 스케줄 수정 -->
-    <button id = "modify_schedule" onClick="modifyBtn()">
+    <button id = "modify_schedule">
         <span id = "text1">Modify</span>
     </button>
 
@@ -68,70 +70,122 @@
     </button>
 </footer>
 </body>
+<script>
+    let used = document.getElementById("flagValue").value;
+    console.log("used 값 : " + used)
+    if (used !== "") {
+        alert("현재 " + used + " 운영자님이 수정 중입니다. \n나중에 다시 시도 부탁드립니다.")
+    }
+</script>
+<script>
+    let userId;
+    let userImage;
+    // 사용자가 OP 페이지에 들어오면 카카오톡 프로필, 이름을 애니메이션으로 보여준다.
+    Kakao.Auth.getStatusInfo(function(statusObj) {
+        if (statusObj.status === 'connected') {
+            userId = statusObj.user.properties.nickname
+            userImage = statusObj.user.kakao_account.profile.profile_image_url
+
+            let isItFirst = document.getElementById("firstValue").value;
+            console.log("isItFirst 값 : " + isItFirst)
+            if (isItFirst === "true") {
+                loginAram(userImage, userId)
+            }
+
+            // 버튼 요소 가져오기
+            let button = document.getElementById('modify_schedule');
+
+            // 클릭 이벤트에 리스너 등록
+            button.addEventListener('click', function() {
+
+                let startTag = document.getElementById('date-range-start');
+                let endTag = document.getElementById('date-range-end');
+
+                // 시작일과 종료일의 값을 가져옴
+                const startD = startTag.value;
+                const endD = endTag.value;
+                // 시작일과 종료일이 모두 입력되었고, 시작일이 종료일보다 작은 경우
+                if (startD && endD && startD <= endD) {
+                    modifyBtn(startD, endD);
+                }
+                else {
+                    alert('시작일은 종료일보다 작아야 합니다. 다시 입력해주세요.');
+                    startTag.value = getCurrentDate();
+                    endTag.value = getCurrEndDate();
+                }
+            });
+
+            adminDateSearch();
+
+            // 시작일과 종료일의 input 요소를 가져옴
+            const startDateInput = document.getElementById('date-range-start');
+            const endDateInput = document.getElementById('date-range-end');
+
+            startDateInput.value = getCurrentDate();
+            endDateInput.value = getCurrEndDate()
+
+            // 시작일과 종료일의 값을 가져옴
+            const startDateString = startDateInput.value;
+            const endDateString = endDateInput.value;
+
+            // 값을 console에 출력
+            const startDate = new Date(startDateString);
+            const endDate = new Date(endDateString);
+            console.log('시작일:', startDateString);
+            console.log('종료일:', endDateString);
+            //console.log(getDates(startDate, endDate));
+            let cards = getDates(startDate, endDate);
+            console.log(cards)
+
+            // 순차적으로 비동기 작업을 수행하는 함수
+            async function processCards() {
+                for (let card of cards) {
+                    await processCard(card);
+                }
+            }
+
+            // 각 날짜에 대한 비동기 작업을 수행하는 함수
+            function processCard(card) {
+                return new Promise(resolve => {
+                    let xhr1 = new XMLHttpRequest();
+                    let payloadFront = {"date": card};
+                    xhr1.open('POST', '/getSchedule', true);
+                    xhr1.setRequestHeader("Content-Type", "application/json");
+                    xhr1.send(JSON.stringify(payloadFront));
+
+                    xhr1.onload = function () {
+                        let results = JSON.parse(xhr1.response);
+                        console.log(results);
+
+                        const dateObject = new Date(`${card}T00:00:00-05:00`);
+                        const options = {weekday: 'short', timeZone: 'America/New_York'};
+                        const dayOfWeek = dateObject.toLocaleDateString('en-US', options);
+
+
+                        // DOM 에서 동적으로 카드르 만들어 배열에 저장. 붙이기는 정렬 후 한번에 수행하게 됨.
+                        scheduleCard(results, dayOfWeek, card);
+
+
+                        resolve();
+                    }
+                });
+            }
+
+            // 비동기 작업을 순차적으로 실행
+            processCards();
+        }
+    })
+</script>
 
 <script>
-    adminDateSearch();
+    document.addEventListener('DOMContentLoaded', function () {
+        let container = document.getElementById('image-container');
 
-    // 시작일과 종료일의 input 요소를 가져옴
-    const startDateInput = document.getElementById('date-range-start');
-    const endDateInput = document.getElementById('date-range-end');
-
-    startDateInput.value = getCurrentDate();
-    endDateInput.value = getCurrEndDate()
-
-    // 시작일과 종료일의 값을 가져옴
-    const startDateString = startDateInput.value;
-    const endDateString = endDateInput.value;
-
-    // 값을 console에 출력
-    const startDate = new Date(startDateString);
-    const endDate = new Date(endDateString);
-    console.log('시작일:', startDateString);
-    console.log('종료일:', endDateString);
-    //console.log(getDates(startDate, endDate));
-    let cards = getDates(startDate, endDate);
-    console.log(cards)
-
-    // 순차적으로 비동기 작업을 수행하는 함수
-    async function processCards() {
-        for (let card of cards) {
-            await processCard(card);
-        }
-    }
-
-    // 각 날짜에 대한 비동기 작업을 수행하는 함수
-    function processCard(card) {
-        return new Promise(resolve => {
-            let xhr1 = new XMLHttpRequest();
-            let payloadFront = {"date": card};
-            xhr1.open('POST', '/getSchedule', true);
-            xhr1.setRequestHeader("Content-Type", "application/json");
-            xhr1.send(JSON.stringify(payloadFront));
-
-            xhr1.onload = function () {
-                let results = JSON.parse(xhr1.response);
-                console.log(results);
-
-                const dateString = results[0]?.date || "";
-                let dayOfWeek = "";
-
-                if (dateString) {
-                    const dateObject = new Date(`${dateString}T00:00:00-05:00`);
-                    const options = {weekday: 'short', timeZone: 'America/New_York'};
-                    const dayOfWeekString = dateObject.toLocaleDateString('en-US', options);
-                    dayOfWeek = dayOfWeekString;
-                }
-
-                // DOM 에서 동적으로 카드르 만들어 배열에 저장. 붙이기는 정렬 후 한번에 수행하게 됨.
-                scheduleCard(results, dayOfWeek, card);
-
-                resolve();
-            }
+        container.addEventListener('wheel', function (e) {
+            container.scrollLeft += e.deltaY;
+            e.preventDefault();
         });
-    }
-
-    // 비동기 작업을 순차적으로 실행
-    processCards();
-
+    });
 </script>
+
 </html>

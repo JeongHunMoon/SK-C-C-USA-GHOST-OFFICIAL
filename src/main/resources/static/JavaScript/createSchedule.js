@@ -1,30 +1,40 @@
 //공정별로 구분해서 작성한 이유 : 본인 공정만 등록/수정할 수 있도록 하는 기능을 추후 개발 가능성 고려
-async function createSchedule() {
-    let confirmedSchedule = [];
-    let flag = true;
-    //오타검증 : ROC 멤버를 배열로 미리 저장
-    let rocMembers = [];
-    let typoPostSample = {"CheckTypo": 'typoPostSample'};
-    let xhr_check = new XMLHttpRequest(); // REST API 통신을 위한 객체
-    xhr_check.open('POST', '/checktypo', true); // REST 정의
-    xhr_check.setRequestHeader("Content-Type", "application/json"); // 요청 해더 정의 > payload는 Json
-    xhr_check.send(JSON.stringify(typoPostSample));
-    //xhr_check.send 받은 후 동작 - 비동기
-    await new Promise((resolve) => {
-        xhr_check.onreadystatechange = function () {
-            if (xhr_check.readyState === 4 && xhr_check.status === 200) {
+function createSchedule() {
+    Kakao.Auth.getStatusInfo(function(statusObj) {
+        let nowUserId = null;
+        let nowUserNiname = null;
+
+        // 만약 사용자가 로그인이 되어 있는 경우
+        if (statusObj.status === 'connected') {
+            nowUserId = statusObj.user.kakao_account.email;
+            nowUserNiname = statusObj.user.kakao_account.profile.nickname
+
+            let confirmedSchedule = [];
+            let flag = true;
+            let rocMembers = null; //오타검증 : ROC 멤버를 배열로 미리 저장
+            let typoPostSample = {"CheckTypo": 'typoPostSample'};
+            let form = null;
+
+            // ROC 맴버의 모든 이름을 가져온다.
+            let xhr_check = new XMLHttpRequest(); // REST API 통신을 위한 객체
+            xhr_check.open('POST', '/checktypo', true); // REST 정의
+            xhr_check.setRequestHeader("Content-Type", "application/json"); // 요청 해더 정의 > payload는 Json
+            xhr_check.send(JSON.stringify(typoPostSample));
+
+            xhr_check.onload = function () {
                 rocMembers = JSON.parse(xhr_check.responseText);
-                // console.log("ROC MEMBERS : " + rocMembers); // 전체인원
-                let form = document.querySelectorAll("#createForm");
+                console.log("ROC MEMBERS : " + rocMembers); // 전체인원
+                form = document.querySelectorAll("#createForm");
 
                 //DB에서 이름을 불러오지 못했을 때
-                if (!rocMembers) {
-                    alert("현재 DB 접근에 문제가 있습니다. 관리자에게 문의해주세요")
-                    window.location.href = '/index';
-                } else {
+                if (rocMembers.length === 0) {
+                    window.location.href = '/remove';
+                    alert("현재 DB ROC 맴버가 없습니다.. 관리자에게 문의해주세요??")
+                }
+                else {
                     // 전체 카드 반복(1~7)
-                    for (let i = 0; i < form.length; i++) {
-                        let formdate = form[i].querySelector("#dateInfo").textContent;
+                    for (let j = 0; j < form.length; j++) {
+                        let formdate = form[j].querySelector("#dateInfo").textContent;
 
                         // 전극 1,2 차 정보
                         let elecInfo = []
@@ -84,7 +94,8 @@ async function createSchedule() {
                         commInfo.push(document.getElementById(formdate + "COMM6").value)
 
                         for (let i = 1; i < 7; i++) {
-                            let elecinf = elecInfo[i - 1];
+                            let elecinf = elecInfo[i - 1].trim();
+                            //앞뒤로 트립 제거
                             if (elecinf === "") {
                             } else if (rocMembers.includes(elecinf)) {
                                 console.log(elecinf)
@@ -103,7 +114,7 @@ async function createSchedule() {
                             }
                         }
                         for (let i = 1; i < 7; i++) {
-                            let cellinf = cellInfo[i - 1];
+                            let cellinf = cellInfo[i - 1].trim();
                             if (cellinf === "") {
                             } else if (rocMembers.includes(cellinf)) {
                                 //confirmedSchedule 정보 넣기
@@ -121,7 +132,7 @@ async function createSchedule() {
                             }
                         }
                         for (let i = 1; i < 7; i++) {
-                            let forminf = formInfo[i - 1];
+                            let forminf = formInfo[i - 1].trim();
                             if (forminf === "") {
                             } else if (rocMembers.includes(forminf)) {
                                 //confirmedSchedule 정보 넣기
@@ -139,7 +150,7 @@ async function createSchedule() {
                             }
                         }
                         for (let i = 1; i < 7; i++) {
-                            let packinf = packInfo[i - 1];
+                            let packinf = packInfo[i - 1].trim();
                             if (packinf === "") {
                             } else if (rocMembers.includes(packinf)) {
                                 //confirmedSchedule 정보 넣기
@@ -157,7 +168,7 @@ async function createSchedule() {
                             }
                         }
                         for (let i = 1; i < 7; i++) {
-                            let wmsinf = wmsInfo[i - 1];
+                            let wmsinf = wmsInfo[i - 1].trim();
                             if (wmsinf === "") {
                             } else if (rocMembers.includes(wmsinf)) {
                                 //confirmedSchedule 정보 넣기
@@ -175,7 +186,7 @@ async function createSchedule() {
                             }
                         }
                         for (let i = 1; i < 7; i++) {
-                            let collinf = collInfo[i - 1];
+                            let collinf = collInfo[i - 1].trim();
                             if (collinf === "") {
                             } else if (rocMembers.includes(collinf)) {
                                 document.getElementById(`${formdate}COLL${i}`).style.color = "black";
@@ -193,7 +204,7 @@ async function createSchedule() {
                             }
                         }
                         for (let i = 1; i < 7; i++) {
-                            let comminf = commInfo[i - 1];
+                            let comminf = commInfo[i - 1].trim();
                             if (comminf === "") {
                             } else if (rocMembers.includes(comminf)) {
                                 document.getElementById(`${formdate}COMM${i}`).style.color = "black";
@@ -211,34 +222,43 @@ async function createSchedule() {
                                 document.getElementById(`${formdate}COMM${i}`).style.color = "red";
                             }
                         }
-                        // 모든 카드 OK
-                        if (flag === false) {
-                            alert("오탈자를 확인해주세요")
-                            return 1; //저장하지 않음)
-                        } else {
+
+                        if (j === form.length - 1) {
+                            // 오타가 없는 경우
+                            if (flag) {
+                                console.log(JSON.stringify(confirmedSchedule));
+                                let xhr_check_saveDB = new XMLHttpRequest(); // REST API 통신을 위한 객체
+                                xhr_check_saveDB.open('POST', '/saveSchedule', true);
+                                xhr_check_saveDB.setRequestHeader("Content-Type", "application/json"); // 요청 해더 정의 > payload는 Json
+
+                                xhr_check_saveDB.send(JSON.stringify(confirmedSchedule));
+
+                                xhr_check_saveDB.onload = function() {
+                                    if (xhr_check_saveDB.responseText === "Save Success") {
+                                        window.location.href = "/remove";
+                                        alert("정상적으로 등록되었습니다.")
+                                    }
+                                    else {
+                                        // 디비에 넣는 서비스가 예외가 일었났으므로 세션 날릴 필요 없음.
+                                        window.location.href = "admin?id=" + nowUserId;
+                                        alert("저장이 불가능합니다. 다시 시도 부탁드립니다.");
+                                    }
+                                };
+                            }
+                            else {
+                                alert("오탈자를 확인해주세요")
+                                return; //저장하지 않음
+                            }
                         }
                     }
                 }
-                resolve();
             }
         }
-    });
-    console.log(JSON.stringify(confirmedSchedule, null, 2));
-    let xhr_check_saveDB = new XMLHttpRequest(); // REST API 통신을 위한 객체
-    xhr_check_saveDB.open('POST', '/saveSchedule', true);
-    xhr_check_saveDB.setRequestHeader("Content-Type", "application/json"); // 요청 해더 정의 > payload는 Json
 
-    xhr_check_saveDB.send(JSON.stringify(confirmedSchedule));
-
-    xhr_check_saveDB.onreadystatechange = function() {
-        console.log("open")
-
-        if (xhr_check_saveDB.readyState === 4 && xhr_check_saveDB.status === 200 && xhr_check_saveDB.responseText === "Save Success") {
-            alert("저장되었습니다");
-            window.location.href = "/remove"; // 아이디 검증 코드 추가 필요.
-        }
         else {
-            alert("저장이 불가능합니다. 관리자에게 문의해주세요.");
+            // 세션 저장할 필요 없음 > 재로그이 시킨 후 다시 접속 시 세션을 불러와야함.
+            window.location.href = "/"
+            alert("로그인 세션이 만료되었습니다. 재 로그인 부탁드립니다.")
         }
-    };
+    })
 }

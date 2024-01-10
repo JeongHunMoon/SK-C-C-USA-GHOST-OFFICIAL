@@ -65,8 +65,8 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
         xhr1.onload = function () {
             let results = xhr1.responseText; // 서버에서 전달 받은 payload
             if (results === "False") {
-                alert("DB에 스케줄 정보가 없습니다. \n오늘 날짜를 기준으로 만드세요!")
                 date = getCurrentDate();
+                alert("DB에 스케줄 정보가 없습니다. \n오늘 날짜를 기준으로 만드세요!")
             }
             else { date = results }
 
@@ -78,7 +78,7 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
 
             // 날짜의 요일을 가져오기
             dayOfWeek = dateInNewYork.toLocaleDateString("en-US", { weekday: "long" });
-            Container.appendChild(createCardStored([], dayOfWeek, date))
+            Container.appendChild(createCardStored([], dayOfWeek, date, true))
 
 
             //처음 페이지가 실행되면 DB에서 가장 마지막 날짜 + 1 날짜를 가져옴 + default 1개 출력
@@ -107,7 +107,7 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
 
                 // 날짜의 요일을 가져오기
                 let dayOfWeek = dateInNewYork.toLocaleDateString("en-US", { weekday: "long" });
-                cardInfo.push(createCardStored([], dayOfWeek, dateVal))
+                cardInfo.push(createCardStored([], dayOfWeek, dateVal, true))
             }
             console.log(cardInfo)
             document.getElementById('slider').disabled = false; // 활성화
@@ -126,7 +126,7 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
 
                 // JSON 형식의 문자열을 배열로 파싱
                 let savedDataArray = JSON.parse(results);
-                console.log("+++++++++++++++++서버에서 전달 받은 세션")
+                console.log("아래 객체는 서버에서 전달 받은 저장된 세션 값")
                 console.log(savedDataArray)
 
                 // 저장된 데이터가 없음.
@@ -153,7 +153,7 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                         let dateInNewYork = new Date(d + "T00:00:00");
                         dateInNewYork.toLocaleString("en-US", { timeZone: newYorkTimeZone });
                         let dayOfWeek = dateInNewYork.toLocaleDateString("en-US", { weekday: "long" });
-                        imageContainer.appendChild(createCardStored([], dayOfWeek, d))
+                        imageContainer.appendChild(createCardStored([], dayOfWeek, d, true))
                     }
 
 
@@ -253,14 +253,14 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                 }
                 // 이 코드 동작안하며 원인 파악 필요함.
                 else if(start_xhr.responseText === "false") {
-                    let a = start_xhr.responseText
-                    alert("다른 운영자님이 스케줄 생성 중입니다.\n 잠시 대기해주세요.")
+                    let payload = start_xhr.responseText
                     console.log("누군가 쓰고 있음." + start_xhr.responseText);
-                    window.location.href = "/";
+                    window.location.href = "/admin?id=" + nowUserId;
+                    alert("다른 운영자님이 스케줄 생성 중입니다.\n 잠시 대기해주세요.")
                 }
                 else {
-                    alert("잘못된 접근입니다.")
                     window.location.href = "/";
+                    alert("잘못된 접근입니다.")
                 }
             };
         })
@@ -270,27 +270,8 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
         doneForm2.addEventListener('submit', function(event) {
             // 폼의 기본 동작을 막음 (페이지 새로고침 방지)
             event.preventDefault();
-            // JavaScript 코드
 
-            // XMLHttpRequest 생성
-            const xhr = new XMLHttpRequest();
-
-            // done 엔드포인트에 GET 요청 보내기
-            xhr.open("GET", `/done?id=${nowUserId}`, true);
-            xhr.onreadystatechange = function () {
-                if (xhr.readyState === 4) {
-                    if (xhr.status === 200) {
-                        console.log("정상적으로 세션 종료. 다른 사용자 접속 허용");
-                        // 디비에 값 저장 후, admin 페이지로 리다이랙트
-                        createSchedule()
-                    } else {
-                        console.log("외부 사용자가 종료 처리 요청함");
-                    }
-                }
-            };
-
-            // 요청 보내기
-            xhr.send();
+            createSchedule()
         })
 
         // submit 이벤트가 발생하면 실행되는 함수
@@ -336,13 +317,11 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
             window.location.href = "/remove";
             alert("취소되었습니다.")
         })
-
-
     }
 
     else {
+        window.location.href = "/"
         alert("세션이 만료되었습니다. 로그인을 다시해주세요.")
         loadingOff();
-        window.location.href = "/"
     }
 })
