@@ -52,4 +52,17 @@ public class V1service {
         return list;
     }
 
+    public int deleteSchedule(List<Map<String, String>> scheduleData){
+        int result = 1;
+        try {
+            System.out.println("삭제준비완료");
+            // v1Dao.deleteSchedule(scheduleData);
+//            System.out.println("Success to call v1Dao");
+        } catch (Exception e) {
+//            System.out.println("Fail to call v1Dao" + e.getMessage());
+//            e.printStackTrace();
+        }
+        return result;
+    }
+
 }

@@ -225,4 +225,47 @@ public class Home {
         return rocALlNames;
     }
 
+//    @GetMapping("/deleteSchedule")
+//    // 호출 예시 ex) http://localhost:8080/OP?uuid=12313213dwf232fe231321 > 서버에서 발급된 해쉬가 올바르게 요청되야 OP페이지로 이동함.
+//    public String goToDeletePage(
+//            @RequestParam(value = "id", required = true) String id,
+//            @RequestParam(value = "first", required = false) String first,
+//            Model model) {
+//        List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
+//        System.out.println("ROC Member" + lists);
+//
+//        // 로그인한 사용자가 올바른지 검증
+//        for (Map<String, String> list : lists) {
+//            String rocMember = list.get("id"); // ROC인원의 id
+//            String processInfo = list.get("process");
+//
+//            //
+//            if (rocMember.equals(id)) {
+//                if (first != null) {
+//                    // "first" 파라미터가 전달된 경우 운영자 페이지에 처음 접속한 경우이므로 Model 저달
+//                    model.addAttribute("firstValue", first);
+//                }
+//                System.out.println(id + lists);
+//                return "home/deleteSchedule";
+//            }
+//        }
+//        return "home/400";
+//    }
+    @GetMapping("/deleteSchedule")
+    public String goToDeletePage(Model model) {
+            return "home/deleteSchedule";
+    }
+
+    @PostMapping("/delete")
+    public ResponseEntity<String> deleteSchedule(@RequestBody List<Map<String, String>> requestBody) throws Exception {
+        System.out.println("Delete from DB : " + requestBody);
+        try{
+            System.out.println("삭제준비완료");
+            //v1service.deleteSchedule(requestBody);
+        }
+        catch (Exception e) {
+            return ResponseEntity.ok("Delete Fail");
+        }
+        return ResponseEntity.ok("Delete Success");
+    }
 }
