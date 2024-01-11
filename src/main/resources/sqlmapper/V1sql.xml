@@ -32,6 +32,7 @@
         where A.date = #{dateInfo}
     </select>
 
+    <!-- 입력된 운영자 스케줄 저장 -->
     <insert id="saveSchedule" parameterType="java.util.List">
         insert into admin_shift (name,date,shift,priority)
         values
@@ -49,6 +50,20 @@
     <select id="adminShiftLastDate" resultType="String">
         SELECT date from admin_shift
     </select>
+
+    <!--선택된 운영자 스케줄 삭제-->
+    <delete id="deleteSchedule" parameterType="java.util.List">
+        delete from admin_shift (name,date,shift,priority)
+        values
+        <foreach collection="list" item="listItem" separator=",">
+            (
+            #{listItem.name},
+            #{listItem.date},
+            #{listItem.shift},
+            #{listItem.priority}
+            )
+        </foreach>
+    </delete>
 
 </mapper>
 

@@ -17,4 +17,5 @@ public interface V1Dao {
     // 운영자 스케줄 조회
     public List<Map<String ,String>> adminShiftListAll();
     public ArrayList<String> adminShiftLastDate();
+    public int deleteSchedule(List<Map<String, String>> scheduleData);
 }
