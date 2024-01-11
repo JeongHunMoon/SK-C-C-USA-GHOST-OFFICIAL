@@ -261,7 +261,7 @@ public class Home {
         System.out.println("Delete from DB : " + requestBody);
         try{
             System.out.println("삭제준비완료");
-            //v1service.deleteSchedule(requestBody);
+            v1service.deleteSchedule(requestBody);
         }
         catch (Exception e) {
             return ResponseEntity.ok("Delete Fail");

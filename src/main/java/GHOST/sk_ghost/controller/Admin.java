@@ -225,4 +225,17 @@ public class Admin {
         return "home/400";
     }
 
+
+    @PostMapping("/modifyUpdate")
+    public ResponseEntity<String> modifyUpdate(@RequestBody List<Map<String, String>> requestBody) throws Exception {
+        System.out.println("modifyUpdate from DB : " + requestBody);
+        try {
+            v1service.modifyUpdate(requestBody);
+        }
+        catch (Exception e) {
+            return ResponseEntity.ok("Update Fail");
+        }
+        return ResponseEntity.ok("Update Success");
+    }
+
 }
