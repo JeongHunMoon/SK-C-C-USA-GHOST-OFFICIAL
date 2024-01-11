@@ -39,10 +39,9 @@ public class V1service {
         int result = 1;
         try {
             v1Dao.saveSchedule(scheduleData);
-//            System.out.println("Success to call v1Dao");
         } catch (Exception e) {
-//            System.out.println("Fail to call v1Dao" + e.getMessage());
-//            e.printStackTrace();
+            // System.out.println("Fail to call v1Dao" + e.getMessage());
+            // e.printStackTrace();
         }
         return result;
     }
@@ -55,14 +54,26 @@ public class V1service {
     public int deleteSchedule(List<Map<String, String>> scheduleData){
         int result = 1;
         try {
-            System.out.println("삭제준비완료");
-            // v1Dao.deleteSchedule(scheduleData);
-//            System.out.println("Success to call v1Dao");
+            System.out.println("삭제준비완료" +scheduleData);
+            v1Dao.deleteSchedule(scheduleData);
+//          System.out.println("Success to call v1Dao");
         } catch (Exception e) {
 //            System.out.println("Fail to call v1Dao" + e.getMessage());
 //            e.printStackTrace();
         }
         return result;
     }
+
+    public void modifyUpdate(List<Map<String, String>> scheduleData){
+        try {
+            System.out.println("변경준비완료");
+            v1Dao.modifyUpdate(scheduleData);
+
+        } catch (Exception e) {
+//            System.out.println("Fail to call v1Dao" + e.getMessage());
+//            e.printStackTrace();
+        }
+    }
+
 
 }
