@@ -35,7 +35,7 @@ public class V1service {
     }
 
     @Transactional
-    public int saveSchedule(List<Map<String, String>> scheduleData) {
+    public void saveSchedule(List<Map<String, String>> scheduleData) {
         int result = 1;
         try {
             v1Dao.saveSchedule(scheduleData);
@@ -43,7 +43,6 @@ public class V1service {
             // System.out.println("Fail to call v1Dao" + e.getMessage());
             // e.printStackTrace();
         }
-        return result;
     }
 
     public ArrayList<String> adminShiftLastDate() {
@@ -51,17 +50,15 @@ public class V1service {
         return list;
     }
 
-    public int deleteSchedule(List<Map<String, String>> scheduleData){
+    public void deleteSchedule(List<Map<String, String>> scheduleData){
         int result = 1;
         try {
             System.out.println("삭제준비완료" +scheduleData);
             v1Dao.deleteSchedule(scheduleData);
-//          System.out.println("Success to call v1Dao");
         } catch (Exception e) {
-//            System.out.println("Fail to call v1Dao" + e.getMessage());
-//            e.printStackTrace();
+            System.out.println("Fail to call v1Dao" + e.getMessage());
+            e.printStackTrace();
         }
-        return result;
     }
 
     public void modifyUpdate(List<Map<String, String>> scheduleData){
@@ -70,10 +67,8 @@ public class V1service {
             v1Dao.modifyUpdate(scheduleData);
 
         } catch (Exception e) {
-//            System.out.println("Fail to call v1Dao" + e.getMessage());
-//            e.printStackTrace();
+            System.out.println("Fail to call v1Dao" + e.getMessage());
+            e.printStackTrace();
         }
     }
-
-
 }

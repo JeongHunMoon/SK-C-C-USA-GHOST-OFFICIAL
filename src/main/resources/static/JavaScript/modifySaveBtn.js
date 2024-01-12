@@ -1,4 +1,7 @@
 function modifySaveBtn(beforeCards) {
+    document.getElementById("modify_save").disabled = true;     // 버튼 비활성화
+    document.getElementById("modify_save").style.opacity = 0.5;     // 버튼 비활성화
+
     Kakao.Auth.getStatusInfo(function(statusObj) {
         let nowUserId = null;
         let nowUserNiname = null;
@@ -32,6 +35,8 @@ function modifySaveBtn(beforeCards) {
                 //DB에서 이름을 불러오지 못했을 때
                 if (rocMembers.length === 0) {
                     window.location.href = '/remove';
+                    document.getElementById("modify_save").disabled = false;
+                    document.getElementById("modify_save").style.opacity = 1;
                     alert("현재 DB ROC 맴버가 없습니다.. 관리자에게 문의해주세요??")
                 }
                 else {
@@ -120,10 +125,11 @@ function modifySaveBtn(beforeCards) {
                             // 변경(업데이트) "A" > "B"
                             else if (rocMembers.includes(elecinf) && beforeCards[idInf] !== "" && beforeCards[idInf] !== elecinf) {
                                 updateInfo.push({
-                                    "name": elecinf,
+                                    "name": beforeCards[idInf],
                                     "date": formdate,
                                     "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                     "priority": i < 4 ? '1' : '2',
+                                    "toBeName": elecinf
                                 });
                             }
 
@@ -148,25 +154,57 @@ function modifySaveBtn(beforeCards) {
 
                         }
 
-                        /*
+                        // 조립
                         for (let i = 1; i < 7; i++) {
-                            let cellinf = cellInfo[i - 1].trim();
-                            if (cellinf === "") {
-                            } else if (rocMembers.includes(cellinf)) {
-                                //confirmedSchedule 정보 넣기
-                                document.getElementById(`${formdate}CELL${i}`).style.color = "black";
-                                confirmedSchedule.push({
+                            let cellinf = cellInfo[i - 1].trim(); // 하나의 값
+                            let idInf = `${formdate}CELL${i}`;
+                            document.getElementById(idInf).style.color = "black";
+
+                            if (beforeCards[idInf] !== cellinf) {noChange = false;}
+                            // 입력 공백 또는 변경 사항이 없을시 continue
+                            if ((beforeCards[idInf] === "" && cellinf === "") || (beforeCards[idInf] === cellinf)) {}
+
+                            // 삭제. > 입력 값이 공백인 경우
+                            else if (beforeCards[idInf] !== "" && cellinf === "") {
+                                deleteInfo.push({
+                                    "name": beforeCards[idInf],
+                                    "date": formdate,
+                                    "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
+                                    "priority": i < 4 ? '1' : '2',
+                                });
+                            }
+
+                            // 변경(업데이트) "A" > "B"
+                            else if (rocMembers.includes(cellinf) && beforeCards[idInf] !== "" && beforeCards[idInf] !== cellinf) {
+                                updateInfo.push({
                                     "name": cellinf,
                                     "date": formdate,
                                     "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                     "priority": i < 4 ? '1' : '2',
                                 });
-                            } else {
-                                // 해당 줄 빨간줄 표시
+                            }
+
+                            // 추가 "" > "A"
+                            else if (rocMembers.includes(cellinf) && beforeCards[idInf] === "") {
+                                insertInfo.push({
+                                    "name": cellinf,
+                                    "date": formdate,
+                                    "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
+                                    "priority": i < 4 ? '1' : '2',
+                                });
+                            }
+
+                            else if (!rocMembers.includes(cellinf)) {
                                 flag = false;
                                 document.getElementById(`${formdate}CELL${i}`).style.color = "red";
                             }
+                            else {
+                                flag = false;
+                                document.getElementById(`${formdate}CELL${i}`).style.color = "red";
+                            }
+
                         }
+                        /*
                         for (let i = 1; i < 7; i++) {
                             let forminf = formInfo[i - 1].trim();
                             if (forminf === "") {
@@ -261,8 +299,9 @@ function modifySaveBtn(beforeCards) {
                         */
 
                         if (j === form.length - 1) {
-
                             if (noChange) {
+                                document.getElementById("modify_save").disabled = false;
+                                document.getElementById("modify_save").style.opacity = 1;
                                 alert("변경 사항이 없습니다.")
                                 return; //저장하지 않음
                             }
@@ -278,13 +317,14 @@ function modifySaveBtn(beforeCards) {
                                 if (insertInfo.length !== 0) {asyncTotalCounter +=1}
                                 if (deleteInfo.length !== 0) {asyncTotalCounter +=1}
                                 if (updateInfo.length !== 0) {asyncTotalCounter +=1}
+                                console.log("=================", asyncTotalCounter)
 
                                 // Promise를 사용하여 비동기 작업 정의
                                 function performAsyncOperation(xhr, infoArray) {
                                     return new Promise(function(resolve) {
                                         xhr.send(JSON.stringify(infoArray));
                                         xhr.onload = function() {
-                                            if (xhr.responseText === "Delete Success" || xhr.responseText === "Save Success") {
+                                            if (xhr.responseText === "Delete Success" || xhr.responseText === "Save Success" || xhr.responseText === "Update Success") {
                                                 resolve();
                                             } else {
                                                 // 에러 처리 로직 추가
@@ -338,27 +378,30 @@ function modifySaveBtn(beforeCards) {
                                 function checkAllOperationsComplete() {
                                     if (asyncCounter === asyncTotalCounter) {
                                         // 모든 작업이 완료된 후에 실행될 동작
-                                        alert("작업 모두 완료");
                                         window.location.href = "/admin?id=" + nowUserId
+                                        document.getElementById("modify_save").disabled = false;
+                                        document.getElementById("modify_save").style.opacity = 1;
+                                        alert("작업 모두 완료");
                                     }
                                 }
                             }
                             else {
+                                document.getElementById("modify_save").disabled = false;
+                                document.getElementById("modify_save").style.opacity = 1;
                                 alert("오탈자를 확인해주세요")
                                 return; //저장하지 않음
                             }
                         }
                     }
-
-                    //window.location.href = '/admin?id=' + nowUserId;
-
                 }
             }
 
         }
         else {
-            alert("로그인 세션이 만료되었습니다. 다시 로그인 부탁드립니다. ")
             window.location.href = "/"
+            document.getElementById("modify_save").disabled = false;
+            document.getElementById("modify_save").style.opacity = 1;
+            alert("로그인 세션이 만료되었습니다. 다시 로그인 부탁드립니다. ")
         }
     })
 }

@@ -120,6 +120,22 @@ public class Admin {
         return "home/admin";
     }
 
+    // id get으로 받고, 맴버 검증 수행 후 취소하기
+    @GetMapping("/removeModify")
+    public String removeModify(@RequestParam String id, HttpSession session) {
+
+        if (id.equals(modifyAdminhashValue)) {
+            // 사용할 id를 여기에서 활용할 수 있음
+            modifyAdminhashValue = null;
+            System.out.println("수정시 세션이 성공적으로 종료되었습니다.");
+            return "home/admin";
+        }
+        else {
+            return "home/400";
+        }
+    }
+
+
 
 
     @PostMapping("/saveData")

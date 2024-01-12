@@ -3,6 +3,7 @@ function createSchedule() {
     Kakao.Auth.getStatusInfo(function(statusObj) {
         let nowUserId = null;
         let nowUserNiname = null;
+        let noChange = false;
 
         // 만약 사용자가 로그인이 되어 있는 경우
         if (statusObj.status === 'connected') {
@@ -28,6 +29,8 @@ function createSchedule() {
 
                 //DB에서 이름을 불러오지 못했을 때
                 if (rocMembers.length === 0) {
+                    document.getElementById('doneBtnModify').disabled = false;
+                    document.getElementById('doneBtnModify').style.opacity = 1;
                     window.location.href = '/remove';
                     alert("현재 DB ROC 맴버가 없습니다.. 관리자에게 문의해주세요??")
                 }
@@ -98,7 +101,7 @@ function createSchedule() {
                             //앞뒤로 트립 제거
                             if (elecinf === "") {
                             } else if (rocMembers.includes(elecinf)) {
-                                console.log(elecinf)
+                                noChange = true;
                                 document.getElementById(`${formdate}ELEC${i}`).style.color = "black";
                                 //confirmedSchedule 정보 넣기
                                 confirmedSchedule.push({
@@ -108,7 +111,7 @@ function createSchedule() {
                                     "priority": i < 4 ? '1' : '2',
                                 });
                             } else {
-                                // 해당 줄 빨간줄 표시
+                                noChange = true;
                                 flag = false;
                                 document.getElementById(`${formdate}ELEC${i}`).style.color = "red";
                             }
@@ -117,7 +120,7 @@ function createSchedule() {
                             let cellinf = cellInfo[i - 1].trim();
                             if (cellinf === "") {
                             } else if (rocMembers.includes(cellinf)) {
-                                //confirmedSchedule 정보 넣기
+                                noChange = true;
                                 document.getElementById(`${formdate}CELL${i}`).style.color = "black";
                                 confirmedSchedule.push({
                                     "name": cellinf,
@@ -126,7 +129,7 @@ function createSchedule() {
                                     "priority": i < 4 ? '1' : '2',
                                 });
                             } else {
-                                // 해당 줄 빨간줄 표시
+                                noChange = true;
                                 flag = false;
                                 document.getElementById(`${formdate}CELL${i}`).style.color = "red";
                             }
@@ -135,7 +138,7 @@ function createSchedule() {
                             let forminf = formInfo[i - 1].trim();
                             if (forminf === "") {
                             } else if (rocMembers.includes(forminf)) {
-                                //confirmedSchedule 정보 넣기
+                                noChange = true;
                                 document.getElementById(`${formdate}FORM${i}`).style.color = "black";
                                 confirmedSchedule.push({
                                     "name": forminf,
@@ -144,7 +147,7 @@ function createSchedule() {
                                     "priority": i < 4 ? '1' : '2',
                                 });
                             } else {
-                                // 해당 줄 빨간줄 표시
+                                noChange = true;
                                 flag = false;
                                 document.getElementById(`${formdate}FORM${i}`).style.color = "red";
                             }
@@ -153,7 +156,7 @@ function createSchedule() {
                             let packinf = packInfo[i - 1].trim();
                             if (packinf === "") {
                             } else if (rocMembers.includes(packinf)) {
-                                //confirmedSchedule 정보 넣기
+                                noChange = true;
                                 document.getElementById(`${formdate}PACK${i}`).style.color = "black";
                                 confirmedSchedule.push({
                                     "name": packinf,
@@ -162,7 +165,7 @@ function createSchedule() {
                                     "priority": i < 4 ? '1' : '2',
                                 });
                             } else {
-                                // 해당 줄 빨간줄 표시
+                                noChange = true;
                                 flag = false;
                                 document.getElementById(`${formdate}PACK${i}`).style.color = "red";
                             }
@@ -171,7 +174,7 @@ function createSchedule() {
                             let wmsinf = wmsInfo[i - 1].trim();
                             if (wmsinf === "") {
                             } else if (rocMembers.includes(wmsinf)) {
-                                //confirmedSchedule 정보 넣기
+                                noChange = true;
                                 document.getElementById(`${formdate}WMS${i}`).style.color = "black";
                                 confirmedSchedule.push({
                                     "name": wmsinf,
@@ -180,7 +183,7 @@ function createSchedule() {
                                     "priority": i < 4 ? '1' : '2',
                                 });
                             } else {
-                                // 해당 줄 빨간줄 표시
+                                noChange = true;
                                 flag = false;
                                 document.getElementById(`${formdate}WMS${i}`).style.color = "red";
                             }
@@ -189,8 +192,8 @@ function createSchedule() {
                             let collinf = collInfo[i - 1].trim();
                             if (collinf === "") {
                             } else if (rocMembers.includes(collinf)) {
+                                noChange = true;
                                 document.getElementById(`${formdate}COLL${i}`).style.color = "black";
-                                //confirmedSchedule 정보 넣기
                                 confirmedSchedule.push({
                                     "name": collinf,
                                     "date": formdate,
@@ -198,7 +201,7 @@ function createSchedule() {
                                     "priority": i < 4 ? '1' : '2',
                                 });
                             } else {
-                                // 해당 줄 빨간줄 표시
+                                noChange = true;
                                 flag = false;
                                 document.getElementById(`${formdate}COLL${i}`).style.color = "red";
                             }
@@ -207,25 +210,31 @@ function createSchedule() {
                             let comminf = commInfo[i - 1].trim();
                             if (comminf === "") {
                             } else if (rocMembers.includes(comminf)) {
+                                noChange = true;
                                 document.getElementById(`${formdate}COMM${i}`).style.color = "black";
-                                //confirmedSchedule 정보 넣기
                                 confirmedSchedule.push({
                                     "name": comminf,
                                     "date": formdate,
                                     "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                     "priority": i < 4 ? '1' : '2',
                                 });
-                                //console.log("confirmedSchedule"+JSON.stringify(confirmedSchedule, null, 2));
                             } else {
-                                // 해당 줄 빨간줄 표시
+                                noChange = true;
                                 flag = false;
                                 document.getElementById(`${formdate}COMM${i}`).style.color = "red";
                             }
                         }
 
                         if (j === form.length - 1) {
+                            // 변경된 데이터가 없는 경우
+                            if (!noChange) {
+                                document.getElementById('doneBtnModify').disabled = false;
+                                document.getElementById('doneBtnModify').style.opacity = 1;
+                                alert("저장할 데이터가 없습니다.")
+                                return; //저장하지 않음
+                            }
                             // 오타가 없는 경우
-                            if (flag) {
+                            else if (flag) {
                                 console.log(JSON.stringify(confirmedSchedule));
                                 let xhr_check_saveDB = new XMLHttpRequest(); // REST API 통신을 위한 객체
                                 xhr_check_saveDB.open('POST', '/saveSchedule', true);
@@ -235,10 +244,15 @@ function createSchedule() {
 
                                 xhr_check_saveDB.onload = function() {
                                     if (xhr_check_saveDB.responseText === "Save Success") {
+                                        document.getElementById('doneBtnModify').disabled = false;
+                                        document.getElementById('doneBtnModify').style.opacity = 1;
+
                                         window.location.href = "/remove";
                                         alert("정상적으로 등록되었습니다.")
                                     }
                                     else {
+                                        document.getElementById('doneBtnModify').disabled = false;
+                                        document.getElementById('doneBtnModify').style.opacity = 1;
                                         // 디비에 넣는 서비스가 예외가 일었났으므로 세션 날릴 필요 없음.
                                         window.location.href = "admin?id=" + nowUserId;
                                         alert("저장이 불가능합니다. 다시 시도 부탁드립니다.");
@@ -246,6 +260,8 @@ function createSchedule() {
                                 };
                             }
                             else {
+                                document.getElementById('doneBtnModify').disabled = false;
+                                document.getElementById('doneBtnModify').style.opacity = 1;
                                 alert("오탈자를 확인해주세요")
                                 return; //저장하지 않음
                             }
@@ -256,6 +272,8 @@ function createSchedule() {
         }
 
         else {
+            document.getElementById('doneBtnModify').disabled = false;
+            document.getElementById('doneBtnModify').style.opacity = 1;
             // 세션 저장할 필요 없음 > 재로그이 시킨 후 다시 접속 시 세션을 불러와야함.
             window.location.href = "/"
             alert("로그인 세션이 만료되었습니다. 재 로그인 부탁드립니다.")
