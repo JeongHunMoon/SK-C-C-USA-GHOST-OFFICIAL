@@ -16,14 +16,14 @@ public interface V1Dao {
     public List<Map<String, String>> oneDateSchedule(String dateInfo);
 
     //DB에 삽입
-    public int saveSchedule(List<Map<String, String>> scheduleData);
+    public void saveSchedule(List<Map<String, String>> scheduleData);
 
     // 운영자 스케줄 조회
     public List<Map<String ,String>> adminShiftListAll();
 
     public ArrayList<String> adminShiftLastDate();
 
-    public int deleteSchedule(List<Map<String, String>> scheduleData);
+    public void deleteSchedule(List<Map<String, String>> scheduleData);
     
     public void modifyUpdate(List<Map<String, String>> scheduleData);
 }

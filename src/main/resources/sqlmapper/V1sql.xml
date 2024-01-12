@@ -51,19 +51,30 @@
         SELECT date from admin_shift
     </select>
 
-    <!--선택된 운영자 스케줄 삭제-->
+    <!-- 선택된 운영자 스케줄 삭제 -->
     <delete id="deleteSchedule" parameterType="java.util.List">
-        delete from admin_shift (name,date,shift,priority)
-        values
-        <foreach collection="list" item="listItem" separator=",">
+        delete from admin_shift
+        where
+        <foreach collection="list" item="listItem" separator="OR">
             (
-            #{listItem.name},
-            #{listItem.date},
-            #{listItem.shift},
-            #{listItem.priority}
+            name = #{listItem.name, jdbcType=VARCHAR},
+            date = #{listItem.date, jdbcType=DATE},
+            shift = #{listItem.shift, jdbcType=VARCHAR},
+            priority = #{listItem.priority, jdbcType=VARCHAR}
             )
         </foreach>
     </delete>
 
+    <!-- 이름 수정 -->
+    <update id="modifyUpdate" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            UPDATE admin_shift
+            SET name = #{item.toBeName}
+            WHERE name = #{item.name}
+            AND date = #{item.date}
+            AND shift = #{item.shift}
+            AND priority = #{item.priority}
+        </foreach>
+    </update>
 </mapper>
 

@@ -258,9 +258,8 @@ public class Home {
 
     @PostMapping("/delete")
     public ResponseEntity<String> deleteSchedule(@RequestBody List<Map<String, String>> requestBody) throws Exception {
-        System.out.println("Delete from DB : " + requestBody);
         try{
-            System.out.println("삭제준비완료");
+            System.out.println("Delete from DB : " + requestBody);
             v1service.deleteSchedule(requestBody);
         }
         catch (Exception e) {

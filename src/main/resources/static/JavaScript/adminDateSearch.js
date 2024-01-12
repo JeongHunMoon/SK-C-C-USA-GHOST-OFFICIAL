@@ -14,6 +14,7 @@ function adminDateSearch() {
     dateForm.addEventListener('submit', function(event) {
         // 폼의 기본 동작을 막음 (페이지 새로고침 방지)
         event.preventDefault();
+        loadingOn()
 
         // 기존의 카드 값 초기화.
         // "image-container" id를 가진 div 요소 가져오기
@@ -44,14 +45,17 @@ function adminDateSearch() {
             console.log(cards)
 
             // 순차적으로 비동기 작업을 수행하는 함수
-            async function processCards() {
+            async function processCardsSearchedFromUser() {
                 for (let card of cards) {
-                    await processCard(card);
+                    await processCardSearchedFromUser(card);
                 }
+
+                // 로딩이 끝나면, off
+                loadingOff()
             }
 
             // 각 날짜에 대한 비동기 작업을 수행하는 함수
-            function processCard(card) {
+            function processCardSearchedFromUser(card) {
                 return new Promise(resolve => {
                     let xhr1 = new XMLHttpRequest();
                     let payloadFront = {"date": card};
@@ -76,7 +80,7 @@ function adminDateSearch() {
             }
 
             // 비동기 작업을 순차적으로 실행
-            processCards();
+            processCardsSearchedFromUser();
 
 
         }
@@ -104,6 +108,8 @@ function adminDateSearch() {
                 for (let card of cards) {
                     await processCard(card);
                 }
+                // 로딩이 끝나면, off
+                loadingOff()
             }
 
             // 각 날짜에 대한 비동기 작업을 수행하는 함수
