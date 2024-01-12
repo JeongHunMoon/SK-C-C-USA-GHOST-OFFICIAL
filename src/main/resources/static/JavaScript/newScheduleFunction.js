@@ -3,13 +3,11 @@
 
 //최초 사용자(운영자) 이미 카카오 로그인이 되어있는지 판단.
 document.getElementById('slider').disabled = true; // 비활성화
-document.getElementById('startBtn').disabled = true; // 비활성화
-document.getElementById('doneForm').style.display = 'none'; // 제출 버튼 비활성화
-document.getElementById('doneBtn').style.display = 'none'; // 제출 버튼 비활성화
-document.getElementById('saveForm').style.display = 'none'; // 제출 버튼 비활성화
-document.getElementById('saveBtn').style.display = 'none'; // 제출 버튼 비활성화
-document.getElementById('cancelForm').style.display = 'none'; // 제출 버튼 비활성화
-document.getElementById('cancelBtn').style.display = 'none'; // 제출 버튼 비활성화
+document.getElementById('startBtnModify').disabled = true; // 비활성화
+
+document.getElementById('doneBtnModify').style.display = 'none'; // 제출 버튼 비활성화
+document.getElementById('saveBtnModify').style.display = 'none'; // 제출 버튼 비활성화
+document.getElementById('cancelBtnModify').style.display = 'none'; // 제출 버튼 비활성화
 
 loadingOn();
 Kakao.Auth.getStatusInfo(function(statusObj) {
@@ -111,7 +109,7 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
             }
             console.log(cardInfo)
             document.getElementById('slider').disabled = false; // 활성화
-            document.getElementById('startBtn').disabled = false; // 활성화
+            document.getElementById('startBtnModify').disabled = false; // 활성화
 
 
             // 백업 검사. 기존에 작업하던 값이 있었다면 백업한다.
@@ -165,15 +163,12 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                     document.getElementById("slider-value").textContent = mySet.size.toString();
                     // 슬라이드, start 버튼 비활성화
                     document.getElementById('slider').style.display = 'none'; // 제출 버튼 비활성화
-                    document.getElementById('startForm').style.display = 'none'; // 제출 버튼 비활성화
-                    document.getElementById('startBtn').style.display = 'none'; // 제출 버튼 비활성화
+                    document.getElementById('startBtnModify').style.display = 'none'; // 제출 버튼 비활성화
+
                     // saved와 done 버튼 활성화
-                    document.getElementById('saveForm').style.display = 'block'; // 제출 버튼 활성화
-                    document.getElementById('saveBtn').style.display = 'block'; // 제출 버튼 활성화
-                    document.getElementById('doneForm').style.display = 'block'; // 제출 버튼 활성화
-                    document.getElementById('doneBtn').style.display = 'block'; // 제출 버튼 활성화
-                    document.getElementById('cancelForm').style.display = 'block'; // 제출 버튼 활성화
-                    document.getElementById('cancelBtn').style.display = 'block'; // 제출 버튼 활성화
+                    document.getElementById('saveBtnModify').style.display = 'flex'; // 제출 버튼 활성화
+                    document.getElementById('doneBtnModify').style.display = 'flex'; // 제출 버튼 활성화
+                    document.getElementById('cancelBtnModify').style.display = 'flex'; // 제출 버튼 활성화
 
                     const inputElements = document.querySelectorAll('#image-container input');
 
@@ -216,10 +211,10 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
 
         // 입력 시작 이벤트
         // submit 이벤트가 발생하면 실행되는 함수
-        const dateForm = document.getElementById('startForm');
-        dateForm.addEventListener('submit', function(event) {
-            // 폼의 기본 동작을 막음 (페이지 새로고침 방지)
-            event.preventDefault();
+        const dateForm = document.getElementById('startBtnModify');
+        dateForm.addEventListener('click', function(event) {
+            document.getElementById('startBtnModify').style.display = 'none'; // 제출 버튼 비활성화
+            document.getElementById('slider').style.display = 'none';
 
             let start_xhr = new XMLHttpRequest();
             start_xhr.open("GET", "/uniquePage?id="+nowUserId, true);
@@ -231,18 +226,6 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                     // id > 이름 변경
                     alert(nowUserNiname + " 매니저님, 스케줄을 생성해주세요.")
 
-                    document.getElementById('slider').style.display = 'none';
-                    document.getElementById('startForm').style.display = 'none'; // 제출 버튼 비활성화
-                    document.getElementById('startBtn').style.display = 'none'; // 제출 버튼 비활성화
-
-                    document.getElementById('doneForm').style.display = 'block'; // 제출 버튼 비활성화
-                    document.getElementById('doneBtn').style.display = 'block'; // 제출 버튼 비활성화
-
-                    document.getElementById('saveForm').style.display = 'block'; // 제출 버튼 비활성화
-                    document.getElementById('saveBtn').style.display = 'block'; // 제출 버튼 비활성화
-                    document.getElementById('cancelForm').style.display = 'block'; // 제출 버튼 활성화
-                    document.getElementById('cancelBtn').style.display = 'block'; // 제출 버튼 활성화
-
                     // image-container 내부의 모든 input 태그 가져오기
                     const inputElements = document.querySelectorAll('#image-container input');
 
@@ -250,15 +233,25 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                     inputElements.forEach(input => {
                         input.disabled = false;
                     });
+                    document.getElementById('doneBtnModify').style.display = 'flex'; // 제출 버튼 비활성화
+                    document.getElementById('saveBtnModify').style.display = 'flex'; // 제출 버튼 비활성화
+                    document.getElementById('cancelBtnModify').style.display = 'flex'; // 제출 버튼 활성화
                 }
                 // 이 코드 동작안하며 원인 파악 필요함.
                 else if(start_xhr.responseText === "false") {
                     let payload = start_xhr.responseText
+
+                    document.getElementById('slider').style.display = 'flex';
+                    document.getElementById('startBtnModify').style.display = 'flex';
+
                     console.log("누군가 쓰고 있음." + start_xhr.responseText);
                     window.location.href = "/admin?id=" + nowUserId;
                     alert("다른 운영자님이 스케줄 생성 중입니다.\n 잠시 대기해주세요.")
                 }
                 else {
+                    document.getElementById('slider').style.display = 'flex';
+                    document.getElementById('startBtnModify').style.display = 'flex';
+
                     window.location.href = "/";
                     alert("잘못된 접근입니다.")
                 }
@@ -266,20 +259,18 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
         })
 
         // submit 이벤트가 발생하면 실행되는 함수
-        const doneForm2 = document.getElementById('doneForm');
-        doneForm2.addEventListener('submit', function(event) {
-            // 폼의 기본 동작을 막음 (페이지 새로고침 방지)
-            event.preventDefault();
-
+        const doneForm2 = document.getElementById('doneBtnModify');
+        doneForm2.addEventListener('click', function(event) {
+            doneForm2.disabled = true; // 제출 버튼 활성화
+            doneForm2.style.opacity = 0.5
             createSchedule()
         })
 
         // submit 이벤트가 발생하면 실행되는 함수
-        const saveForm = document.getElementById('saveForm');
-        saveForm.addEventListener('submit', function(event) {
-            // 폼의 기본 동작을 막음 (페이지 새로고침 방지)
-            event.preventDefault();
-
+        const saveForm = document.getElementById('saveBtnModify');
+        saveForm.addEventListener('click', function(event) {
+            saveForm.disabled = true; // 제출 버튼 활성화
+            saveForm.style.opacity = 0.5
             // DB 에 접속하여 해당 세션은 무조건 있음.
             // 해당 세션에 데이터를 저장하면 됨.
 
@@ -297,24 +288,30 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                 // 서버 응답
                 save_xhr.onload = function () {
                     let results = save_xhr.responseText;
+                    saveForm.disabled = false; // 제출 버튼 활성화
+                    saveForm.style.opacity = 1;
                     alert("임시 저장 완료!")
                 };
             }
             else {
+                saveForm.disabled = false; // 제출 버튼 활성화
+                saveForm.style.opacity = 1;
                 alert("저장할 값이 없습니다.")
             }
         })
 
 
         // cancel 이벤트가 발생하면 실행되는 함수
-        const cancelForm = document.getElementById('cancelForm');
-        cancelForm.addEventListener('submit', function(event) {
-            // 폼의 기본 동작을 막음 (페이지 새로고침 방지)
-            event.preventDefault();
-
+        const cancelForm = document.getElementById('cancelBtnModify');
+        cancelForm.addEventListener('click', function(event) {
+            cancelForm.disabled = true; // 제출 버튼 활성화
+            cancelForm.style.opacity = 0.5
 
             //해당 코드로 변경 필요 > window.location.href = "/remove?id="+nowUserId;
             window.location.href = "/remove";
+
+            cancelForm.disabled = false; // 제출 버튼 활성화
+            cancelForm.style.opacity = 1
             alert("취소되었습니다.")
         })
     }

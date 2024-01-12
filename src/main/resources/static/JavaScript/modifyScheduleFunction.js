@@ -1,7 +1,9 @@
 function modifyScheduleFunction() {
+    modifyOffBtn()
     let userId;
     let userImage;
     let noFlag = false; // 수정할 페이지가 하나도 없다면 false
+
     // 사용자가 OP 페이지에 들어오면 카카오톡 프로필, 이름을 애니메이션으로 보여준다.
     Kakao.Auth.getStatusInfo(function(statusObj) {
         if (statusObj.status === 'connected') {
@@ -38,6 +40,7 @@ function modifyScheduleFunction() {
                 else {
                     afterProcessCards();
                 }
+                modifyOnBtn()
             }
 
             // 각 날짜에 대한 비동기 작업을 수행하는 함수
@@ -100,8 +103,21 @@ function modifyScheduleFunction() {
                     modifySaveBtn(asIsAllInfos)
                 });
 
+                // 버튼 요소 가져오기
+                let button2 = document.getElementById('modify_cancel');
+
+                // 클릭 이벤트에 리스너 등록
+                button2.addEventListener('click', function() {
+                    modifyCancelBtn()
+                });
+
             }
 
+        }
+        else {
+            modifyOnBtn()
+            window.location.href = "/"
+            alert("세션이 만료되었습니다. 로그인을 다시해주세요.")
         }
     })
 }
@@ -126,3 +142,18 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
     });
 });
+
+
+function modifyOnBtn() {
+    document.getElementById("modify_cancel").disabled = false;     // 버튼 비활성화
+    document.getElementById("modify_cancel").style.opacity = 1;     // 버튼 비활성화
+    document.getElementById("modify_save").disabled = false;     // 버튼 비활성화
+    document.getElementById("modify_save").style.opacity = 1;     // 버튼 비활성화
+}
+
+function modifyOffBtn() {
+    document.getElementById("modify_cancel").disabled = true;     // 버튼 비활성화
+    document.getElementById("modify_cancel").style.opacity = 0.5;     // 버튼 비활성화
+    document.getElementById("modify_save").disabled = true;     // 버튼 비활성화
+    document.getElementById("modify_save").style.opacity = 0.5;     // 버튼 비활성화
+}
