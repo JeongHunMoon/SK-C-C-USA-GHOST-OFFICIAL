@@ -1,13 +1,16 @@
 function modifyScheduleFunction() {
+    loadingOn()
     modifyOffBtn()
     let userId;
     let userImage;
+    let userName
     let noFlag = false; // 수정할 페이지가 하나도 없다면 false
 
     // 사용자가 OP 페이지에 들어오면 카카오톡 프로필, 이름을 애니메이션으로 보여준다.
     Kakao.Auth.getStatusInfo(function(statusObj) {
         if (statusObj.status === 'connected') {
-            userId = statusObj.user.properties.nickname
+            userId = statusObj.user.kakao_account.email;
+            userName = statusObj.user.properties.nickname
             userImage = statusObj.user.kakao_account.profile.profile_image_url
 
             // 시작일과 종료일의 input 요소를 가져옴
@@ -35,11 +38,14 @@ function modifyScheduleFunction() {
                 }
 
                 if (!noFlag) {
-                    alert("현재 날짜 범위는 스케줄이 없습니다.\n New로 생성하세요!")
+                    window.location.href ='/admin?id='+userId
+                    modifyOnBtn()
+                    alert("현재 날짜 범위는 스케줄이 없습니다.")
                 }
                 else {
                     afterProcessCards();
                 }
+                loadingOff()
                 modifyOnBtn()
             }
 
@@ -115,6 +121,7 @@ function modifyScheduleFunction() {
 
         }
         else {
+            loadingOff()
             modifyOnBtn()
             window.location.href = "/"
             alert("세션이 만료되었습니다. 로그인을 다시해주세요.")
