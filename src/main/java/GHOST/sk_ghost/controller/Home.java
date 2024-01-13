@@ -251,10 +251,6 @@ public class Home {
 //        }
 //        return "home/400";
 //    }
-    @GetMapping("/deleteSchedule")
-    public String goToDeletePage(Model model) {
-            return "home/deleteSchedule";
-    }
 
     @PostMapping("/delete")
     public ResponseEntity<String> deleteSchedule(@RequestBody List<Map<String, String>> requestBody) throws Exception {

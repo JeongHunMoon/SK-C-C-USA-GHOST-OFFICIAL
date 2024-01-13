@@ -25,6 +25,8 @@
 
     <script src = "../../JavaScript/modifyBtn.js"></script>
     <script src = "../../JavaScript/newBtn.js"></script>
+    <script src = "../../JavaScript/deleteBtn.js"></script>
+
     <title>SK GHOST ADMIN</title>
 
 </head>
@@ -68,6 +70,11 @@
     <button id = "new_schedule" onClick="newBtn()">
         <span id = "text2">New</span>
     </button>
+
+    <!-- 스케줄 삭제-->
+    <button id = "delete_schedule">
+        <span id = "text3">Delete</span>
+    </button>
 </footer>
 </body>
 <script>
@@ -103,6 +110,29 @@
                 // 시작일과 종료일이 모두 입력되었고, 시작일이 종료일보다 작은 경우
                 if (startD && endD && startD <= endD) {
                     modifyBtn(startD, endD);
+                }
+                else {
+                    alert('시작일은 종료일보다 작아야 합니다. 다시 입력해주세요.');
+                    startTag.value = getCurrentDate();
+                    endTag.value = getCurrEndDate();
+                }
+            });
+
+            // 버튼 요소 가져오기
+            let deleteButton = document.getElementById('delete_schedule');
+
+            // 클릭 이벤트에 리스너 등록
+            deleteButton.addEventListener('click', function() {
+
+                let startTag = document.getElementById('date-range-start');
+                let endTag = document.getElementById('date-range-end');
+
+                // 시작일과 종료일의 값을 가져옴
+                const startD = startTag.value;
+                const endD = endTag.value;
+                // 시작일과 종료일이 모두 입력되었고, 시작일이 종료일보다 작은 경우
+                if (startD && endD && startD <= endD) {
+                    deleteBtn(startD, endD);
                 }
                 else {
                     alert('시작일은 종료일보다 작아야 합니다. 다시 입력해주세요.');

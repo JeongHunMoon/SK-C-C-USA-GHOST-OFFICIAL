@@ -1,0 +1,294 @@
+
+/* 전체 스크롤 바 스타일 */
+::-webkit-scrollbar {
+    width: 7px; /* 스크롤 바 너비 조절 */
+}
+
+/* 스크롤 바 트랙 스타일 (배경) */
+::-webkit-scrollbar-track {
+    background-color: transparent; /* 트랙 배경색 */
+}
+
+/* 스크롤 바 핸들 스타일 */
+::-webkit-scrollbar-thumb {
+    background-color: #888; /* 밝은 회색으로 변경 */
+    border-radius: 7px; /* 핸들 모양 (둥근 모서리) */
+}
+
+/* 스크롤 마우스 오버 효과 */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #aaa; /* 마우스 오버 시 핸들 색상 */
+}
+
+#header {
+    display: flex;
+    position : absolute;
+    padding-top : 15px;
+    padding-bottom : 15px;
+    height: 2rem;
+    justify-content: flex-end;
+    align-items: center;
+    flex-shrink: 0;
+
+    top : 0;
+    left : 0;
+    right: 0;
+    width: 100vw;
+
+    background: #E1022A;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+
+#header_sk {
+    position : absolute;
+    top : 10px;
+    left : 20px;
+    width: 40px;
+    height: 40px;
+
+    animation: ghost 0.8s /* 속도 */
+    linear 0s   /* 처음부터 끝까지 일정 속도로 진행 */
+    infinite alternate; /* 무한 반복 */
+}
+
+@keyframes ghost {
+    0% {top: 5px; opacity : 1} /* 처음 위치 */
+    100% {top: 15px; opacity : 0.5} /* 마지막 위치 */
+}
+
+#header_logo {
+    width: 190px;
+    height: 24px;
+    margin-right: 3%;
+    color: #FFF;
+    text-align: center;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+    font-family: Inter;
+    font-size: 1.5rem;
+    font-style: italic;
+    font-weight: 700;
+    line-height: normal;
+}
+
+
+#section_date {
+    flex-direction: row; /* 가로로 나열하도록 설정 */
+    display: flex;
+    position:absolute;
+    height: 1.5rem;
+    padding-top : 15px;
+    padding-bottom : 15px;
+    justify-content: flex-end;
+    align-items: center;
+    flex-shrink: 0;
+    gap: 8px;
+    top : 4rem;
+    left : 0;
+    right: 0;
+
+    width: 100vw;
+    background: lightblue;
+}
+
+#date_submit {
+    margin-right: 10px;
+}
+
+#date-range-start, #date-range-end {
+    max-width: 200px;
+    width: 35%;
+}
+
+
+#section_top {
+    display: flex;
+    position:absolute;
+    height: 75%;
+    min-height: 600px;
+    max-height: 700px;
+
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    gap: 20px;
+    top : 7rem;
+    left : 0;
+    right: 0;
+
+    padding-top: 25px;
+    padding-bottom: 40px;
+
+    width: 100vw;
+    background: white;
+    overflow-y: scroll;
+
+    /*animation: bannermove 30s linear infinite;*/
+}
+
+#image-container {
+    display: flex; /* flex container로 설정 */
+    flex-direction: row; /* 가로로 나열하도록 설정 */
+    width: max-content; /* 이미지의 총 너비에 맞춰서 부모 컨테이너의 크기를 동적으로 설정 */
+
+    height: 100%;
+    gap: 20px; /* 각 테이블 간의 간격을 조절 */
+    margin: 0 10px; /* 양쪽 마진을 추가하여 테이블이 화면 양 끝에 붙지 않도록 함 */
+
+    overflow-x: auto; /* 가로 스크롤을 가능하게 함 */
+    white-space: nowrap; /* 텍스트가 한 줄로 유지되도록 함 */
+    flex-wrap:nowrap;
+
+}
+
+.schedule_div {
+    max-width: 450px; /* 최대 너비 */
+    width: 100%; /* 최대 크기보다 작은 경우 100%로 설정 */
+
+    height: 97%;
+    flex-shrink: 0;
+    display: flex;
+    border-radius: 30px;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+.schedule_card{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.schedule_card td{
+    width: 100px; /* 원하는 너비 값으로 변경 */
+    max-height: 20px;
+    height: auto;
+    text-align: center; /* 텍스트를 가운데 정렬합니다. */
+}
+
+.schedule_card input {
+    /* 원하는 스타일을 여기에 추가하세요 */
+    width: 90%;
+    height: 90%;
+    margin: 0;
+    padding: 0;
+    /* 추가적인 스타일을 필요에 따라 설정하세요 */
+}
+
+
+
+/*
+@keyframes bannermove {
+    0% {
+        transform: translate(0, 0);
+    }
+    100% {
+        transform: translate(-70%, 0);
+    }
+}
+*/
+
+
+#section_bottom {
+    display: flex;
+    position:absolute;
+    height: 10vw;
+    padding-top : 15px;
+    padding-bottom : 15px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 45px;
+    flex-shrink: 0;
+
+    top : 455px;
+    left : 0;
+    right: 0;
+    width: 100vw;
+    background: white;
+
+    overflow-x: hidden;
+    border-top: 0.1rem darkgray solid;
+}
+
+#footer {
+    display: flex;
+    position: fixed;
+    height: 1.5rem;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    justify-content: center;
+    align-items: center;
+    background: #E1022A;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.30);
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100vw;
+    gap: 2vw; /* 버튼 간격 설정 */
+}
+
+#cancel_btn,
+#delete_schedule {
+    display: flex;
+    width: 15%;
+    min-width: 120px;
+    max-width: 200px;
+    height: 85%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+#cancel_btn {
+    background: #E1022A;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+#delete_schedule {
+    background: #EE7603;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
+#text1,
+#text2 {
+    flex-grow: 1; /* 텍스트가 버튼 영역을 채울 수 있도록 함 */
+    text-align: center; /* 텍스트를 가운데 정렬함 */
+    overflow: hidden; /* 텍스트가 버튼을 벗어나지 않도록 함 */
+    white-space: nowrap; /* 텍스트가 한 줄로만 표시되도록 함 */
+    text-overflow: ellipsis; /* 텍스트가 너무 길 경우 생략 부호로 표시함 */
+    color: #FFF;
+    font-family: Inter;
+    font-size: 100%;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+
+#text3 {
+    flex-shrink: 0;
+    color: #FFF;
+    font-family: Inter;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+#footer_text {
+    width: 400px;
+    height: 20px;
+
+    color: darkgray;
+    text-align: center;
+    text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+    font-family: Inter;
+    font-size: 17px;
+    font-style: italic;
+    font-weight: 700;
+    line-height: normal;
+}
