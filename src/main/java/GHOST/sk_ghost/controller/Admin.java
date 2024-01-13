@@ -242,6 +242,51 @@ public class Admin {
     }
 
 
+    @GetMapping("/deleteSchedule")
+    public String deleteSchedule(
+            @RequestParam(value = "id", required = true) String id,
+            @RequestParam(value = "start", required = true) String start,
+            @RequestParam(value = "end", required = true) String end,
+            Model model) {
+        List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
+        System.out.println("ROC Member" + lists);
+
+        // 로그인한 사용자가 올바른지 검증
+        for (Map<String, String> list : lists) {
+            String rocMember = list.get("id"); // ROC인원의 id
+            String processInfo = list.get("process");
+
+            // 로그인 요청한 사용자가 OP인 경우만 OP 페이지 접속 허가 > 운영자는 OP 페이지 접속 불가.
+            if (rocMember.equals(id)) {
+                System.out.println(start + end);
+                // 여기에서 start와 end를 사용하여 필요한 작업 수행
+                model.addAttribute("start", start);
+                model.addAttribute("end", end);
+
+                if (modifyAdminhashValue != null) {
+                    System.out.println("==누군가 수정 중임.==");
+                    System.out.println(modifyAdminhashValue);
+
+                    if (modifyAdminhashValue.equals(id)) {
+                        System.out.println("재접속");
+                        return "home/deleteSchedule";
+                    }
+                    else {
+                        System.out.println("누군가 쓰고 있음." + newAdminhashValue);
+                        model.addAttribute("flag", id); // 이름으로 전달 필요.
+                        return "home/admin";
+                    }
+                } else {
+                    System.out.println("신규 접속");
+                    modifyAdminhashValue = id;
+                    return "home/deleteSchedule";
+                }
+            }
+        }
+        return "home/400";
+    }
+
+
     @PostMapping("/modifyUpdate")
     public ResponseEntity<String> modifyUpdate(@RequestBody List<Map<String, String>> requestBody) throws Exception {
         System.out.println("modifyUpdate from DB : " + requestBody);
