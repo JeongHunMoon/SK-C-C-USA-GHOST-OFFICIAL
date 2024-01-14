@@ -38,7 +38,7 @@
 <input type="hidden" id="firstValue" th:value="${firstValue}" />
 <!-- 메인 해더-->
 <header id = "header">
-    <img id = "header_sk" src="css/images/Ghost.png" alt = "location images"> <!-- GHOST 트레이드 마크 -->
+    <img id="header_sk" src="css/images/Ghost.png" alt="location images" style="cursor: pointer;" onclick="window.location.href = '/'"> <!-- GHOST 트레이드 마크 -->
     <span id = "header_logo">SK GHOST Admin</span> <!-- GHOST text -->
 </header>
 
@@ -77,6 +77,21 @@
     </button>
 </footer>
 </body>
+
+<script>
+    // Online 또는 Offline 상태 변경 시 발생하는 이벤트
+    window.addEventListener('online', function () {
+        // 온라인 상태
+        console.log('온라인 상태입니다.');
+    });
+
+    window.addEventListener('offline', function () {
+        window.location.href = "/"
+        // 오프라인 상태
+        alert('인터넷 연결이 끊겼습니다. 다시 연결 후 시도하세요.');
+    });
+</script>
+
 <script>
     loadingOn()
     let used = document.getElementById("flagValue").value;

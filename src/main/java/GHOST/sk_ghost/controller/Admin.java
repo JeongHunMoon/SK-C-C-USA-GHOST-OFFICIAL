@@ -112,26 +112,32 @@ public class Admin {
 
     // id get으로 받고, 맴버 검증 수행 후 취소하기
     @GetMapping("/remove")
-    public String remove(HttpSession session) {
-        session.setMaxInactiveInterval(-1);
-        session.invalidate();
-        newAdminhashValue = null;
-        System.out.println("세션이 성공적으로 종료되었습니다.");
-        return "home/admin";
+    public ResponseEntity<String> remove(@RequestParam(name = "id", required = true) String id, HttpSession session) {
+        System.out.println("현재 생성 중인 사람" + newAdminhashValue);
+        if (id.equals(newAdminhashValue)) {
+            session.setMaxInactiveInterval(-1);
+            session.invalidate();
+            newAdminhashValue = null;
+            System.out.println("생성시 세션이 성공적으로 종료되었습니다.");
+            return ResponseEntity.ok("true");
+
+        } else {
+            return ResponseEntity.ok("false");
+        }
     }
 
     // id get으로 받고, 맴버 검증 수행 후 취소하기
     @GetMapping("/removeModify")
-    public String removeModify(@RequestParam String id, HttpSession session) {
-
+    public ResponseEntity<String> removeModify(@RequestParam(name = "id", required = true) String id, HttpSession session) {
+        System.out.println("현재 수정 중인 사람" + modifyAdminhashValue);
         if (id.equals(modifyAdminhashValue)) {
             // 사용할 id를 여기에서 활용할 수 있음
             modifyAdminhashValue = null;
             System.out.println("수정시 세션이 성공적으로 종료되었습니다.");
-            return "home/admin";
-        }
-        else {
-            return "home/400";
+            return ResponseEntity.ok("true");
+
+        } else {
+            return ResponseEntity.ok("false");
         }
     }
 

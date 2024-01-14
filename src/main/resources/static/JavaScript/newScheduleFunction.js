@@ -307,12 +307,59 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
             cancelForm.disabled = true; // 제출 버튼 활성화
             cancelForm.style.opacity = 0.5
 
-            //해당 코드로 변경 필요 > window.location.href = "/remove?id="+nowUserId;
-            window.location.href = "/remove";
 
-            cancelForm.disabled = false; // 제출 버튼 활성화
-            cancelForm.style.opacity = 1
-            alert("취소되었습니다.")
+            let cancelXhr = new XMLHttpRequest();
+            cancelXhr.open("GET", "/remove?id="+nowUserId, true);
+
+            // Timeout 설정 (예: 5초)
+            cancelXhr.timeout = 5000;
+
+            cancelXhr.onload = function () {
+                if (cancelXhr.status === 200) {
+                    if (cancelXhr.responseText === "true") {
+                        cancelForm.disabled = false; // 제출 버튼 활성화
+                        cancelForm.style.opacity = 1
+                        alert("취소되었습니다.")
+                        window.location.href = "admin?id="+nowUserId;
+                    }
+                    else {
+                        cancelForm.disabled = false; // 제출 버튼 활성화
+                        cancelForm.style.opacity = 1
+                        alert("잘못된 접근입니다.")
+                        window.location.href = "/";
+                    }
+
+                } else {
+                    cancelForm.disabled = false; // 제출 버튼 활성화
+                    cancelForm.style.opacity = 1
+                    alert("취소 실패. 다시 취소 부탁드립니다.")
+                }
+            };
+
+            // 서버에서 일정시간 응답이 없을 때,
+            cancelXhr.ontimeout = function () {
+                cancelForm.disabled = false; // 제출 버튼 활성화
+                cancelForm.style.opacity = 1
+                alert("Request timed out. Please try again.");
+            };
+
+            // 넷웤이 없는데 요청할때 실행
+            cancelXhr.onerror = function () {
+                cancelForm.disabled = false; // 제출 버튼 활성화
+                cancelForm.style.opacity = 1
+                alert("Network error occurred. Please check your connection and try again.");
+            };
+
+            // 프론트에서 네트워크가 있는 경우에 전송
+            if (navigator.onLine) {
+                cancelXhr.send();
+            } else {
+                cancelForm.disabled = false; // 제출 버튼 활성화
+                cancelForm.style.opacity = 1
+                location.reload();
+                alert("No internet connection. Please check your connection and try again.");
+            }
+
         })
     }
 

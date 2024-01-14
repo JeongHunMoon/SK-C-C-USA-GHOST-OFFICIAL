@@ -215,13 +215,16 @@ public class Home {
     //Create시 ROC멤버 아닌 사람 입력 검증을 위해 member 모두 불러옴
     @ResponseBody
     @PostMapping("/checktypo")
-    public ArrayList<String> checkTypo(@RequestBody Map<String, String> requestBody) {
+    public HashMap<String, String> checkTypo(@RequestBody Map<String, String> requestBody) {
         String checkTypo = requestBody.get("CheckTypo"); // 프론트에서 보낸 입력값.
         List<Map<String, String>> lists = v1service.userList();
-        ArrayList<String> rocALlNames = new ArrayList<>();
+        System.out.println("CheckTypo"+lists);
+
+        HashMap<String, String> rocALlNames = new HashMap<>();
         for (Map<String, String> list : lists) {
-            rocALlNames.add(list.get("name"));
+            rocALlNames.put(list.get("name"), list.get("process"));
         }
+        System.out.println(rocALlNames);
         return rocALlNames;
     }
 
