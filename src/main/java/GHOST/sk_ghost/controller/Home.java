@@ -255,15 +255,15 @@ public class Home {
 //        return "home/400";
 //    }
 
-    @PostMapping("/delete")
-    public ResponseEntity<String> deleteSchedule(@RequestBody List<Map<String, String>> requestBody) throws Exception {
-        try{
-            System.out.println("Delete from DB : " + requestBody);
-            v1service.deleteSchedule(requestBody);
-        }
-        catch (Exception e) {
-            return ResponseEntity.ok("Delete Fail");
-        }
-        return ResponseEntity.ok("Delete Success");
-    }
+//    @PostMapping("/delete")
+//    public ResponseEntity<String> deleteSchedule(@RequestBody List<Map<String, String>> requestBody) throws Exception {
+//        try{
+//            System.out.println("Delete from DB : " + requestBody);
+//            v1service.deleteSchedule(requestBody);
+//        }
+//        catch (Exception e) {
+//            return ResponseEntity.ok("Delete Fail");
+//        }
+//        return ResponseEntity.ok("Delete Success");
+//    }
 }
