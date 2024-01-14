@@ -45,7 +45,7 @@ public class Home {
         return ResponseEntity.ok("False"); //DB에 없는 사용자가 로그인을 시도했기에 접근을 차단한다.
     }
 
-    // 로그인 페이지로 이동시킨다.
+    // admin 최초 로그인 요청 및 admin 페이지 이동
     @GetMapping("/admin")
     // 호출 예시 ex) http://localhost:8080/OP?uuid=12313213dwf232fe231321 > 서버에서 발급된 해쉬가 올바르게 요청되야 OP페이지로 이동함.
     public String goToAdminPage(
@@ -73,30 +73,6 @@ public class Home {
         }
         return "home/400";
     }
-
-
-    // 생성 페이지 중 카드 생성 페이지로 이동시킨다.
-    @GetMapping("/newSchedule")
-    public String adminNewSchedule(@RequestParam(value = "id", required = true) String id, Model model) {
-        List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
-        System.out.println("ROC Member" + lists);
-
-        // 로그인한 사용자가 올바른지 검증
-        for (Map<String, String> list : lists) {
-            String rocMember = list.get("id"); // ROC인원의 id
-            String processInfo = list.get("process");
-
-            // 로그인 요청한 사용자가 OP인 경우만 OP 페이지 접속 허가 > 운영자는 OP 페이지 접속 불가.
-            if (rocMember.equals(id)) {
-                System.out.println(id + lists);
-                return "home/newSchedule";
-            }
-        }
-        return "home/400";
-    }
-
-
-
 
 
     //출근하기 기능이다. 디비에서 금일의 대응자님 조회하여 list로 조히하여 프론트로 전송한다.
@@ -166,15 +142,41 @@ public class Home {
         return ResponseEntity.ok("False"); //DB에 없는 사용자가 로그인을 시도했기에 접근을 차단한다.
     }
 
+
+    // Admin에서 new 버튼 > 생성 페이지 중 카드 드레그 생성 페이지로 이동시킨다.
+    @GetMapping("/newSchedule")
+    public String adminNewSchedule(@RequestParam(value = "id", required = true) String id, Model model) {
+        List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
+        System.out.println("ROC Member" + lists);
+
+        // 로그인한 사용자가 올바른지 검증
+        for (Map<String, String> list : lists) {
+            String rocMember = list.get("id"); // ROC인원의 id
+            String processInfo = list.get("process");
+
+            // 로그인 요청한 사용자가 OP인 경우만 OP 페이지 접속 허가 > 운영자는 OP 페이지 접속 불가.
+            if (rocMember.equals(id)) {
+                System.out.println(id + lists);
+                return "home/newSchedule";
+            }
+        }
+        return "home/400";
+    }
+
+    // 운영자 정보를 가져온다.
     @PostMapping("/getSchedule")
-    public ResponseEntity<List<Map<String, String>>> getSchedule(@RequestBody Map<String, String> requestBody) {
-        String dateInfo = requestBody.get("date"); // 무의미 데이터 무시하세요.
+    public ResponseEntity<List<List<Map<String, String>>>> getSchedule(@RequestBody Map<String, List<String>> requestBody) {
+        List<String> dateInfo = requestBody.get("date"); // 무의미 데이터 무시하세요.
+        List<List<Map<String, String>>> payload = new Vector<List<Map<String, String>>>();
 
-        List<Map<String, String>> lists = v1service.oneDateSchedule(dateInfo); // 금일의 대응자 admin을 조회한다.
+        for (String card : dateInfo) {
+            List<Map<String, String>> lists = v1service.oneDateSchedule(card); // 금일의 대응자 admin을 조회한다.
+            payload.add(lists);
 
-        System.out.println("조희 결과> " + lists);
+        }
+        System.out.println("조희 결과> " + payload);
 
-        return ResponseEntity.ok(lists);
+        return ResponseEntity.ok(payload);
     }
 
 
@@ -192,26 +194,6 @@ public class Home {
     }
 
 
-    @GetMapping("/judgeNewSchedule")
-    public String judgeNewSchedule(@RequestParam(value = "user", required = true) String user, Model model) {
-        System.out.println(user);
-        // 해쉬가 없다면 400 오류 페이지 반환
-        if (newhashValue == null) {
-            //newhashValue = UUID.randomUUID().toString();
-            // DB 조회하여 가장 마지막 날짜 + 1을 반환한다.
-
-            model.addAttribute("new", newhashValue); //model에 key를 uuid, value를 hashValue로 담아서 프론트로 보냄
-            model.addAttribute("date", "2024-12-12"); //model에 key를 uuid, value를 hashValue로 담아서 프론트로 보냄
-            return "home/newSchedule";
-        }
-
-        // 누군가 이미 생성 중이라면 아무도 접근 하지 못하게 차단한다.
-        else {
-            System.out.println("누군가 이미 생성 중입니다.");
-            return "home/admin";
-        }
-    }
-
     //Create시 ROC멤버 아닌 사람 입력 검증을 위해 member 모두 불러옴
     @ResponseBody
     @PostMapping("/checktypo")
@@ -227,43 +209,4 @@ public class Home {
         System.out.println(rocALlNames);
         return rocALlNames;
     }
-
-//    @GetMapping("/deleteSchedule")
-//    // 호출 예시 ex) http://localhost:8080/OP?uuid=12313213dwf232fe231321 > 서버에서 발급된 해쉬가 올바르게 요청되야 OP페이지로 이동함.
-//    public String goToDeletePage(
-//            @RequestParam(value = "id", required = true) String id,
-//            @RequestParam(value = "first", required = false) String first,
-//            Model model) {
-//        List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
-//        System.out.println("ROC Member" + lists);
-//
-//        // 로그인한 사용자가 올바른지 검증
-//        for (Map<String, String> list : lists) {
-//            String rocMember = list.get("id"); // ROC인원의 id
-//            String processInfo = list.get("process");
-//
-//            //
-//            if (rocMember.equals(id)) {
-//                if (first != null) {
-//                    // "first" 파라미터가 전달된 경우 운영자 페이지에 처음 접속한 경우이므로 Model 저달
-//                    model.addAttribute("firstValue", first);
-//                }
-//                System.out.println(id + lists);
-//                return "home/deleteSchedule";
-//            }
-//        }
-//        return "home/400";
-//    }
-
-//    @PostMapping("/delete")
-//    public ResponseEntity<String> deleteSchedule(@RequestBody List<Map<String, String>> requestBody) throws Exception {
-//        try{
-//            System.out.println("Delete from DB : " + requestBody);
-//            v1service.deleteSchedule(requestBody);
-//        }
-//        catch (Exception e) {
-//            return ResponseEntity.ok("Delete Fail");
-//        }
-//        return ResponseEntity.ok("Delete Success");
-//    }
 }

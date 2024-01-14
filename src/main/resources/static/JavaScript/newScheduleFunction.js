@@ -210,7 +210,7 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
         document.getElementById('slider').addEventListener('input', updateValue);
 
         // 입력 시작 이벤트
-        // submit 이벤트가 발생하면 실행되는 함수
+        // new 버튼 클릭시 실행되는 이벤트
         const dateForm = document.getElementById('startBtnModify');
         dateForm.addEventListener('click', function(event) {
             document.getElementById('startBtnModify').style.display = 'none'; // 제출 버튼 비활성화
