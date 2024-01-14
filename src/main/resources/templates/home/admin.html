@@ -156,6 +156,7 @@
                 }
             });
 
+            // search 버튼을 누를시 호출되는 함수
             adminDateSearch();
 
             // 시작일과 종료일의 input 요소를 가져옴
@@ -178,10 +179,25 @@
             let cards = getDates(startDate, endDate);
             console.log(cards)
 
-            // 순차적으로 비동기 작업을 수행하는 함수
-            async function processCards() {
-                for (let card of cards) {
-                    await processCard(card);
+            let xhr1 = new XMLHttpRequest();
+            let payloadFront = {"date": cards};
+            xhr1.open('POST', '/getSchedule', true);
+            xhr1.setRequestHeader("Content-Type", "application/json");
+            xhr1.send(JSON.stringify(payloadFront));
+
+            xhr1.onload = function () {
+                let results = JSON.parse(xhr1.response);
+                console.log(results);
+
+                let idx = 0
+                for (let card of cards){
+                    const dateObject = new Date(`${card}T00:00:00-05:00`);
+                    const options = {weekday: 'short', timeZone: 'America/New_York'};
+                    const dayOfWeek = dateObject.toLocaleDateString('en-US', options);
+
+                    // DOM 에서 동적으로 카드르 만들어 배열에 저장. 붙이기는 정렬 후 한번에 수행하게 됨.
+                    scheduleCard(results[idx], dayOfWeek, card);
+                    idx += 1
                 }
 
                 // 초기 로딩이 끝나면, off
@@ -191,37 +207,8 @@
                     loginAram(userImage, userId)
                 }
                 loadingOff()
+
             }
-
-            // 각 날짜에 대한 비동기 작업을 수행하는 함수
-            function processCard(card) {
-                return new Promise(resolve => {
-                    let xhr1 = new XMLHttpRequest();
-                    let payloadFront = {"date": card};
-                    xhr1.open('POST', '/getSchedule', true);
-                    xhr1.setRequestHeader("Content-Type", "application/json");
-                    xhr1.send(JSON.stringify(payloadFront));
-
-                    xhr1.onload = function () {
-                        let results = JSON.parse(xhr1.response);
-                        console.log(results);
-
-                        const dateObject = new Date(`${card}T00:00:00-05:00`);
-                        const options = {weekday: 'short', timeZone: 'America/New_York'};
-                        const dayOfWeek = dateObject.toLocaleDateString('en-US', options);
-
-
-                        // DOM 에서 동적으로 카드르 만들어 배열에 저장. 붙이기는 정렬 후 한번에 수행하게 됨.
-                        scheduleCard(results, dayOfWeek, card);
-
-
-                        resolve();
-                    }
-                });
-            }
-
-            // 비동기 작업을 순차적으로 실행
-            processCards();
         }
         else {
             window.location.href = "/"

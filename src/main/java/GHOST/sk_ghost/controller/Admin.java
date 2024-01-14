@@ -47,6 +47,7 @@ public class Admin {
         }
     }
 
+    // 생성 드레그 페이지에서 Start 버튼을 누를 시 > 스케줄 생성 페이지로 이동시킨다.
     @GetMapping("/uniquePage")
     @ResponseBody
     public ResponseEntity<String> uniquePage(HttpSession session, @RequestParam String id) {
@@ -94,6 +95,7 @@ public class Admin {
         return ResponseEntity.ok("None");
     }
 
+    // 스케줄 생성 완료.
     @GetMapping("/done")
     @ResponseBody
     public String done(HttpSession session, @RequestParam String id) {
@@ -110,7 +112,7 @@ public class Admin {
         return "OK"; // 수정된 부분
     }
 
-    // id get으로 받고, 맴버 검증 수행 후 취소하기
+    // 생성에서 사용하는 cancel 버튼 > id get으로 받고, 맴버 검증 수행 후 취소하기
     @GetMapping("/remove")
     public ResponseEntity<String> remove(@RequestParam(name = "id", required = true) String id, HttpSession session) {
         System.out.println("현재 생성 중인 사람" + newAdminhashValue);
@@ -126,7 +128,7 @@ public class Admin {
         }
     }
 
-    // id get으로 받고, 맴버 검증 수행 후 취소하기
+    // 업데이트에서 사용하는 취소 버튼 > id get으로 받고, 맴버 검증 수행 후 취소하기
     @GetMapping("/removeModify")
     public ResponseEntity<String> removeModify(@RequestParam(name = "id", required = true) String id, HttpSession session) {
         System.out.println("현재 수정 중인 사람" + modifyAdminhashValue);
@@ -142,8 +144,7 @@ public class Admin {
     }
 
 
-
-
+    // 생성 시 현재까지 입력된 데이터를 세션으로 백업한다.
     @PostMapping("/saveData")
     @ResponseBody
     public ResponseEntity<String> saveData(HttpSession session, @RequestBody Map<String, String> requestBody) {
@@ -184,6 +185,7 @@ public class Admin {
         return ResponseEntity.ok("Data received successfully!");
     }
 
+    // 세션에 저장된 데이터를 불러온다.
     @PostMapping("/getSavedData")
     @ResponseBody
     public ResponseEntity<List<List<String>>> getSavedData(HttpSession session, @RequestBody Map<String, String> requestBody) {
@@ -202,7 +204,7 @@ public class Admin {
     }
 
 
-    // 생성과 수정은 독립적 관계이므로 페이지를 각각 잠근다.
+    // 사용자를 수정 페이지로 이동시킨다.
     @GetMapping("/modifySchedule")
     public String modifySchedule(
             @RequestParam(value = "id", required = true) String id,
@@ -248,6 +250,7 @@ public class Admin {
     }
 
 
+    // 사용자를 삭제 페이지로 이동시킨다.
     @GetMapping("/deleteSchedule")
     public String deleteSchedule(
             @RequestParam(value = "id", required = true) String id,
@@ -293,6 +296,7 @@ public class Admin {
     }
 
 
+    // 수정 시 > 업데이트 호출 부분
     @PostMapping("/modifyUpdate")
     public ResponseEntity<String> modifyUpdate(@RequestBody List<Map<String, String>> requestBody) throws Exception {
         System.out.println("modifyUpdate from DB : " + requestBody);
