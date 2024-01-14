@@ -228,7 +228,8 @@
 }
 
 #modify_schedule,
-#new_schedule {
+#new_schedule,
+#delete_schedule{
     display: flex;
     width: 15%;
     min-width: 120px;
@@ -253,8 +254,14 @@
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
+#delete_schedule{
+    background: #EE7603;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+}
+
 #text1,
-#text2 {
+#text2,
+#text3 {
     flex-grow: 1; /* 텍스트가 버튼 영역을 채울 수 있도록 함 */
     text-align: center; /* 텍스트를 가운데 정렬함 */
     overflow: hidden; /* 텍스트가 버튼을 벗어나지 않도록 함 */
@@ -263,17 +270,6 @@
     color: #FFF;
     font-family: Inter;
     font-size: 100%;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-}
-
-
-#text3 {
-    flex-shrink: 0;
-    color: #FFF;
-    font-family: Inter;
-    font-size: 1.5rem;
     font-style: normal;
     font-weight: 700;
     line-height: normal;

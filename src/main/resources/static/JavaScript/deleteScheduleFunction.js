@@ -16,14 +16,13 @@ function deleteScheduleFunction() {
             const startDay = document.getElementById('startDate');
             const endDay = document.getElementById('endDate');
 
-
             // 시작일과 종료일의 값을 가져옴
             const startDateString = startDay.innerText;
             const endDateString = endDay.innerText;
-
-            // 값을 console에 출력
             const startDate = new Date(startDateString);
             const endDate = new Date(endDateString);
+
+            // 값을 console에 출력
             console.log('시작일:', startDateString);
             console.log('종료일:', endDateString);
             //console.log(getDates(startDate, endDate));
@@ -38,13 +37,13 @@ function deleteScheduleFunction() {
 
                 if (!noFlag) {
                     window.location.href ='/admin?id='+userId
-                    modifyOnBtn()
+                    deleteOnBtn()
                     alert("현재 날짜 범위는 스케줄이 없습니다.")
                 }
                 else {
-                    afterProcessCards()
+                    afterProcessCards() //카드 DOM 으로 생성 후 작업
                 }
-                modifyOnBtn()
+                deleteOnBtn()
             }
 
             // 각 날짜에 대한 비동기 작업을 수행하는 함수
@@ -99,7 +98,7 @@ function deleteScheduleFunction() {
             }
         }
         else {
-            modifyOnBtn()
+            deleteOnBtn()
             window.location.href = "/"
             alert("세션이 만료되었습니다. 로그인을 다시해주세요.")
         }
@@ -129,16 +128,16 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-function modifyOnBtn() {
-    document.getElementById("delete_cancel").disabled = false;     // 버튼 비활성화
-    document.getElementById("delete_cancel").style.opacity = 1;     // 버튼 비활성화
-    document.getElementById("delete_save").disabled = false;     // 버튼 비활성화
-    document.getElementById("delete_save").style.opacity = 1;     // 버튼 비활성화
+function deleteOnBtn() {
+    document.getElementById("delete_cancel").disabled = false;     // 버튼 활성화
+    document.getElementById("delete_cancel").style.opacity = 1;     // 버튼 활성화
+    document.getElementById("delete_save").disabled = false;     // 버튼 활성화
+    document.getElementById("delete_save").style.opacity = 1;     // 버튼 활성화
 }
 
-function modifyOffBtn() {
+function deleteOffBtn() {
     document.getElementById("delete_cancel").disabled = true;     // 버튼 비활성화
-    document.getElementById("delete_cancel").style.opacity = 0.5;     // 버튼 비활성화
+    document.getElementById("delete_cancel").style.opacity = 0.5;     // 버튼 비활성화 표시 위한 투명도
     document.getElementById("delete_save").disabled = true;     // 버튼 비활성화
-    document.getElementById("delete_save").style.opacity = 0.5;     // 버튼 비활성화
+    document.getElementById("delete_save").style.opacity = 0.5;     // 버튼 비활성화 표시 위한 투명도
 }
