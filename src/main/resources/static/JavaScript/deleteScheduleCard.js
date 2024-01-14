@@ -1,9 +1,3 @@
-// 스케줄 정보가 없을 시 빈 배열 results에 전달
-
-// 사용자가 클릭할 때마다 카드의 배경색 바꾸고, 가능하다면 x 도
-// flag && 배경색 동시 체크로 지울 카드인지 아닌지 판단하기.
-//
-// results가 빈 배열인 경우는
 function deleteScheduleCard(results, dfe, date) {
 
     // 테이블을 담을 div
@@ -12,8 +6,6 @@ function deleteScheduleCard(results, dfe, date) {
     // 테이블 생성
     const schedule_div = document.createElement("div");
     schedule_div.className = "schedule_div";
-
-
 
     let table = document.createElement("table");
     table.className = "schedule_card"; // class 설정
@@ -391,6 +383,105 @@ function deleteScheduleCard(results, dfe, date) {
 
     const comm_2_E = commRow2.insertCell();
     comm_2_E.textContent = comm_info2.find(item => item.shift === "E")?.name || "";
+
+
+    // 테이블 클릭 했을 때 스타일 변경, 삭제 후보 배열에 넣기
+    let tableFlag = 1;
+    let tableFirstClick = 0;
+    let deleteList= [];
+
+    table.onclick = function(){
+        if (tableFirstClick === 0) {
+            this.style.backgroundColor = "darkgrey";
+            this.style.color = "white";
+            tableFirstClick++;
+            tableFlag *= -1;
+            console.log("First Click ON")
+            //테이블 전체 셀을 배열에 넣음
+            for (let i = 2; i < table.rows.length; i++) { //ok
+                let row = table.rows[i];
+                let rowIndex = row.rowIndex;
+                // let rowCellIter = row.cells.length % 2 === 0 ? row.cells.length +1: row.cells.length;
+                for (let j = 2; j < row.cells.length; j++) {
+                    // // let rowCellCount= row.cells.length % 2 === 0 ? row.cells.length +1: row.cells.length;
+                    // console.log("rowCellCount"+rowCellCount) //계속 5
+                    // // const columnIndex = this.cellIndex;
+                    let columnIndex = row.cells.length % 2 === 0 ? row.cells[j].cellIndex - 1: row.cells[j].cellIndex;
+                    console.log("columnIndex"+columnIndex) //2,3,4
+
+                    // //행이 홀수인 경우 4번째 열 강제 주입 //0번째 열 셀 병합으로 인해 행의 셀 개수가 동일하지 않음으로 동일하게 처리
+                    // if(row.cells.length % 2 !== 0 && j === row.cells.length-1){
+                    //     console.log("4번째 강제주입"+rowIndex + ","+ row.cells[j+1].textContent)
+                    //     let deleteCandidate = {
+                    //         "name": row.cells[j+1].textContent,
+                    //         "date": date,
+                    //         "shift": columnIndex === 2 ? 'N' : columnIndex === 3 ? 'D' : 'E',
+                    //         "priority": rowIndex % 2 === 0 ? '1' : '2',
+                    //     }
+                    //     deleteList.push(deleteCandidate)
+                    // }
+                    let deleteCandidate = {
+                        "name": row.cells[j].textContent,
+                        "date": date,
+                        "shift": columnIndex === 2 ? 'N' : columnIndex === 3 ? 'D' : 'E',
+                        "priority": rowIndex % 2 === 0 ? '1' : '2',
+                    }
+                    deleteList.push(deleteCandidate)
+                    console.log("Row: " + rowIndex + ", Column: " + columnIndex);
+                    // console.log(deleteList)
+                }
+            }
+            console.log(deleteList)
+        }
+        else if( tableFlag===1 && this.style.backgroundColor === "white"){
+            this.style.backgroundColor = "darkgrey";
+            this.style.color = "white";
+            console.log("Table Click ON")
+            tableFlag *= -1;
+            //배열에 넣기
+            for (let i = 0; i < table.rows.length; i++) {
+                const row = table.rows[i];
+                const rowIndex = row.rowIndex;
+                for (let j = 0; j < row.cells.length; j++) {
+                    const cell = row.cells[j];
+                    const columnIndex = this.cellIndex;
+                    // 이미 배열에 있는지 확인용
+                    const deleteCandidate = {
+                        "name": this.textContent,
+                        "date": date,
+                        "shift": columnIndex === 2 ? 'N' : columnIndex === 3 ? 'D' : 'E',
+                        "priority": rowIndex % 2 === 0 ? '1' : '2'
+                    }
+                    deleteList.push(deleteCandidate)
+                }
+                console.log(deleteList)
+            }
+        }
+        else if( tableFlag!==1 || this.style.backgroundColor !== "darkgrey" ){
+            this.style.backgroundColor = "white";
+            this.style.color = "black";
+            console.log("Table Click OFF")
+            tableFlag *= -1;
+            //배열에서 제외 (중복된 내용만 제거 필요함)
+            // for (let i = 0; i < table.rows.length; i++) {
+            //     const row = table.rows[i];
+            //     const rowIndex = row.rowIndex;
+            //     for (let j = 0; j < row.cells.length; j++) {
+            //         const columnIndex = this.cellIndex;
+            //         // 이미 배열에 있는지 확인용
+            //         const deleteCandidate = {
+            //             "name": this.textContent,
+            //             "date": date,
+            //             "shift": columnIndex === 2 ? 'N' : columnIndex === 3 ? 'D' : 'E',
+            //             "priority": rowIndex % 2 === 0 ? '1' : '2'
+            //         }
+            //         deleteList.push(deleteCandidate)
+            //     }
+            //     console.log(deleteList)
+            // }
+        }
+    };
+
 
 
     // 테이블을 div에 추가

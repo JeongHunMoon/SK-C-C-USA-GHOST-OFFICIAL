@@ -1,5 +1,5 @@
 function deleteScheduleFunction() {
-    modifyOffBtn()
+    deleteOffBtn()
     let userId;
     let userImage;
     let userName
@@ -51,7 +51,7 @@ function deleteScheduleFunction() {
                 return new Promise(resolve => {
                     let xhr1 = new XMLHttpRequest();
                     let payloadFront = {"date": card};
-                    xhr1.open('POST', '/getSchedule', true);
+                    xhr1.open('POST', '/getSchedule', true); // 날짜에 맞는 스케줄 정보 (이름, 날짜, shift, 우선순위, 공정)
                     xhr1.setRequestHeader("Content-Type", "application/json");
                     xhr1.send(JSON.stringify(payloadFront));
 
@@ -64,10 +64,9 @@ function deleteScheduleFunction() {
                         const options = {weekday: 'short', timeZone: 'America/New_York'};
                         const dayOfWeek = dateObject.toLocaleDateString('en-US', options);
 
-                        if (results.length !== 0) {
-                            noFlag = true
-                            // DOM 에서 동적으로 카드를 생성하여 부모 컨테이너에 삽입
-                            deleteScheduleCard(results, dayOfWeek, card); // 개발1
+                        if (results.length !== 0) { //해당 날짜에 대한 값이 없으면 카드 생성하지 않음
+                            noFlag = true //
+                            deleteScheduleCard(results, dayOfWeek, card); // DOM 에서 동적으로 카드를 생성하여 부모 컨테이너에 삽입
                         }
 
                         resolve();
@@ -115,7 +114,7 @@ function getDates(startDate, endDate) {
         dateArray.push(currentDate.toISOString().split('T')[0]);
         currentDate.setDate(currentDate.getDate() + 1);
     }
-    return dateArray;
+    return dateArray; //리스트 반환
 }
 
 document.addEventListener('DOMContentLoaded', function () {
