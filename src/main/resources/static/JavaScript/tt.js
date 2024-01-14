@@ -1,14 +1,15 @@
+// 화성
 for (let i = 1; i < 7; i++) {
-    let cellinf = cellInfo[i - 1].trim(); // 하나의 값
-    let idInf = `${formdate}CELL${i}`;
+    let comminf = commInfo[i - 1].trim(); // 하나의 값
+    let idInf = `${formdate}COMM${i}`;
     document.getElementById(idInf).style.color = "black";
 
-    if (beforeCards[idInf] !== cellinf) {noChange = false;}
+    if (beforeCards[idInf] !== comminf) {noChange = false;}
     // 입력 공백 또는 변경 사항이 없을시 continue
-    if ((beforeCards[idInf] === "" && cellinf === "") || (beforeCards[idInf] === cellinf)) {}
+    if ((beforeCards[idInf] === "" && comminf === "") || (beforeCards[idInf] === comminf)) {}
 
     // 삭제. > 입력 값이 공백인 경우
-    else if (beforeCards[idInf] !== "" && cellinf === "") {
+    else if (beforeCards[idInf] !== "" && comminf === "") {
         deleteInfo.push({
             "name": beforeCards[idInf],
             "date": formdate,
@@ -18,9 +19,9 @@ for (let i = 1; i < 7; i++) {
     }
 
     // 변경(업데이트) "A" > "B"
-    else if (rocMembers.includes(CELLinf) && beforeCards[idInf] !== "" && beforeCards[idInf] !== CELLinf) {
+    else if (rocMembers.hasOwnProperty(comminf) && rocMembers[comminf] === "COMM" && beforeCards[idInf] !== "" && beforeCards[idInf] !== comminf) {
         updateInfo.push({
-            "name": CELLinf,
+            "name": comminf,
             "date": formdate,
             "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
             "priority": i < 4 ? '1' : '2',
@@ -28,22 +29,17 @@ for (let i = 1; i < 7; i++) {
     }
 
     // 추가 "" > "A"
-    else if (rocMembers.includes(CELLinf) && beforeCards[idInf] === "") {
+    else if (rocMembers.hasOwnProperty(comminf) && rocMembers[comminf] === "COMM" && beforeCards[idInf] === "") {
         insertInfo.push({
-            "name": CELLinf,
+            "name": comminf,
             "date": formdate,
             "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
             "priority": i < 4 ? '1' : '2',
         });
     }
 
-    else if (!rocMembers.includes(CELLinf)) {
-        flag = false;
-        document.getElementById(`${formdate}CELL${i}`).style.color = "red";
-    }
     else {
         flag = false;
-        document.getElementById(`${formdate}CELL${i}`).style.color = "red";
+        document.getElementById(`${formdate}COMM${i}`).style.color = "red";
     }
-
 }

@@ -23,8 +23,8 @@ function createSchedule() {
             xhr_check.send(JSON.stringify(typoPostSample));
 
             xhr_check.onload = function () {
-                rocMembers = JSON.parse(xhr_check.responseText);
-                console.log("ROC MEMBERS : " + rocMembers); // 전체인원
+                rocMembers = JSON.parse(xhr_check.response)
+                console.log(rocMembers); // 전체인원
                 form = document.querySelectorAll("#createForm");
 
                 //DB에서 이름을 불러오지 못했을 때
@@ -98,9 +98,12 @@ function createSchedule() {
 
                         for (let i = 1; i < 7; i++) {
                             let elecinf = elecInfo[i - 1].trim();
+                            console.log(elecinf)
+                            console.log(rocMembers.hasOwnProperty(elecinf))
                             //앞뒤로 트립 제거
                             if (elecinf === "") {
-                            } else if (rocMembers.includes(elecinf)) {
+                            } else if (rocMembers.hasOwnProperty(elecinf) && rocMembers[elecinf] === "ELEC") {
+                                console.log("참참", rocMembers.hasOwnProperty(elecinf))
                                 noChange = true;
                                 document.getElementById(`${formdate}ELEC${i}`).style.color = "black";
                                 //confirmedSchedule 정보 넣기
@@ -119,7 +122,7 @@ function createSchedule() {
                         for (let i = 1; i < 7; i++) {
                             let cellinf = cellInfo[i - 1].trim();
                             if (cellinf === "") {
-                            } else if (rocMembers.includes(cellinf)) {
+                            } else if (rocMembers.hasOwnProperty(cellinf) && rocMembers[cellinf] === "CELL") {
                                 noChange = true;
                                 document.getElementById(`${formdate}CELL${i}`).style.color = "black";
                                 confirmedSchedule.push({
@@ -137,7 +140,7 @@ function createSchedule() {
                         for (let i = 1; i < 7; i++) {
                             let forminf = formInfo[i - 1].trim();
                             if (forminf === "") {
-                            } else if (rocMembers.includes(forminf)) {
+                            } else if (rocMembers.hasOwnProperty(forminf) && rocMembers[forminf] === "FORM") {
                                 noChange = true;
                                 document.getElementById(`${formdate}FORM${i}`).style.color = "black";
                                 confirmedSchedule.push({
@@ -155,7 +158,7 @@ function createSchedule() {
                         for (let i = 1; i < 7; i++) {
                             let packinf = packInfo[i - 1].trim();
                             if (packinf === "") {
-                            } else if (rocMembers.includes(packinf)) {
+                            } else if (rocMembers.hasOwnProperty(packinf) && rocMembers[packinf] === "PACK") {
                                 noChange = true;
                                 document.getElementById(`${formdate}PACK${i}`).style.color = "black";
                                 confirmedSchedule.push({
@@ -173,7 +176,7 @@ function createSchedule() {
                         for (let i = 1; i < 7; i++) {
                             let wmsinf = wmsInfo[i - 1].trim();
                             if (wmsinf === "") {
-                            } else if (rocMembers.includes(wmsinf)) {
+                            } else if (rocMembers.hasOwnProperty(wmsinf) && rocMembers[wmsinf] === "WMS") {
                                 noChange = true;
                                 document.getElementById(`${formdate}WMS${i}`).style.color = "black";
                                 confirmedSchedule.push({
@@ -191,7 +194,7 @@ function createSchedule() {
                         for (let i = 1; i < 7; i++) {
                             let collinf = collInfo[i - 1].trim();
                             if (collinf === "") {
-                            } else if (rocMembers.includes(collinf)) {
+                            } else if (rocMembers.hasOwnProperty(collinf) && rocMembers[collinf] === "COLL") {
                                 noChange = true;
                                 document.getElementById(`${formdate}COLL${i}`).style.color = "black";
                                 confirmedSchedule.push({
@@ -209,7 +212,7 @@ function createSchedule() {
                         for (let i = 1; i < 7; i++) {
                             let comminf = commInfo[i - 1].trim();
                             if (comminf === "") {
-                            } else if (rocMembers.includes(comminf)) {
+                            } else if (rocMembers.hasOwnProperty(comminf) && rocMembers[comminf] === "COMM") {
                                 noChange = true;
                                 document.getElementById(`${formdate}COMM${i}`).style.color = "black";
                                 confirmedSchedule.push({
@@ -262,7 +265,7 @@ function createSchedule() {
                             else {
                                 document.getElementById('doneBtnModify').disabled = false;
                                 document.getElementById('doneBtnModify').style.opacity = 1;
-                                alert("오탈자를 확인해주세요")
+                                alert("오타 및 입력된 운영자님의 공정이 올바른지 확인해주세요.")
                                 return; //저장하지 않음
                             }
                         }

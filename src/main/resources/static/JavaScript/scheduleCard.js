@@ -6,6 +6,7 @@ function scheduleCard(results, dfe, date) {
     // 테이블 생성
     const schedule_div = document.createElement("div");
     schedule_div.className = "schedule_div";
+    schedule_div.setAttribute("id", date+"schedule_div"); // 카드의 id 설정
     schedule_div.style.border= "1px solid lightgray"
 
     // results가 빈 배열인 경우에만 밝은 회색 배경 적용

@@ -4,7 +4,6 @@ function modifyScheduleFunction() {
     let userId;
     let userImage;
     let userName
-    let noFlag = false; // 수정할 페이지가 하나도 없다면 false
 
     // 사용자가 OP 페이지에 들어오면 카카오톡 프로필, 이름을 애니메이션으로 보여준다.
     Kakao.Auth.getStatusInfo(function(statusObj) {
@@ -37,14 +36,7 @@ function modifyScheduleFunction() {
                     await processCard(card);
                 }
 
-                if (!noFlag) {
-                    window.location.href ='/admin?id='+userId
-                    modifyOnBtn()
-                    alert("현재 날짜 범위는 스케줄이 없습니다.")
-                }
-                else {
-                    afterProcessCards();
-                }
+                afterProcessCards();
                 loadingOff()
                 modifyOnBtn()
             }
@@ -66,12 +58,7 @@ function modifyScheduleFunction() {
                         const options = {weekday: 'short', timeZone: 'America/New_York'};
                         const dayOfWeek = dateObject.toLocaleDateString('en-US', options);
 
-                        if (results.length !== 0) {
-                            noFlag = true
-                            // DOM 에서 동적으로 카드를 생성하여 부모 컨테이너에 삽입
-                            createCardStored(results, dayOfWeek, card, false);
-                        }
-
+                        createCardStored(results, dayOfWeek, card, false);
 
                         resolve();
                     }

@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- 카카오 API를 사용하기 위한 라이브러리 선언-->
+    <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script> Kakao.init('2e39201190179fe7cd5eb25903daba8a'); </script> <!--SDK를 초기화 (애플리케이션>앱설정>앱키:JAVASCRIPTKEY -->
+
     <script src = "../../JavaScript/unlinkWithKakao.js"></script>
     <title>Title</title>
 </head>
@@ -11,8 +15,9 @@
 <script>
     unlinkWithKakao();
     setTimeout(function() {
+        alert("Goodbye :)")
         window.location.href = "/";
-    }, 2000); // 2000 밀리초(2초) 후에 "/"로 이동
+    }, 1000); // 2000 밀리초(2초) 후에 "/"로 이동
 </script>
 
 </html>

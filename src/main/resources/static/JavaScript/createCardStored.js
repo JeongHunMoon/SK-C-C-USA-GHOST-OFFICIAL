@@ -7,6 +7,7 @@ function createCardStored(results, dfe, date, fl) {
     const schedule_div = document.createElement("div");
     schedule_div.className = "schedule_div"
     schedule_div.setAttribute("id", date+"schedule_div"); // 카드의 id 설정
+    schedule_div.style.border= "1px solid lightgray"
 
     const table = document.createElement("table");
     table.className = "schedule_card"; // class 설정
@@ -15,10 +16,12 @@ function createCardStored(results, dfe, date, fl) {
 
     // 상단 해더 고정
     const headerRow = table.insertRow();
+    headerRow.style.borderTop = "1px solid transparent"
 
     const partHeader = headerRow.insertCell();
     partHeader.textContent = "Part";
     partHeader.rowSpan = 2;
+    headerRow.style.borderLeft = "1px solid transparent"
 
     const priorityHeader = headerRow.insertCell();
     priorityHeader.textContent = "Priority";
@@ -31,6 +34,7 @@ function createCardStored(results, dfe, date, fl) {
     dateHeader.colSpan = 2;
     dateHeader.textContent = date;
     dateHeader.setAttribute('id', "dateInfo");
+    dateHeader.style.borderRight = "1px solid transparent"
 
 
     // 날짜 행 추가
@@ -43,6 +47,7 @@ function createCardStored(results, dfe, date, fl) {
 
     const eHeader = dateRow.insertCell();
     eHeader.textContent = "E";
+    eHeader.style.borderRight = "1px solid transparent"
 
 
     //전극 정보 가공
@@ -65,6 +70,7 @@ function createCardStored(results, dfe, date, fl) {
     const elec = elecRow.insertCell();
     elec.textContent = "ELEC";
     elec.rowSpan = 2;
+    elec.style.borderLeft = "1px solid transparent"
 
     const elec_1 = elecRow.insertCell();
     elec_1.textContent = "1";
@@ -87,6 +93,7 @@ function createCardStored(results, dfe, date, fl) {
     inputTag.value = elec_info1.find(item => item.shift === "E")?.name || "";
     inputTag.setAttribute('id', date + 'ELEC3')
     elec_1_E.appendChild(inputTag)
+    elec_1_E.style.borderRight = "1px solid transparent"
 
     // 전극 2차
     const elecRow2 = table.insertRow();
@@ -110,6 +117,7 @@ function createCardStored(results, dfe, date, fl) {
     inputTag.value = elec_info2.find(item => item.shift === "E")?.name || "";
     inputTag.setAttribute('id', date + 'ELEC6')
     elec_2_E.appendChild(inputTag)
+    elec_2_E.style.borderRight = "1px solid transparent"
 
 
 
@@ -133,6 +141,7 @@ function createCardStored(results, dfe, date, fl) {
     const cell = cellRow.insertCell();
     cell.textContent = "CELL";
     cell.rowSpan = 2;
+    cell.style.borderLeft = "1px solid transparent"
 
     const cell_1 = cellRow.insertCell();
     cell_1.textContent = "1";
@@ -154,6 +163,7 @@ function createCardStored(results, dfe, date, fl) {
     inputTag.value = cell_info1.find(item => item.shift === "E")?.name || "";
     inputTag.setAttribute('id', date + 'CELL3')
     cell_1_E.appendChild(inputTag)
+    cell_1_E.style.borderRight = "1px solid transparent"
 
     // 조립 2차
     const cellRow2 = table.insertRow();
@@ -177,6 +187,7 @@ function createCardStored(results, dfe, date, fl) {
     inputTag.value = cell_info2.find(item => item.shift === "E")?.name || "";
     inputTag.setAttribute('id', date + 'CELL6')
     cell_2_E.appendChild(inputTag)
+    cell_2_E.style.borderRight = "1px solid transparent"
 
 
     //화성 정보 가공
@@ -199,6 +210,7 @@ function createCardStored(results, dfe, date, fl) {
     const form = formRow.insertCell();
     form.textContent = "FORM";
     form.rowSpan = 2;
+    form.style.borderLeft = "1px solid transparent"
 
     const form_1 = formRow.insertCell();
     form_1.textContent = "1";
@@ -221,6 +233,7 @@ function createCardStored(results, dfe, date, fl) {
     inputTag.value = form_info1.find(item => item.shift === "E")?.name || "";
     inputTag.setAttribute('id', date + 'FORM3')
     form_1_E.appendChild(inputTag)
+    form_1_E.style.borderRight = "1px solid transparent"
 
 
     // 화성 2차
@@ -245,6 +258,7 @@ function createCardStored(results, dfe, date, fl) {
     inputTag.value = form_info2.find(item => item.shift === "E")?.name || "";
     inputTag.setAttribute('id', date + 'FORM6')
     form_2_E.appendChild(inputTag)
+    form_2_E.style.borderRight = "1px solid transparent"
 
 
     //모듈 정보 가공
@@ -267,6 +281,7 @@ function createCardStored(results, dfe, date, fl) {
     const pack = packRow.insertCell();
     pack.textContent = "PACK";
     pack.rowSpan = 2;
+    pack.style.borderLeft = "1px solid transparent"
 
     const pack_1 = packRow.insertCell();
     pack_1.textContent = "1";
@@ -288,6 +303,7 @@ function createCardStored(results, dfe, date, fl) {
     inputTag.value = pack_info1.find(item => item.shift === "E")?.name || "";
     inputTag.setAttribute('id', date + 'PACK3')
     pack_1_E.appendChild(inputTag)
+    pack_1_E.style.borderRight = "1px solid transparent"
 
     // 모듈 2차
     const packRow2 = table.insertRow();
@@ -311,11 +327,13 @@ function createCardStored(results, dfe, date, fl) {
     inputTag.value = pack_info2.find(item => item.shift === "E")?.name || "";
     inputTag.setAttribute('id', date + 'PACK6')
     pack_2_E.appendChild(inputTag)
+    pack_2_E.style.borderRight = "1px solid transparent"
 
 
     //wms 정보 가공
     let wms_info1 = []
     let wms_info2 = []
+    let wms_info3 = []
 
     results.forEach(item => {
         if (item.process === "WMS") {
@@ -323,6 +341,8 @@ function createCardStored(results, dfe, date, fl) {
                 wms_info1.push(item);
             } else if (item.priority === "2") {
                 wms_info2.push(item);
+            } else if (item.priority === "3") {
+                wms_info3.push(item);
             }
         }
     });
@@ -332,7 +352,9 @@ function createCardStored(results, dfe, date, fl) {
     const wmsRow = table.insertRow();
     const wms = wmsRow.insertCell();
     wms.textContent = "WMS";
-    wms.rowSpan = 2;
+    wms.rowSpan = 3;
+    wms.style.borderLeft = "1px solid transparent"
+
 
     const wms_1 = wmsRow.insertCell();
     wms_1.textContent = "1";
@@ -354,6 +376,7 @@ function createCardStored(results, dfe, date, fl) {
     inputTag.value = wms_info1.find(item => item.shift === "E")?.name || "";
     inputTag.setAttribute('id', date + 'WMS3')
     wms_1_E.appendChild(inputTag)
+    wms_1_E.style.borderRight = "1px solid transparent"
 
     // wms 2차
     const wmsRow2 = table.insertRow();
@@ -377,6 +400,31 @@ function createCardStored(results, dfe, date, fl) {
     inputTag.value = wms_info2.find(item => item.shift === "E")?.name || "";
     inputTag.setAttribute('id', date + 'WMS6')
     wms_2_E.appendChild(inputTag)
+    wms_2_E.style.borderRight = "1px solid transparent"
+
+    // wms 3차
+    const wmsRow3 = table.insertRow();
+    const wms_3 = wmsRow3.insertCell();
+    wms_3.textContent = "2";
+
+    const wms_3_N = wmsRow3.insertCell();
+    inputTag = document.createElement('input')
+    inputTag.value = wms_info3.find(item => item.shift === "N")?.name || "";
+    inputTag.setAttribute('id', date + 'WMS7')
+    wms_3_N.appendChild(inputTag)
+
+    const wms_3_D = wmsRow3.insertCell();
+    inputTag = document.createElement('input')
+    inputTag.value = wms_info3.find(item => item.shift === "D")?.name || "";
+    inputTag.setAttribute('id', date + 'WMS8')
+    wms_3_D.appendChild(inputTag)
+
+    const wms_3_E = wmsRow3.insertCell();
+    inputTag = document.createElement('input')
+    inputTag.value = wms_info3.find(item => item.shift === "E")?.name || "";
+    inputTag.setAttribute('id', date + 'WMS9')
+    wms_3_E.appendChild(inputTag)
+    wms_3_E.style.borderRight = "1px solid transparent"
 
 
     //coll 정보 가공
@@ -399,6 +447,7 @@ function createCardStored(results, dfe, date, fl) {
     const coll = collRow.insertCell();
     coll.textContent = "COLL";
     coll.rowSpan = 2;
+    coll.style.borderLeft = "1px solid transparent"
 
     const coll_1 = collRow.insertCell();
     coll_1.textContent = "1";
@@ -420,6 +469,7 @@ function createCardStored(results, dfe, date, fl) {
     inputTag.value = coll_info1.find(item => item.shift === "E")?.name || "";
     inputTag.setAttribute('id', date + 'COLL3')
     coll_1_E.appendChild(inputTag)
+    coll_1_E.style.borderRight = "1px solid transparent"
 
     // coll 2차
     const collRow2 = table.insertRow();
@@ -443,6 +493,7 @@ function createCardStored(results, dfe, date, fl) {
     inputTag.value = coll_info2.find(item => item.shift === "E")?.name || "";
     inputTag.setAttribute('id', date + 'COLL6')
     coll_2_E.appendChild(inputTag)
+    coll_2_E.style.borderRight = "1px solid transparent"
 
 
     //comm 정보 가공
@@ -464,6 +515,7 @@ function createCardStored(results, dfe, date, fl) {
     const comm = commRow.insertCell();
     comm.textContent = "COMM";
     comm.rowSpan = 2;
+    comm.style.borderLeft = "1px solid transparent"
 
     const comm_1 = commRow.insertCell();
     comm_1.textContent = "1";
@@ -485,11 +537,14 @@ function createCardStored(results, dfe, date, fl) {
     inputTag.value = comm_info1.find(item => item.shift === "E")?.name || "";
     inputTag.setAttribute('id', date + 'COMM3')
     comm_1_E.appendChild(inputTag)
+    comm_1_E.style.borderRight = "1px solid transparent"
 
     // comm 2차
     const commRow2 = table.insertRow();
     const comm_2 = commRow2.insertCell();
     comm_2.textContent = "2";
+    commRow2.style.borderBottom = "1px solid transparent"
+
 
     const comm_2_N = commRow2.insertCell();
     inputTag = document.createElement('input')
@@ -508,6 +563,7 @@ function createCardStored(results, dfe, date, fl) {
     inputTag.value = comm_info2.find(item => item.shift === "E")?.name || "";
     inputTag.setAttribute('id', date + 'COMM6')
     comm_2_E.appendChild(inputTag)
+    comm_2_E.style.borderRight = "1px solid transparent"
 
 
     //form 태그 생성

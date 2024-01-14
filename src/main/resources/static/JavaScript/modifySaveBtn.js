@@ -15,8 +15,6 @@ function modifySaveBtn(beforeCards) {
         let updateInfo = [] // "A" > "B"
         let insertInfo = [] // "" > "A"
 
-
-
         // 만약 사용자가 로그인이 되어 있는 경우
         if (statusObj.status === 'connected') {
             nowUserId = statusObj.user.kakao_account.email;
@@ -28,7 +26,7 @@ function modifySaveBtn(beforeCards) {
             xhr_check.send(JSON.stringify({"CheckTypo": 'typoPostSample'}));
 
             xhr_check.onload = function () {
-                rocMembers = JSON.parse(xhr_check.responseText);
+                rocMembers = JSON.parse(xhr_check.response);
                 console.log("ROC MEMBERS : " + rocMembers); // 전체 ROC인원을 문자열로 가지는 배열.
                 form = document.querySelectorAll("#createForm");
 
@@ -123,7 +121,7 @@ function modifySaveBtn(beforeCards) {
                             }
 
                             // 변경(업데이트) "A" > "B"
-                            else if (rocMembers.includes(elecinf) && beforeCards[idInf] !== "" && beforeCards[idInf] !== elecinf) {
+                            else if (rocMembers.hasOwnProperty(elecinf) && rocMembers[elecinf] === "ELEC" && beforeCards[idInf] !== "" && beforeCards[idInf] !== elecinf) {
                                 updateInfo.push({
                                     "name": beforeCards[idInf],
                                     "date": formdate,
@@ -134,7 +132,7 @@ function modifySaveBtn(beforeCards) {
                             }
 
                             // 추가 "" > "A"
-                            else if (rocMembers.includes(elecinf) && beforeCards[idInf] === "") {
+                            else if (rocMembers.hasOwnProperty(elecinf) && rocMembers[elecinf] === "ELEC" && beforeCards[idInf] === "") {
                                 insertInfo.push({
                                     "name": elecinf,
                                     "date": formdate,
@@ -143,10 +141,6 @@ function modifySaveBtn(beforeCards) {
                                 });
                             }
 
-                            else if (!rocMembers.includes(elecinf)) {
-                                flag = false;
-                                document.getElementById(`${formdate}ELEC${i}`).style.color = "red";
-                            }
                             else {
                                 flag = false;
                                 document.getElementById(`${formdate}ELEC${i}`).style.color = "red";
@@ -175,7 +169,7 @@ function modifySaveBtn(beforeCards) {
                             }
 
                             // 변경(업데이트) "A" > "B"
-                            else if (rocMembers.includes(cellinf) && beforeCards[idInf] !== "" && beforeCards[idInf] !== cellinf) {
+                            else if (rocMembers.hasOwnProperty(cellinf) && rocMembers[cellinf] === "CELL" && beforeCards[idInf] !== "" && beforeCards[idInf] !== cellinf) {
                                 updateInfo.push({
                                     "name": cellinf,
                                     "date": formdate,
@@ -185,7 +179,7 @@ function modifySaveBtn(beforeCards) {
                             }
 
                             // 추가 "" > "A"
-                            else if (rocMembers.includes(cellinf) && beforeCards[idInf] === "") {
+                            else if (rocMembers.hasOwnProperty(cellinf) && rocMembers[cellinf] === "CELL" && beforeCards[idInf] === "") {
                                 insertInfo.push({
                                     "name": cellinf,
                                     "date": formdate,
@@ -194,109 +188,241 @@ function modifySaveBtn(beforeCards) {
                                 });
                             }
 
-                            else if (!rocMembers.includes(cellinf)) {
-                                flag = false;
-                                document.getElementById(`${formdate}CELL${i}`).style.color = "red";
-                            }
                             else {
                                 flag = false;
                                 document.getElementById(`${formdate}CELL${i}`).style.color = "red";
                             }
-
                         }
-                        /*
+
+                        // 화성
                         for (let i = 1; i < 7; i++) {
-                            let forminf = formInfo[i - 1].trim();
-                            if (forminf === "") {
-                            } else if (rocMembers.includes(forminf)) {
-                                //confirmedSchedule 정보 넣기
-                                document.getElementById(`${formdate}FORM${i}`).style.color = "black";
-                                confirmedSchedule.push({
+                            let forminf = formInfo[i - 1].trim(); // 하나의 값
+                            let idInf = `${formdate}FORM${i}`;
+                            document.getElementById(idInf).style.color = "black";
+
+                            if (beforeCards[idInf] !== forminf) {noChange = false;}
+                            // 입력 공백 또는 변경 사항이 없을시 continue
+                            if ((beforeCards[idInf] === "" && forminf === "") || (beforeCards[idInf] === forminf)) {}
+
+                            // 삭제. > 입력 값이 공백인 경우
+                            else if (beforeCards[idInf] !== "" && forminf === "") {
+                                deleteInfo.push({
+                                    "name": beforeCards[idInf],
+                                    "date": formdate,
+                                    "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
+                                    "priority": i < 4 ? '1' : '2',
+                                });
+                            }
+
+                            // 변경(업데이트) "A" > "B"
+                            else if (rocMembers.hasOwnProperty(forminf) && rocMembers[forminf] === "FORM" && beforeCards[idInf] !== "" && beforeCards[idInf] !== forminf) {
+                                updateInfo.push({
                                     "name": forminf,
                                     "date": formdate,
                                     "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                     "priority": i < 4 ? '1' : '2',
                                 });
-                            } else {
-                                // 해당 줄 빨간줄 표시
+                            }
+
+                            // 추가 "" > "A"
+                            else if (rocMembers.hasOwnProperty(forminf) && rocMembers[forminf] === "FORM" && beforeCards[idInf] === "") {
+                                insertInfo.push({
+                                    "name": forminf,
+                                    "date": formdate,
+                                    "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
+                                    "priority": i < 4 ? '1' : '2',
+                                });
+                            }
+
+                            else {
                                 flag = false;
                                 document.getElementById(`${formdate}FORM${i}`).style.color = "red";
                             }
                         }
+
+                        // 모듈
                         for (let i = 1; i < 7; i++) {
-                            let packinf = packInfo[i - 1].trim();
-                            if (packinf === "") {
-                            } else if (rocMembers.includes(packinf)) {
-                                //confirmedSchedule 정보 넣기
-                                document.getElementById(`${formdate}PACK${i}`).style.color = "black";
-                                confirmedSchedule.push({
+                            let packinf = packInfo[i - 1].trim(); // 하나의 값
+                            let idInf = `${formdate}PACK${i}`;
+                            document.getElementById(idInf).style.color = "black";
+
+                            if (beforeCards[idInf] !== packinf) {noChange = false;}
+                            // 입력 공백 또는 변경 사항이 없을시 continue
+                            if ((beforeCards[idInf] === "" && packinf === "") || (beforeCards[idInf] === packinf)) {}
+
+                            // 삭제. > 입력 값이 공백인 경우
+                            else if (beforeCards[idInf] !== "" && packinf === "") {
+                                deleteInfo.push({
+                                    "name": beforeCards[idInf],
+                                    "date": formdate,
+                                    "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
+                                    "priority": i < 4 ? '1' : '2',
+                                });
+                            }
+
+                            // 변경(업데이트) "A" > "B"
+                            else if (rocMembers.hasOwnProperty(packinf) && rocMembers[packinf] === "PACK" && beforeCards[idInf] !== "" && beforeCards[idInf] !== packinf) {
+                                updateInfo.push({
                                     "name": packinf,
                                     "date": formdate,
                                     "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                     "priority": i < 4 ? '1' : '2',
                                 });
-                            } else {
-                                // 해당 줄 빨간줄 표시
+                            }
+
+                            // 추가 "" > "A"
+                            else if (rocMembers.hasOwnProperty(packinf) && rocMembers[packinf] === "PACK" && beforeCards[idInf] === "") {
+                                insertInfo.push({
+                                    "name": packinf,
+                                    "date": formdate,
+                                    "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
+                                    "priority": i < 4 ? '1' : '2',
+                                });
+                            }
+
+                            else {
                                 flag = false;
                                 document.getElementById(`${formdate}PACK${i}`).style.color = "red";
                             }
                         }
+
+                        // WMS
                         for (let i = 1; i < 7; i++) {
-                            let wmsinf = wmsInfo[i - 1].trim();
-                            if (wmsinf === "") {
-                            } else if (rocMembers.includes(wmsinf)) {
-                                //confirmedSchedule 정보 넣기
-                                document.getElementById(`${formdate}WMS${i}`).style.color = "black";
-                                confirmedSchedule.push({
+                            let wmsinf = wmsInfo[i - 1].trim(); // 하나의 값
+                            let idInf = `${formdate}WMS${i}`;
+                            document.getElementById(idInf).style.color = "black";
+
+                            if (beforeCards[idInf] !== wmsinf) {noChange = false;}
+                            // 입력 공백 또는 변경 사항이 없을시 continue
+                            if ((beforeCards[idInf] === "" && wmsinf === "") || (beforeCards[idInf] === wmsinf)) {}
+
+                            // 삭제. > 입력 값이 공백인 경우
+                            else if (beforeCards[idInf] !== "" && wmsinf === "") {
+                                deleteInfo.push({
+                                    "name": beforeCards[idInf],
+                                    "date": formdate,
+                                    "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
+                                    "priority": i < 4 ? '1' : '2',
+                                });
+                            }
+
+                            // 변경(업데이트) "A" > "B"
+                            else if (rocMembers.hasOwnProperty(wmsinf) && rocMembers[wmsinf] === "WMS" && beforeCards[idInf] !== "" && beforeCards[idInf] !== wmsinf) {
+                                updateInfo.push({
                                     "name": wmsinf,
                                     "date": formdate,
                                     "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                     "priority": i < 4 ? '1' : '2',
                                 });
-                            } else {
-                                // 해당 줄 빨간줄 표시
+                            }
+
+                            // 추가 "" > "A"
+                            else if (rocMembers.hasOwnProperty(wmsinf) && rocMembers[wmsinf] === "WMS" && beforeCards[idInf] === "") {
+                                insertInfo.push({
+                                    "name": wmsinf,
+                                    "date": formdate,
+                                    "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
+                                    "priority": i < 4 ? '1' : '2',
+                                });
+                            }
+
+                            else {
                                 flag = false;
                                 document.getElementById(`${formdate}WMS${i}`).style.color = "red";
                             }
                         }
+
+                        // 수집서버
                         for (let i = 1; i < 7; i++) {
-                            let collinf = collInfo[i - 1].trim();
-                            if (collinf === "") {
-                            } else if (rocMembers.includes(collinf)) {
-                                document.getElementById(`${formdate}COLL${i}`).style.color = "black";
-                                //confirmedSchedule 정보 넣기
-                                confirmedSchedule.push({
+                            let collinf = collInfo[i - 1].trim(); // 하나의 값
+                            let idInf = `${formdate}COLL${i}`;
+                            document.getElementById(idInf).style.color = "black";
+
+                            if (beforeCards[idInf] !== collinf) {noChange = false;}
+                            // 입력 공백 또는 변경 사항이 없을시 continue
+                            if ((beforeCards[idInf] === "" && collinf === "") || (beforeCards[idInf] === collinf)) {}
+
+                            // 삭제. > 입력 값이 공백인 경우
+                            else if (beforeCards[idInf] !== "" && collinf === "") {
+                                deleteInfo.push({
+                                    "name": beforeCards[idInf],
+                                    "date": formdate,
+                                    "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
+                                    "priority": i < 4 ? '1' : '2',
+                                });
+                            }
+
+                            // 변경(업데이트) "A" > "B"
+                            else if (rocMembers.hasOwnProperty(collinf) && rocMembers[collinf] === "COLL" && beforeCards[idInf] !== "" && beforeCards[idInf] !== collinf) {
+                                updateInfo.push({
                                     "name": collinf,
                                     "date": formdate,
                                     "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                     "priority": i < 4 ? '1' : '2',
                                 });
-                            } else {
-                                // 해당 줄 빨간줄 표시
+                            }
+
+                            // 추가 "" > "A"
+                            else if (rocMembers.hasOwnProperty(collinf) && rocMembers[collinf] === "COLL" && beforeCards[idInf] === "") {
+                                insertInfo.push({
+                                    "name": collinf,
+                                    "date": formdate,
+                                    "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
+                                    "priority": i < 4 ? '1' : '2',
+                                });
+                            }
+
+                            else {
                                 flag = false;
                                 document.getElementById(`${formdate}COLL${i}`).style.color = "red";
                             }
                         }
+
+                        // 공통
                         for (let i = 1; i < 7; i++) {
-                            let comminf = commInfo[i - 1].trim();
-                            if (comminf === "") {
-                            } else if (rocMembers.includes(comminf)) {
-                                document.getElementById(`${formdate}COMM${i}`).style.color = "black";
-                                //confirmedSchedule 정보 넣기
-                                confirmedSchedule.push({
+                            let comminf = commInfo[i - 1].trim(); // 하나의 값
+                            let idInf = `${formdate}COMM${i}`;
+                            document.getElementById(idInf).style.color = "black";
+
+                            if (beforeCards[idInf] !== comminf) {noChange = false;}
+                            // 입력 공백 또는 변경 사항이 없을시 continue
+                            if ((beforeCards[idInf] === "" && comminf === "") || (beforeCards[idInf] === comminf)) {}
+
+                            // 삭제. > 입력 값이 공백인 경우
+                            else if (beforeCards[idInf] !== "" && comminf === "") {
+                                deleteInfo.push({
+                                    "name": beforeCards[idInf],
+                                    "date": formdate,
+                                    "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
+                                    "priority": i < 4 ? '1' : '2',
+                                });
+                            }
+
+                            // 변경(업데이트) "A" > "B"
+                            else if (rocMembers.hasOwnProperty(comminf) && rocMembers[comminf] === "COMM" && beforeCards[idInf] !== "" && beforeCards[idInf] !== comminf) {
+                                updateInfo.push({
                                     "name": comminf,
                                     "date": formdate,
                                     "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                     "priority": i < 4 ? '1' : '2',
                                 });
-                                //console.log("confirmedSchedule"+JSON.stringify(confirmedSchedule, null, 2));
-                            } else {
-                                // 해당 줄 빨간줄 표시
+                            }
+
+                            // 추가 "" > "A"
+                            else if (rocMembers.hasOwnProperty(comminf) && rocMembers[comminf] === "COMM" && beforeCards[idInf] === "") {
+                                insertInfo.push({
+                                    "name": comminf,
+                                    "date": formdate,
+                                    "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
+                                    "priority": i < 4 ? '1' : '2',
+                                });
+                            }
+
+                            else {
                                 flag = false;
                                 document.getElementById(`${formdate}COMM${i}`).style.color = "red";
                             }
                         }
-                        */
 
                         if (j === form.length - 1) {
                             if (noChange) {
@@ -388,7 +514,7 @@ function modifySaveBtn(beforeCards) {
                             else {
                                 document.getElementById("modify_save").disabled = false;
                                 document.getElementById("modify_save").style.opacity = 1;
-                                alert("오탈자를 확인해주세요")
+                                alert("오타 및 입력된 운영자님의 공정이 올바른지 확인해주세요.")
                                 return; //저장하지 않음
                             }
                         }
