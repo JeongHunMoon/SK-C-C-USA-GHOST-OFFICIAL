@@ -227,8 +227,8 @@
     gap: 2vw; /* 버튼 간격 설정 */
 }
 
-#cancel_btn,
-#delete_schedule {
+#delete_cancel,
+#delete_save {
     display: flex;
     width: 15%;
     min-width: 120px;
@@ -243,12 +243,12 @@
     cursor: pointer;
 }
 
-#cancel_btn {
+#delete_cancel {
     background: #E1022A;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
-#delete_schedule {
+#delete_save {
     background: #EE7603;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
 }

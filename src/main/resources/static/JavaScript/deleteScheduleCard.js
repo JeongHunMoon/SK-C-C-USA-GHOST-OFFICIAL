@@ -3,6 +3,7 @@
 // 사용자가 클릭할 때마다 카드의 배경색 바꾸고, 가능하다면 x 도
 // flag && 배경색 동시 체크로 지울 카드인지 아닌지 판단하기.
 //
+// results가 빈 배열인 경우는
 function deleteScheduleCard(results, dfe, date) {
 
     // 테이블을 담을 div
@@ -12,10 +13,7 @@ function deleteScheduleCard(results, dfe, date) {
     const schedule_div = document.createElement("div");
     schedule_div.className = "schedule_div";
 
-    // results가 빈 배열인 경우에만 밝은 회색 배경 적용
-    if (results.length === 0) {
-        schedule_div.style.backgroundColor = "lightgray";
-    }
+
 
     let table = document.createElement("table");
     table.className = "schedule_card"; // class 설정
