@@ -200,28 +200,32 @@ function deleteSaveBtn() {
             }
 
             console.log("이 값들이 디비에 삭제됨.", deleteInfo);
-            // 비동기 작업 카운터 초기화
-            let asyncTotalCounter = 0;
-            let asyncCounter = 0; //What for?
-            if (deleteInfo.length !== 0) {
-                asyncTotalCounter += 1
-            }
-            console.log("=================", asyncTotalCounter)
 
-            // // delete 작업
-            // if (deleteInfo.length !== 0) {
-            //     let confirmCheck = confirm("정말 삭제하시겠습니까?")
-            //     if (confirmCheck === true) {
-            //         let delete_xhr = new XMLHttpRequest();
-            //         delete_xhr.open('POST', '/delete', true);
-            //         delete_xhr.setRequestHeader("Content-Type", "application/json");
-            //     } else {
-            //         return 0;
-            //     }
-            // } else if (deleteInfo.length === 0) {
-            //     alert("선택된 데이터가 없습니다. 삭제가 필요한 카드를 선택하세요")
-            //     return 0;
-            // }
+            // delete 작업
+            if (deleteInfo.length !== 0) {
+                let confirmCheck = confirm("정말 삭제하시겠습니까?")
+                if (confirmCheck === true) {
+                    let delete_xhr = new XMLHttpRequest();
+                    delete_xhr.open('POST', '/delete', true);
+                    delete_xhr.setRequestHeader("Content-Type", "application/json");
+                    delete_xhr.send(JSON.stringify(deleteInfo));
+                    delete_xhr.onload = function() {
+                        if (delete_xhr.responseText === "Delete Success") {
+                            alert("삭제 성공")
+                            window.location.href = "/admin?id=" + nowUserId
+                        } else {
+                            alert("서버와 통신 불가")
+                            // return 0;
+                        }
+                    }
+                } else {
+                    alert("삭제동의 후 삭제 가능합니다")
+                    return 0;
+                }
+            } else if (deleteInfo.length === 0) {
+                alert("선택된 데이터가 없습니다. 삭제가 필요한 카드를 다시 선택해주세요")
+                return 0;
+            }
         }
         //로그인 되어있지 않은 경우
         else {

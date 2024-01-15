@@ -14,6 +14,7 @@ function deleteScheduleFunction() {
     let flag  = true; //What for
     let noChange = true; //What for
     let deleteInfo = []; // "A" > ""
+    // let firstClick= 0;
     let clickFlags = []; // 1 인경우 : 선택된 상태,  -1인 경우 : 미선택된 상태
 
     // 사용자가 OP 페이지에 들어오면 카카오톡 프로필, 이름을 애니메이션으로 보여준다.
@@ -83,40 +84,33 @@ function deleteScheduleFunction() {
                     } //카드 생성 완료
                     loadingOff()
                     deleteOnBtn()
-                    console.log("카드생성완료")
 
-                    //테이블 클릭시 스타일 추가, 재클릭시 스타일 해제
+                    // 테이블 클릭 시 색상변화
                     tableSelect=document.querySelectorAll("table") //테이블 가져오기
-                    //최초 미클릭 상태로 초기화
-                    // for(let i=0; i<tableSelect.length; i++){
-                    //     clickFlags[i]=-1
-                    // }
-
-                    // tableSelect.forEach(function (table) {
-                    //     //테이블마다 뭔가 속성을 주고 싶은데
-                    // }
                     for(let i=0; i<tableSelect.length; i++){
-                        if (clickFlags[i] === 1) { // 선택된 상태에서 클릭하면 스타일 원복
-                            clickFlags[i] *= -1;
-                            tableSelect.style.backgroundColor = "white";
-                            tableSelect.style.color = "black";
-
-                        } else if (clickFlags[i] === -1) { // 미선택된 상태에서 클릭하면 스타일만 적용
-                            tableSelect.style.backgroundColor = "darkgrey";
-                            tableSelect.style.color = "white";
-                            clickFlags[i] *= -1;
-                            //추가 : X표시 CSS
-                        }
+                        clickFlags[i]=-1
                     }
-
-                    console.log("ClickFlag : "+clickFlags)
+                    // let tableDate = table.querySelector("#dateInfo").textContent; //현재 테이블 날짜 가져오기
                     tableSelect.forEach(function (table) {
-                        table.addEventListener('click', function () {
-
-                            // let tableDate = table.querySelector("#dateInfo").textContent; //현재 테이블 날짜 가져오기
+                        table.addEventListener('click', function (event) {
+                            // 클릭된 테이블 요소
+                            let clickedTable = event.currentTarget;
+                            // 클릭된 테이블의 인덱스
+                            let tableIndex = Array.from(tableSelect).indexOf(clickedTable);
+                            // 두 번째 이후 클릭시 작동
+                            if (clickFlags[tableIndex] === -1) { // 선택된 상태에서 클릭하면 스타일 적용
+                                table.style.backgroundColor = "darkgrey";
+                                table.style.color = "white";
+                                clickFlags[tableIndex] *= -1;
+                            } else if (clickFlags[tableIndex] === 1) { // 선택된 상태에서 클릭하면 스타일 원복
+                                table.style.backgroundColor = "white";
+                                table.style.color = "black";
+                                clickFlags[tableIndex] *= -1;
+                                //추가 : X표시 CSS
+                            }
                         })
-                    })
 
+                    })
                 }
                 else {
                     alert("삭제할 카드가 없습니다.")

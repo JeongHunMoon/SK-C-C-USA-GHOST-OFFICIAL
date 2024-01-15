@@ -209,4 +209,16 @@ public class Home {
         System.out.println(rocALlNames);
         return rocALlNames;
     }
+    @ResponseBody
+    @PostMapping("/delete")
+    public ResponseEntity<String> delete(@RequestBody List<Map<String, String>> requestBody) throws Exception {
+        System.out.println("delete from DB : " + requestBody);
+        try {
+            v1service.deleteSchedule(requestBody);
+        }
+        catch (Exception e) {
+            return ResponseEntity.ok("Delete Fail");
+        }
+        return ResponseEntity.ok("Delete Success");
+    }
 }
