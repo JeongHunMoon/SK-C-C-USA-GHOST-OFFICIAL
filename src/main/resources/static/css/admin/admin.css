@@ -88,18 +88,38 @@
     right: 0;
 
     width: 100vw;
-    background: lightblue;
+    background: #E8E8E8;
 }
 
 #date_submit {
-    margin-right: 10px;
+    background: #F8F8F8;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+    border: 1px solid #F8F8F8;
+    cursor: pointer;
+    border-radius: 50px;
 }
 
 #date-range-start, #date-range-end {
-    max-width: 200px;
+    max-width: 180px;
     width: 35%;
+    padding: 3px; /* 내부 여백 추가 */
+    border: none; /* 테두리 제거 */
+    border-bottom: 1px solid #ddd; /* 하단 경계선 추가 */
+    font-size: 16px; /* 글꼴 크기 조절 */
+    color: #333; /* 글자색 설정 */
+    background-color: #f7f7f7; /* 배경색 설정 */
+    outline: none; /* 포커스 시 테두리 제거 */
 }
 
+#date-range-start:focus, #date-range-end:focus {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3); /* 포커스 시 약간의 그림자 효과 추가 */
+}
+
+/* 달력 아이콘 스타일링 */
+#date-range-start[type="date"]::-webkit-calendar-picker-indicator,
+#date-range-end[type="date"]::-webkit-calendar-picker-indicator {
+    filter: brightness(0.8); /* 달력 아이콘을 약간 어둡게 표시 */
+}
 
 #section_top {
     display: flex;
@@ -246,17 +266,20 @@
 
 #modify_schedule {
     background: #E1022A;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.3);
+    border: 1px solid #E1022A;
 }
 
 #new_schedule {
     background: #EE7603;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.3);
+    border: 1px solid #EE7603;
 }
 
 #delete_schedule{
     background: #EE7603;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.3);
+    border: 1px solid #EE7603;
 }
 
 #text1,

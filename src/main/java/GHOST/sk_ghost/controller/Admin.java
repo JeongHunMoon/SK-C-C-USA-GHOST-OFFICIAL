@@ -297,11 +297,11 @@ public class Admin {
 
 
     // 수정 시 > 업데이트 호출 부분
-    @PostMapping("/modifyUpdate")
-    public ResponseEntity<String> modifyUpdate(@RequestBody List<Map<String, String>> requestBody) throws Exception {
+    @PostMapping("/updateSchedule")
+    public ResponseEntity<String> updateSchedule(@RequestBody List<Map<String, String>> requestBody) throws Exception {
         System.out.println("modifyUpdate from DB : " + requestBody);
         try {
-            v1service.modifyUpdate(requestBody);
+            v1service.updateSchedule(requestBody);
         }
         catch (Exception e) {
             return ResponseEntity.ok("Update Fail");

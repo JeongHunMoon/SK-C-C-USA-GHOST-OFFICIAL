@@ -31,8 +31,33 @@ function createSchedule() {
                 if (rocMembers.length === 0) {
                     document.getElementById('doneBtnModify').disabled = false;
                     document.getElementById('doneBtnModify').style.opacity = 1;
-                    window.location.href = '/remove';
-                    alert("현재 DB ROC 맴버가 없습니다.. 관리자에게 문의해주세요??")
+
+                    let remove_xhr = new XMLHttpRequest();
+                    remove_xhr.open("GET", "/removeCreate?id="+nowUserId, true);
+                    remove_xhr.send()
+
+                    // Timeout 설정 (예: 10초)
+                    remove_xhr.timeout = 10000;
+
+                    remove_xhr.onload = function () {
+                        if (remove_xhr.status === 200) {
+                            if (remove_xhr.responseText === "true") {
+                                alert("현재 DB ROC 맴버가 없습니다.. 관리자에게 문의해주세요??")
+                                window.location.href = "admin?id="+nowUserId;
+                            }
+                            // 저장
+                            else {
+                                alert("서버 오류. 다른 운영자님이 사용할 수 있도록 아래 조치 부탁드립니다." +
+                                    "\n"+"생성 페이지 > cancel을 눌러주세요!")
+                                window.location.href = "/";
+                            }
+
+                        } else {
+                            alert("서버 오류. 다른 운영자님이 사용할 수 있도록 아래 조치 부탁드립니다." +
+                                "\n"+"생성 페이지 > cancel을 눌러주세요!")
+                            window.location.href = "/";
+                        }
+                    };
                 }
                 else {
                     // 전체 카드 반복(1~7)

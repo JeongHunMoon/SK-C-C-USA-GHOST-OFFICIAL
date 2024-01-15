@@ -5,6 +5,7 @@ function adminDateSearch() {
     const startDateInput = document.getElementById('date-range-start');
     const endDateInput = document.getElementById('date-range-end');
 
+    const dateForm = document.getElementById('dateForm');
     // submit 이벤트가 발생하면 실행되는 함수
     dateForm.addEventListener('submit', function(event) {
         // 폼의 기본 동작을 막음 (페이지 새로고침 방지)
@@ -25,16 +26,27 @@ function adminDateSearch() {
             // "schedule_div" 클래스를 가진 모든 div 요소 가져오기
             const scheduleDivs = imageContainer.getElementsByClassName('schedule_div');
 
-            // 모든 "schedule_div"를 순회하며 제거
-            while (scheduleDivs.length > 0) {
-                scheduleDivs[0].remove();
-            }
-
             // 값을 console에 출력
             const startDate = new Date(startDateString);
             const endDate = new Date(endDateString);
             console.log('시작일:', startDateString);
             console.log('종료일:', endDateString);
+            const daysDifference = (endDate - startDate) / (1000 * 60 * 60 * 24);
+            console.log("차이", daysDifference)
+
+            if (daysDifference > 60) {
+                startDateInput.value = getCurrentDate();
+                endDateInput.value = getCurrEndDate();
+                btnOn()
+                alert('2달 이하로 조회 부탁드립니다.');
+                loadingOff()
+                return;
+            }
+            // 모든 "schedule_div"를 순회하며 제거
+            while (scheduleDivs.length > 0) {
+                scheduleDivs[0].remove();
+            }
+
             //console.log(getDates(startDate, endDate));
             let cards = getDates(startDate, endDate);
             console.log(cards)
