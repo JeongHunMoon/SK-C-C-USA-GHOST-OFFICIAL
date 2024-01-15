@@ -122,9 +122,23 @@
                 // 시작일과 종료일의 값을 가져옴
                 const startD = startTag.value;
                 const endD = endTag.value;
+
+                const startDate = new Date(startD);
+                const endDate = new Date(endD);
+                const daysDifference = (endDate - startDate) / (1000 * 60 * 60 * 24);
+                console.log("수정 시 날짜 차이", daysDifference)
+
                 // 시작일과 종료일이 모두 입력되었고, 시작일이 종료일보다 작은 경우
                 if (startD && endD && startD <= endD) {
-                    modifyBtn(startD, endD);
+                    if (daysDifference > 60) {
+                        alert('2달 이하로 수정 부탁드립니다.');
+                        startTag.value = getCurrentDate();
+                        endTag.value = getCurrEndDate();
+                    }
+                    else {
+                        modifyBtn(startD, endD);
+                    }
+
                 }
                 else {
                     alert('시작일은 종료일보다 작아야 합니다. 다시 입력해주세요.');
@@ -145,9 +159,24 @@
                 // 시작일과 종료일의 값을 가져옴
                 const startD = startTag.value;
                 const endD = endTag.value;
+
+                const startDate = new Date(startD);
+                const endDate = new Date(endD);
+                const daysDifference = (endDate - startDate) / (1000 * 60 * 60 * 24);
+                console.log("수정 시 날짜 차이", daysDifference)
+
+
                 // 시작일과 종료일이 모두 입력되었고, 시작일이 종료일보다 작은 경우
                 if (startD && endD && startD <= endD) {
-                    deleteBtn(startD, endD);
+                    if (daysDifference > 60) {
+                        alert('2달 이하로 수정 부탁드립니다.');
+                        startTag.value = getCurrentDate();
+                        endTag.value = getCurrEndDate();
+                    }
+                    else {
+                        deleteBtn(startD, endD);
+                    }
+
                 }
                 else {
                     alert('시작일은 종료일보다 작아야 합니다. 다시 입력해주세요.');

@@ -56,25 +56,33 @@
         delete from admin_shift
         where
         <foreach collection="list" item="listItem" separator="OR">
-            (
-            name = #{listItem.name, jdbcType=VARCHAR},
-            date = #{listItem.date, jdbcType=DATE},
-            shift = #{listItem.shift, jdbcType=VARCHAR},
-            priority = #{listItem.priority, jdbcType=VARCHAR}
-            )
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                name = #{listItem.name, jdbcType=VARCHAR}
+            </trim>
+            <trim prefix="AND" prefixOverrides="OR">
+                date = #{listItem.date, jdbcType=DATE}
+            </trim>
+            <trim prefix="AND" prefixOverrides="OR">
+                shift = #{listItem.shift, jdbcType=VARCHAR}
+            </trim>
+            <trim prefix="AND" prefixOverrides="OR">
+                priority = #{listItem.priority, jdbcType=VARCHAR}
+            </trim>
         </foreach>
     </delete>
 
-    <!-- 이름 수정 -->
-    <update id="modifyUpdate" parameterType="java.util.List">
-        <foreach collection="list" item="item" separator=";">
-            UPDATE admin_shift
-            SET name = #{item.toBeName}
-            WHERE name = #{item.name}
-            AND date = #{item.date}
-            AND shift = #{item.shift}
-            AND priority = #{item.priority}
-        </foreach>
+    <update id="updateSchedule" parameterType="java.util.Map">
+        UPDATE admin_shift
+        SET
+        name = #{toBeName, jdbcType=VARCHAR},
+        date = #{date, jdbcType=DATE},
+        shift = #{shift, jdbcType=VARCHAR},
+        priority = #{priority, jdbcType=VARCHAR}
+        WHERE
+        name = #{name, jdbcType=VARCHAR}
+        AND date = #{date, jdbcType=DATE}
+        AND shift = #{shift, jdbcType=VARCHAR}
+        AND priority = #{priority, jdbcType=VARCHAR}
     </update>
 </mapper>
 

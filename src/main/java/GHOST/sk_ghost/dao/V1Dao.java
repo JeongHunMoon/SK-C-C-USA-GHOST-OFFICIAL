@@ -24,6 +24,6 @@ public interface V1Dao {
     public ArrayList<String> adminShiftLastDate();
 
     public void deleteSchedule(List<Map<String, String>> scheduleData);
-    
-    public void modifyUpdate(List<Map<String, String>> scheduleData);
+
+    public void updateSchedule(Map<String, String> scheduleData);
 }

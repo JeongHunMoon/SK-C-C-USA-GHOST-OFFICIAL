@@ -31,12 +31,59 @@ function modifySaveBtn(beforeCards) {
                     console.log("ROC MEMBERS : " + rocMembers); // 전체 ROC인원을 문자열로 가지는 배열.
                     form = document.querySelectorAll("#createForm");
 
-                    //DB에서 이름을 불러오지 못했을 때
+                    //DB에서 member table이 비어 있는 경우
                     if (rocMembers.length === 0) {
-                        window.location.href = '/remove';
-                        document.getElementById("modify_save").disabled = false;
-                        document.getElementById("modify_save").style.opacity = 1;
-                        alert("현재 DB ROC 맴버가 없습니다.. 관리자에게 문의해주세요??")
+                        let remove_xhr = new XMLHttpRequest();
+                        remove_xhr.open("GET", "/removeModify?id="+nowUserId, true);
+
+                        // Timeout 설정 (예: 5초)
+                        remove_xhr.timeout = 5000;
+
+                        remove_xhr.onload = function () {
+                            if (remove_xhr.status === 200) {
+                                if (remove_xhr.responseText === "true") {
+                                    document.getElementById("modify_save").disabled = false;
+                                    document.getElementById("modify_save").style.opacity = 1;
+                                    alert("현재 DB ROC 맴버가 없습니다.. 관리자에게 문의해주세요!")
+                                    window.location.href = "admin?id="+nowUserId;
+                                }
+                                else {
+                                    document.getElementById("modify_save").disabled = false;
+                                    document.getElementById("modify_save").style.opacity = 1;
+                                    alert("잘못된 접근입니다.")
+                                    window.location.href = "/";
+                                }
+
+                            } else {
+                                document.getElementById("modify_save").disabled = false;
+                                document.getElementById("modify_save").style.opacity = 1;
+                                alert("취소 실패. 다시 취소 부탁드립니다.")
+                            }
+                        };
+
+                        // 서버에서 일정시간 응답이 없을 때,
+                        remove_xhr.ontimeout = function () {
+                            document.getElementById("modify_save").disabled = false;
+                            document.getElementById("modify_save").style.opacity = 1;
+                            alert("Request timed out. Please try again.");
+                        };
+
+                        // 넷웤이 없는데 요청할때 실행
+                        remove_xhr.onerror = function () {
+                            document.getElementById("modify_save").disabled = false;
+                            document.getElementById("modify_save").style.opacity = 1;
+                            alert("Network error occurred. Please check your connection and try again.");
+                        };
+
+                        // 프론트에서 네트워크가 있는 경우에 전송
+                        if (navigator.onLine) {
+                            remove_xhr.send();
+                        } else {
+                            document.getElementById("modify_save").disabled = false;
+                            document.getElementById("modify_save").style.opacity = 1;
+                            location.reload();
+                            alert("No internet connection. Please check your connection and try again.");
+                        }
                     }
                     else {
                         form = document.querySelectorAll("#createForm");
@@ -491,7 +538,7 @@ function modifySaveBtn(beforeCards) {
                                     // update 작업
                                     if (updateInfo.length !== 0) {
                                         let update_xhr = new XMLHttpRequest();
-                                        update_xhr.open('POST', '/modifyUpdate', true);
+                                        update_xhr.open('POST', '/updateSchedule', true);
                                         update_xhr.setRequestHeader("Content-Type", "application/json");
 
                                         performAsyncOperation(update_xhr, updateInfo)
