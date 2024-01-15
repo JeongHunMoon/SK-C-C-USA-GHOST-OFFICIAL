@@ -246,20 +246,86 @@ function createSchedule() {
                                 xhr_check_saveDB.send(JSON.stringify(confirmedSchedule));
 
                                 xhr_check_saveDB.onload = function() {
-                                    if (xhr_check_saveDB.responseText === "Save Success") {
-                                        document.getElementById('doneBtnModify').disabled = false;
-                                        document.getElementById('doneBtnModify').style.opacity = 1;
+                                    if (xhr_check_saveDB.status === 200) {
+                                        if (xhr_check_saveDB.responseText === "Save Success") {
+                                            document.getElementById('doneBtnModify').disabled = false;
+                                            document.getElementById('doneBtnModify').style.opacity = 1;
 
-                                        window.location.href = "/remove";
-                                        alert("정상적으로 등록되었습니다.")
+                                            let remove_xhr = new XMLHttpRequest();
+                                            remove_xhr.open("GET", "/removeCreate?id="+nowUserId, true);
+                                            remove_xhr.send()
+
+                                            // Timeout 설정 (예: 10초)
+                                            remove_xhr.timeout = 10000;
+
+                                            remove_xhr.onload = function () {
+                                                if (remove_xhr.status === 200) {
+                                                    if (remove_xhr.responseText === "true") {
+                                                        alert("정상적으로 등록되었습니다.")
+                                                        window.location.href = "admin?id="+nowUserId;
+                                                    }
+                                                    // 저장
+                                                    else {
+                                                        alert("스케줄 생성은 완료되었습니다.\n" +
+                                                            "하지만 로그인 세션이 만료되어, 세션 삭제에 실패했습니다." +
+                                                            "\n다른 운영자님이 사용할 수 있도록 아래 조치 부탁드립니다." +
+                                                            "\n"+"생성 페이지 > cancel을 눌러주세요!")
+                                                        window.location.href = "/";
+                                                    }
+
+                                                } else {
+                                                    alert("스케줄 생성은 완료되었습니다.\n" +
+                                                        "하지만 로그인 세션이 만료되어, 세션 삭제에 실패했습니다." +
+                                                        "\n다른 운영자님이 사용할 수 있도록 아래 조치 부탁드립니다." +
+                                                        "\n"+"생성 페이지 > cancel을 눌러주세요!")
+                                                    window.location.href = "/";
+                                                }
+                                            };
+
+                                            // 서버에서 일정시간 응답이 없을 때,
+                                            remove_xhr.ontimeout = function () {
+                                                alert("스케줄 생성은 완료되었습니다.\n" +
+                                                    "하지만 서버 처리에 오류가 있어, 세션 삭제에 실패했습니다." +
+                                                    "\n다른 운영자님이 사용할 수 있도록 아래 조치 부탁드립니다." +
+                                                    "\n"+"생성 페이지 > cancel을 눌러주세요!")
+                                                window.location.href = "/";
+                                            };
+
+                                            // 넷웤이 없는데 요청할때 실행
+                                            remove_xhr.onerror = function () {
+                                                alert("스케줄 생성은 완료되었습니다.\n" +
+                                                    "하지만 네트워크 접속이 끊겨 세션 삭제에 실패했습니다." +
+                                                    "\n다른 운영자님이 사용할 수 있도록 아래 조치 부탁드립니다." +
+                                                    "\n"+"생성 페이지 > cancel을 눌러주세요!")
+                                                window.location.href = "/";
+                                            };
+                                        }
+                                        else {
+                                            document.getElementById('doneBtnModify').disabled = false;
+                                            document.getElementById('doneBtnModify').style.opacity = 1;
+                                            // 디비에 넣는 서비스가 예외가 일었났으므로 세션 날릴 필요 없음.
+                                            window.location.href = "admin?id=" + nowUserId;
+                                            alert("저장에 실패했습니다. 다시 시도 부탁드립니다.");
+                                        }
                                     }
                                     else {
-                                        document.getElementById('doneBtnModify').disabled = false;
-                                        document.getElementById('doneBtnModify').style.opacity = 1;
-                                        // 디비에 넣는 서비스가 예외가 일었났으므로 세션 날릴 필요 없음.
-                                        window.location.href = "admin?id=" + nowUserId;
-                                        alert("저장이 불가능합니다. 다시 시도 부탁드립니다.");
+                                        alert("서버 오류.\n재시도 부탁드립니다.")
+                                        window.location.href = "/"
                                     }
+                                };
+
+                                xhr_check_saveDB.timeout = 10000;
+
+                                // 서버에서 일정시간 응답이 없을 때,
+                                xhr_check_saveDB.ontimeout = function () {
+                                    alert("서버 처리 지연./n재시도 부탁드립니다.")
+                                    window.location.href = "/"
+                                };
+
+                                // 넷웤이 없는데 요청할때 실행
+                                xhr_check_saveDB.onerror = function () {
+                                    alert("인터넷 접속을 확인하세요.\n재시도 부탁드립니다.")
+                                    window.location.href = "/"
                                 };
                             }
                             else {

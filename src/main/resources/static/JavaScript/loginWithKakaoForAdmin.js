@@ -40,21 +40,40 @@ function loginWithKakaoForAdmin() {
                     xhr.send();
 
                     xhr.onload = function () { // 로그인 시도한 사용자의 프로필 정보 가져오기
-                        let payload = JSON.parse(xhr.responseText) // 서버로부터 전송 받은 페이로드를 parsing
-                        nowUser = payload.kakao_account.email; // 사용자 카카오 계정
-                        alert("welcome manager, "+ payload.properties.nickname)
-                        loadingOff();
-                        button.disabled = false;     // 버튼 활성화
-                        button.style.opacity = 1; // 투명도를 1로 설정
-                        window.location.href = "/admin?id=" + nowUser + "&first=" +  "true";
-
+                        if (xhr.status === 200) {
+                            let payload = JSON.parse(xhr.responseText) // 서버로부터 전송 받은 페이로드를 parsing
+                            nowUser = payload.kakao_account.email; // 사용자 카카오 계정
+                            alert("welcome manager, "+ payload.properties.nickname)
+                            loadingOff();
+                            button.disabled = false;     // 버튼 활성화
+                            button.style.opacity = 1; // 투명도를 1로 설정
+                            window.location.href = "/admin?id=" + nowUser + "&first=" +  "true";
+                        }
+                        else {
+                            alert("네트워크 문제로 카카오 로그인 실패\n재시도 부탁드립니다.")
+                            window.location.href = "/"
+                        }
                     }
+
+                    xhr.timeout = 5000; // 5초안에 응답이 없으면 재 시도 요청
+                    // 서버에서 일정시간 응답이 없을 때,
+                    xhr.ontimeout = function () {
+                        alert("네트워크 문제로 카카오 로그인 실패\n재시도 부탁드립니다.")
+                        window.location.href = "/"
+                    };
+
+                    // 넷웤이 없는데 요청할때 실행
+                    xhr.onerror = function () {
+                        alert("네트워크 문제로 카카오 로그인 실패\n재시도 부탁드립니다.")
+                        window.location.href = "/"
+                    };
                 },
-                fail: async function (err) { // 로그인 실패시 오류 값 반환
+                fail: function (err) { // 로그인 실패시 오류 값 반환
                     alert("You are not registered in the system.\nContact the Ghost Team.")
                     loadingOff();
                     button.disabled = false;
                     button.style.opacity = 1; // 투명도를 0.5로 설정
+                    window.location.href = "/"
                 },
             })
         }

@@ -46,22 +46,42 @@ function adminDateSearch() {
             xhr1.send(JSON.stringify(payloadFront));
 
             xhr1.onload = function () {
-                let results = JSON.parse(xhr1.response); // 디비에서 해당 날짜의 운영자가 하나도 없는 경우 [] 반환
-                console.log(results);
+                if (xhr1.status === 200) {
+                    let results = JSON.parse(xhr1.response); // 디비에서 해당 날짜의 운영자가 하나도 없는 경우 [] 반환
+                    console.log(results);
 
-                let idx = 0
-                for (let card of cards) {
-                    const dateObject = new Date(`${card}T00:00:00-05:00`);
-                    const options = {weekday: 'short', timeZone: 'America/New_York'};
-                    const dayOfWeek = dateObject.toLocaleDateString('en-US', options);
+                    let idx = 0
+                    for (let card of cards) {
+                        const dateObject = new Date(`${card}T00:00:00-05:00`);
+                        const options = {weekday: 'short', timeZone: 'America/New_York'};
+                        const dayOfWeek = dateObject.toLocaleDateString('en-US', options);
 
-                    // DOM 에서 동적으로 카드르 만들어 배열에 저장. 붙이기는 정렬 후 한번에 수행하게 됨.
-                    scheduleCard(results[idx], dayOfWeek, card);
-                    idx += 1
+                        // DOM 에서 동적으로 카드르 만들어 배열에 저장. 붙이기는 정렬 후 한번에 수행하게 됨.
+                        scheduleCard(results[idx], dayOfWeek, card);
+                        idx += 1
+                    }
+                    btnOn()
+                    loadingOff()
                 }
-                btnOn()
-                loadingOff()
+                else {
+                    alert("서버 오류.\n재시도 부탁드립니다.")
+                    window.location.href = "/"
+                }
             }
+
+            xhr1.timeout = 20000;
+
+            // 서버에서 일정시간 응답이 없을 때,
+            xhr1.ontimeout = function () {
+                alert("네트워크 문제로 조회 실패\n재시도 부탁드립니다.")
+                window.location.href = "/"
+            };
+
+            // 넷웤이 없는데 요청할때 실행
+            xhr1.onerror = function () {
+                alert("네트워크 문제로 조회 실패\n재시도 부탁드립니다.")
+                window.location.href = "/"
+            };
         }
 
         else {
