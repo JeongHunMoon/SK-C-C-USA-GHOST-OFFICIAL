@@ -21,7 +21,7 @@ public class Admin {
     private V1service v1service; // Service 호출을 위한 객체
 
     private static String newAdminhashValue = null;
-    private static String modifyAdminhashValue = null;
+    //private static String newAdminhashValue = null;
 
     @PostMapping("/adminShiftLastDate")
     @ResponseBody
@@ -113,7 +113,7 @@ public class Admin {
     }
 
     // 생성에서 사용하는 cancel 버튼 > id get으로 받고, 맴버 검증 수행 후 취소하기
-    @GetMapping("/remove")
+    @GetMapping("/removeCreate")
     public ResponseEntity<String> remove(@RequestParam(name = "id", required = true) String id, HttpSession session) {
         System.out.println("현재 생성 중인 사람" + newAdminhashValue);
         if (id.equals(newAdminhashValue)) {
@@ -131,10 +131,10 @@ public class Admin {
     // 업데이트에서 사용하는 취소 버튼 > id get으로 받고, 맴버 검증 수행 후 취소하기
     @GetMapping("/removeModify")
     public ResponseEntity<String> removeModify(@RequestParam(name = "id", required = true) String id, HttpSession session) {
-        System.out.println("현재 수정 중인 사람" + modifyAdminhashValue);
-        if (id.equals(modifyAdminhashValue)) {
+        System.out.println("현재 수정 중인 사람" + newAdminhashValue);
+        if (id.equals(newAdminhashValue)) {
             // 사용할 id를 여기에서 활용할 수 있음
-            modifyAdminhashValue = null;
+            newAdminhashValue = null;
             System.out.println("수정시 세션이 성공적으로 종료되었습니다.");
             return ResponseEntity.ok("true");
 
@@ -226,11 +226,11 @@ public class Admin {
                 model.addAttribute("start", start);
                 model.addAttribute("end", end);
 
-                if (modifyAdminhashValue != null) {
+                if (newAdminhashValue != null) {
                     System.out.println("==누군가 수정 중임.==");
-                    System.out.println(modifyAdminhashValue);
+                    System.out.println(newAdminhashValue);
 
-                    if (modifyAdminhashValue.equals(id)) {
+                    if (newAdminhashValue.equals(id)) {
                         System.out.println("재접속");
                         return "home/modifySchedule";
                     }
@@ -241,7 +241,7 @@ public class Admin {
                     }
                 } else {
                     System.out.println("신규 접속");
-                    modifyAdminhashValue = id;
+                    newAdminhashValue = id;
                     return "home/modifySchedule";
                 }
             }
@@ -272,11 +272,11 @@ public class Admin {
                 model.addAttribute("start", start);
                 model.addAttribute("end", end);
 
-                if (modifyAdminhashValue != null) {
+                if (newAdminhashValue != null) {
                     System.out.println("==누군가 수정 중임.==");
-                    System.out.println(modifyAdminhashValue);
+                    System.out.println(newAdminhashValue);
 
-                    if (modifyAdminhashValue.equals(id)) {
+                    if (newAdminhashValue.equals(id)) {
                         System.out.println("재접속");
                         return "home/deleteSchedule";
                     }
@@ -287,7 +287,7 @@ public class Admin {
                     }
                 } else {
                     System.out.println("신규 접속");
-                    modifyAdminhashValue = id;
+                    newAdminhashValue = id;
                     return "home/deleteSchedule";
                 }
             }

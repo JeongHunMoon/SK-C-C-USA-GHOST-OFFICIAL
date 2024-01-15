@@ -14,6 +14,7 @@ function modifyBtn(start, end ) {
             document.getElementById("modify_schedule").disabled = false;
             document.getElementById("modify_schedule").style.opacity = 1;
             window.location.href = '/modifySchedule?id=' + nowUserId + "&start=" + start + "&end=" + end;
+
         }
         else {
             document.getElementById("modify_schedule").disabled = false;

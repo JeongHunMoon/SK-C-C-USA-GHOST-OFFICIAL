@@ -128,11 +128,12 @@ function loginOPWithKakao() {
                     }*/
 
                 },
-                fail: async function (err) { // 로그인 실패시 오류 값 반환
+                fail: function (err) { // 로그인 실패시 오류 값 반환
                     alert("You are not registered in the system.\nContact the Ghost Team.")
                     loadingOff()
                     button.disabled = false;
                     button.style.opacity = 1; // 투명도를 0.5로 설정
+                    window.location.href = "/"
                 },
             })
         }
