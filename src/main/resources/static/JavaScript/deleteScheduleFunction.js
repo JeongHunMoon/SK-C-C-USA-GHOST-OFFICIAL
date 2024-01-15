@@ -86,6 +86,7 @@ function deleteScheduleFunction() {
                             console.log("클릭됨")
                             console.log("table.rows.length() : " + table.rows.length) //테스트
 
+                            console.log("123");
                             // 두 번째 이후 클릭시 작동
                             if (clickFlag === 1 && firstClick !== 0) { // 선택된 상태에서 클릭하면 스타일 원복 및 삭제후보배열에서 삭제
                                 clickFlag *= -1;
