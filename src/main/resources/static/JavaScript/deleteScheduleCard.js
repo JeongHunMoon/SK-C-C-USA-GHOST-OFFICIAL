@@ -1,5 +1,5 @@
 function deleteScheduleCard(results, dfe, date) {
-
+    let spanTag =null;
     // 테이블을 담을 div
     const Container = document.getElementById("image-container");
 
@@ -29,6 +29,7 @@ function deleteScheduleCard(results, dfe, date) {
     const dateHeader = headerRow.insertCell();
     dateHeader.colSpan = 2;
     dateHeader.textContent = date;
+    dateHeader.setAttribute('id', "dateInfo");
 
 
     // 날짜 행 추가
@@ -68,13 +69,23 @@ function deleteScheduleCard(results, dfe, date) {
     elec_1.textContent = "1";
 
     const elec_1_N = elecRow.insertCell();
-    elec_1_N.textContent = elec_info1.find(item => item.shift === "N")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'ELEC1')
+    spanTag.textContent = elec_info1.find(item => item.shift === "N")?.name || "";
+    elec_1_N.appendChild(spanTag)
+
 
     const elec_1_D = elecRow.insertCell();
-    elec_1_D.textContent = elec_info1.find(item => item.shift === "D")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'ELEC2')
+    spanTag.textContent = elec_info1.find(item => item.shift === "D")?.name || "";
+    elec_1_D.appendChild(spanTag)
 
     const elec_1_E = elecRow.insertCell();
-    elec_1_E.textContent = elec_info1.find(item => item.shift === "E")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'ELEC3')
+    spanTag.textContent = elec_info1.find(item => item.shift === "E")?.name || "";
+    elec_1_E.appendChild(spanTag)
 
     // 전극 2차
     const elecRow2 = table.insertRow();
@@ -82,13 +93,22 @@ function deleteScheduleCard(results, dfe, date) {
     elec_2.textContent = "2";
 
     const elec_2_N = elecRow2.insertCell();
-    elec_2_N.textContent = elec_info2.find(item => item.shift === "N")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'ELEC4')
+    spanTag.textContent = elec_info2.find(item => item.shift === "N")?.name || "";
+    elec_2_N.appendChild(spanTag)
 
     const elec_2_D = elecRow2.insertCell();
-    elec_2_D.textContent = elec_info2.find(item => item.shift === "D")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'ELEC5')
+    spanTag.textContent = elec_info2.find(item => item.shift === "D")?.name || "";
+    elec_2_D.appendChild(spanTag)
 
     const elec_2_E = elecRow2.insertCell();
-    elec_2_E.textContent = elec_info2.find(item => item.shift === "E")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'ELEC6')
+    spanTag.textContent = elec_info2.find(item => item.shift === "E")?.name || "";
+    elec_2_E.appendChild(spanTag)
 
 
 
@@ -106,6 +126,7 @@ function deleteScheduleCard(results, dfe, date) {
         }
     });
 
+
     //// 조립 ////
     const cellRow = table.insertRow();
     const cell = cellRow.insertCell();
@@ -116,13 +137,22 @@ function deleteScheduleCard(results, dfe, date) {
     cell_1.textContent = "1";
 
     const cell_1_N = cellRow.insertCell();
-    cell_1_N.textContent = cell_info1.find(item => item.shift === "N")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'CELL1')
+    spanTag.textContent = cell_info1.find(item => item.shift === "N")?.name || "";
+    cell_1_N.appendChild(spanTag)
 
     const cell_1_D = cellRow.insertCell();
-    cell_1_D.textContent = cell_info1.find(item => item.shift === "D")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'CELL2')
+    spanTag.textContent = cell_info1.find(item => item.shift === "D")?.name || "";
+    cell_1_D.appendChild(spanTag)
 
     const cell_1_E = cellRow.insertCell();
-    cell_1_E.textContent = cell_info1.find(item => item.shift === "E")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'CELL3')
+    spanTag.textContent = cell_info1.find(item => item.shift === "E")?.name || "";
+    cell_1_E.appendChild(spanTag)
 
     // 조립 2차
     const cellRow2 = table.insertRow();
@@ -130,15 +160,22 @@ function deleteScheduleCard(results, dfe, date) {
     cell_2.textContent = "2";
 
     const cell_2_N = cellRow2.insertCell();
-    cell_2_N.textContent = cell_info2.find(item => item.shift === "N")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'CELL4')
+    spanTag.textContent = cell_info2.find(item => item.shift === "N")?.name || "";
+    cell_2_N.appendChild(spanTag)
 
     const cell_2_D = cellRow2.insertCell();
-    cell_2_D.textContent = cell_info2.find(item => item.shift === "D")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'CELL5')
+    spanTag.textContent = cell_info2.find(item => item.shift === "D")?.name || "";
+    cell_2_D.appendChild(spanTag)
 
     const cell_2_E = cellRow2.insertCell();
-    cell_2_E.textContent = cell_info2.find(item => item.shift === "E")?.name || "";
-
-
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'CELL6')
+    spanTag.textContent = cell_info2.find(item => item.shift === "E")?.name || "";
+    cell_2_E.appendChild(spanTag)
 
 
     //화성 정보 가공
@@ -155,7 +192,6 @@ function deleteScheduleCard(results, dfe, date) {
         }
     });
 
-
     //// 화성 ////
     const formRow = table.insertRow();
     const form = formRow.insertCell();
@@ -166,13 +202,24 @@ function deleteScheduleCard(results, dfe, date) {
     form_1.textContent = "1";
 
     const form_1_N = formRow.insertCell();
-    form_1_N.textContent = form_info1.find(item => item.shift === "N")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'FORM1')
+    spanTag.textContent = form_info1.find(item => item.shift === "N")?.name || "";
+    form_1_N.appendChild(spanTag)
+
 
     const form_1_D = formRow.insertCell();
-    form_1_D.textContent = form_info1.find(item => item.shift === "D")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'FORM2')
+    spanTag.textContent = form_info1.find(item => item.shift === "D")?.name || "";
+    form_1_D.appendChild(spanTag)
 
     const form_1_E = formRow.insertCell();
-    form_1_E.textContent = form_info1.find(item => item.shift === "E")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'FORM3')
+    spanTag.textContent = form_info1.find(item => item.shift === "E")?.name || "";
+    form_1_E.appendChild(spanTag)
+
 
     // 화성 2차
     const formRow2 = table.insertRow();
@@ -180,14 +227,22 @@ function deleteScheduleCard(results, dfe, date) {
     form_2.textContent = "2";
 
     const form_2_N = formRow2.insertCell();
-    form_2_N.textContent = form_info2.find(item => item.shift === "N")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'FORM4')
+    spanTag.textContent = form_info2.find(item => item.shift === "N")?.name || "";
+    form_2_N.appendChild(spanTag)
 
     const form_2_D = formRow2.insertCell();
-    form_2_D.textContent = form_info2.find(item => item.shift === "D")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'FORM5')
+    spanTag.textContent = form_info2.find(item => item.shift === "D")?.name || "";
+    form_2_D.appendChild(spanTag)
 
     const form_2_E = formRow2.insertCell();
-    form_2_E.textContent = form_info2.find(item => item.shift === "E")?.name || "";
-
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'FORM6')
+    spanTag.textContent = form_info2.find(item => item.shift === "E")?.name || "";
+    form_2_E.appendChild(spanTag)
 
 
     //모듈 정보 가공
@@ -215,13 +270,22 @@ function deleteScheduleCard(results, dfe, date) {
     pack_1.textContent = "1";
 
     const pack_1_N = packRow.insertCell();
-    pack_1_N.textContent = pack_info1.find(item => item.shift === "N")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'PACK1')
+    spanTag.textContent = pack_info1.find(item => item.shift === "N")?.name || "";
+    pack_1_N.appendChild(spanTag)
 
     const pack_1_D = packRow.insertCell();
-    pack_1_D.textContent = pack_info1.find(item => item.shift === "D")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'PACK2')
+    spanTag.textContent = pack_info1.find(item => item.shift === "D")?.name || "";
+    pack_1_D.appendChild(spanTag)
 
     const pack_1_E = packRow.insertCell();
-    pack_1_E.textContent = pack_info1.find(item => item.shift === "E")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'PACK3')
+    spanTag.textContent = pack_info1.find(item => item.shift === "E")?.name || "";
+    pack_1_E.appendChild(spanTag)
 
     // 모듈 2차
     const packRow2 = table.insertRow();
@@ -229,14 +293,22 @@ function deleteScheduleCard(results, dfe, date) {
     pack_2.textContent = "2";
 
     const pack_2_N = packRow2.insertCell();
-    pack_2_N.textContent = pack_info2.find(item => item.shift === "N")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'PACK4')
+    spanTag.textContent = pack_info2.find(item => item.shift === "N")?.name || "";
+    pack_2_N.appendChild(spanTag)
 
     const pack_2_D = packRow2.insertCell();
     pack_2_D.textContent = pack_info2.find(item => item.shift === "D")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'PACK5')
+    pack_2_D.appendChild(spanTag)
 
     const pack_2_E = packRow2.insertCell();
-    pack_2_E.textContent = pack_info2.find(item => item.shift === "E")?.name || "";
-
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'PACK6')
+    spanTag.textContent = pack_info2.find(item => item.shift === "E")?.name || "";
+    pack_2_E.appendChild(spanTag)
 
 
     //wms 정보 가공
@@ -264,13 +336,22 @@ function deleteScheduleCard(results, dfe, date) {
     wms_1.textContent = "1";
 
     const wms_1_N = wmsRow.insertCell();
-    wms_1_N.textContent = wms_info1.find(item => item.shift === "N")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'WMS1')
+    spanTag.textContent = wms_info1.find(item => item.shift === "N")?.name || "";
+    wms_1_N.appendChild(spanTag)
 
     const wms_1_D = wmsRow.insertCell();
-    wms_1_D.textContent = wms_info1.find(item => item.shift === "D")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'WMS2')
+    spanTag.textContent = wms_info1.find(item => item.shift === "D")?.name || "";
+    wms_1_D.appendChild(spanTag)
 
     const wms_1_E = wmsRow.insertCell();
-    wms_1_E.textContent = wms_info1.find(item => item.shift === "E")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'WMS3')
+    spanTag.textContent = wms_info1.find(item => item.shift === "E")?.name || "";
+    wms_1_E.appendChild(spanTag)
 
     // wms 2차
     const wmsRow2 = table.insertRow();
@@ -278,14 +359,22 @@ function deleteScheduleCard(results, dfe, date) {
     wms_2.textContent = "2";
 
     const wms_2_N = wmsRow2.insertCell();
-    wms_2_N.textContent = wms_info2.find(item => item.shift === "N")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'WMS4')
+    spanTag.textContent = wms_info2.find(item => item.shift === "N")?.name || "";
+    wms_2_N.appendChild(spanTag)
 
     const wms_2_D = wmsRow2.insertCell();
     wms_2_D.textContent = wms_info2.find(item => item.shift === "D")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'WMS5')
+    wms_2_D.appendChild(spanTag)
 
     const wms_2_E = wmsRow2.insertCell();
-    wms_2_E.textContent = wms_info2.find(item => item.shift === "E")?.name || "";
-
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'WMS6')
+    spanTag.textContent = wms_info2.find(item => item.shift === "E")?.name || "";
+    wms_2_E.appendChild(spanTag)
 
 
     //coll 정보 가공
@@ -313,13 +402,22 @@ function deleteScheduleCard(results, dfe, date) {
     coll_1.textContent = "1";
 
     const coll_1_N = collRow.insertCell();
-    coll_1_N.textContent = coll_info1.find(item => item.shift === "N")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'COLL1')
+    spanTag.textContent = coll_info1.find(item => item.shift === "N")?.name || "";
+    coll_1_N.appendChild(spanTag)
 
     const coll_1_D = collRow.insertCell();
-    coll_1_D.textContent = coll_info1.find(item => item.shift === "D")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'COLL2')
+    spanTag.textContent = coll_info1.find(item => item.shift === "D")?.name || "";
+    coll_1_D.appendChild(spanTag)
 
     const coll_1_E = collRow.insertCell();
-    coll_1_E.textContent = coll_info1.find(item => item.shift === "E")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'COLL3')
+    spanTag.textContent = coll_info1.find(item => item.shift === "E")?.name || "";
+    coll_1_E.appendChild(spanTag)
 
     // coll 2차
     const collRow2 = table.insertRow();
@@ -327,13 +425,22 @@ function deleteScheduleCard(results, dfe, date) {
     coll_2.textContent = "2";
 
     const coll_2_N = collRow2.insertCell();
-    coll_2_N.textContent = coll_info2.find(item => item.shift === "N")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'COLL4')
+    spanTag.textContent = coll_info2.find(item => item.shift === "N")?.name || "";
+    coll_2_N.appendChild(spanTag)
 
     const coll_2_D = collRow2.insertCell();
-    coll_2_D.textContent = coll_info2.find(item => item.shift === "D")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'COLL5')
+    spanTag.textContent = coll_info2.find(item => item.shift === "D")?.name || "";
+    coll_2_D.appendChild(spanTag)
 
     const coll_2_E = collRow2.insertCell();
-    coll_2_E.textContent = coll_info2.find(item => item.shift === "E")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'COLL6')
+    spanTag.textContent = coll_info2.find(item => item.shift === "E")?.name || "";
+    coll_2_E.appendChild(spanTag)
 
 
     //comm 정보 가공
@@ -361,13 +468,22 @@ function deleteScheduleCard(results, dfe, date) {
     comm_1.textContent = "1";
 
     const comm_1_N = commRow.insertCell();
-    comm_1_N.textContent = comm_info1.find(item => item.shift === "N")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'COMM1')
+    spanTag.textContent = comm_info1.find(item => item.shift === "N")?.name || "";
+    comm_1_N.appendChild(spanTag)
 
     const comm_1_D = commRow.insertCell();
-    comm_1_D.textContent = comm_info1.find(item => item.shift === "D")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'COMM2')
+    spanTag.textContent = comm_info1.find(item => item.shift === "D")?.name || "";
+    comm_1_D.appendChild(spanTag)
 
     const comm_1_E = commRow.insertCell();
     comm_1_E.textContent = comm_info1.find(item => item.shift === "E")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'COMM3')
+    comm_1_E.appendChild(spanTag)
 
     // comm 2차
     const commRow2 = table.insertRow();
@@ -375,13 +491,22 @@ function deleteScheduleCard(results, dfe, date) {
     comm_2.textContent = "2";
 
     const comm_2_N = commRow2.insertCell();
-    comm_2_N.textContent = comm_info2.find(item => item.shift === "N")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'COMM4')
+    spanTag.textContent = comm_info2.find(item => item.shift === "N")?.name || "";
+    comm_2_N.appendChild(spanTag)
 
     const comm_2_D = commRow2.insertCell();
     comm_2_D.textContent = comm_info2.find(item => item.shift === "D")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'COMM5')
+    comm_2_D.appendChild(spanTag)
 
     const comm_2_E = commRow2.insertCell();
-    comm_2_E.textContent = comm_info2.find(item => item.shift === "E")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'COMM6')
+    spanTag.textContent = comm_info2.find(item => item.shift === "E")?.name || "";
+    comm_2_E.appendChild(spanTag)
 
 
     // 테이블을 div에 추가
