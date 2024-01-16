@@ -66,7 +66,12 @@ public class V1service {
             System.out.println("변경 준비 완료");
 
             for (Map<String, String> scheduleItem : itemList) {
+                // 업데이트는 반드시
                 v1Dao.updateSchedule(scheduleItem);
+
+                if (isDateHistory(scheduleItem.get(0))) {
+
+                }
             }
 
         } catch (Exception e) {
@@ -74,4 +79,44 @@ public class V1service {
             e.printStackTrace();
         }
     }
+
+
+    // 카카오 id > 사용자의 이름
+    public String getNameFromId(String id) {
+        String userName = v1Dao.getNameFromId(id);
+
+        // 이름이 없을 경우 기본값 "홍길동" 반환
+        return (userName != null && !userName.isEmpty()) ? userName : "???";
+    }
+
+    // 해당 날짜가 history 테이블에 있는지 검사
+    public boolean isDateHistory(String date) {
+        int count = v1Dao.isDateHistory(date);
+        System.out.println("서비스 : " + date + "가 디비에 있나? >" + count);
+        return count > 0;
+    }
+
+    public void insertDateToScheduleHistoryTable(String date, String creator){
+        System.out.println(date + " : " + creator + "이 값을 히스토리에 넣음");
+
+        v1Dao.insertDateToScheduleHistoryTable(date, creator);
+    }
+
+    public void updateDateToScheduleHistoryTable(String date, String modificator){
+        System.out.println(date + " : " + modificator + "이 값을 히스토리에 변경한다.");
+
+        v1Dao.updateDateToScheduleHistoryTable(date, modificator);
+    }
+
+    public boolean isDateAdminShiftTable(String date) {
+        boolean bool = v1Dao.isDateAdminShiftTable(date);
+        System.out.println("admin_shift 삭제 : " + date + "가 존재하는 판단 요청됨>> " + bool);
+        return bool;
+    }
+
+    public void deleteDateToScheduleHistoryTable(String date) {
+        System.out.println(date + "shedule_admin 테이블에서 삭제 요청됨");
+        v1Dao.deleteDateToScheduleHistoryTable(date);
+    }
+
 }

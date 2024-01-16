@@ -6,6 +6,7 @@ function deleteScheduleCard(results, dfe, date) {
     // 테이블 생성
     const schedule_div = document.createElement("div");
     schedule_div.className = "schedule_div";
+    schedule_div.style.border= "1px solid lightgray"
 
     let table = document.createElement("table");
     table.className = "schedule_card"; // class 설정
@@ -14,10 +15,12 @@ function deleteScheduleCard(results, dfe, date) {
 
     // 상단 해더 고정
     const headerRow = table.insertRow();
+    headerRow.style.borderTop = "1px solid transparent"
 
     const partHeader = headerRow.insertCell();
     partHeader.textContent = "Part";
     partHeader.rowSpan = 2;
+    partHeader.style.borderLeft= "1px solid transparent"
 
     const priorityHeader = headerRow.insertCell();
     priorityHeader.textContent = "Priority";
@@ -30,6 +33,7 @@ function deleteScheduleCard(results, dfe, date) {
     dateHeader.colSpan = 2;
     dateHeader.textContent = date;
     dateHeader.setAttribute('id', "dateInfo");
+    dateHeader.style.borderRight= "1px solid transparent"
 
 
     // 날짜 행 추가
@@ -42,6 +46,7 @@ function deleteScheduleCard(results, dfe, date) {
 
     const eHeader = dateRow.insertCell();
     eHeader.textContent = "E";
+    eHeader.style.borderRight= "1px solid transparent"
 
 
     //전극 정보 가공
@@ -64,6 +69,7 @@ function deleteScheduleCard(results, dfe, date) {
     const elec = elecRow.insertCell();
     elec.textContent = "ELEC";
     elec.rowSpan = 2;
+    elec.style.borderLeft= "1px solid transparent"
 
     const elec_1 = elecRow.insertCell();
     elec_1.textContent = "1";
@@ -86,6 +92,7 @@ function deleteScheduleCard(results, dfe, date) {
     spanTag.setAttribute('id', date + 'ELEC3')
     spanTag.textContent = elec_info1.find(item => item.shift === "E")?.name || "";
     elec_1_E.appendChild(spanTag)
+    elec_1_E.style.borderRight= "1px solid transparent"
 
     // 전극 2차
     const elecRow2 = table.insertRow();
@@ -109,6 +116,7 @@ function deleteScheduleCard(results, dfe, date) {
     spanTag.setAttribute('id', date + 'ELEC6')
     spanTag.textContent = elec_info2.find(item => item.shift === "E")?.name || "";
     elec_2_E.appendChild(spanTag)
+    elec_2_E.style.borderRight= "1px solid transparent"
 
 
 
@@ -132,6 +140,7 @@ function deleteScheduleCard(results, dfe, date) {
     const cell = cellRow.insertCell();
     cell.textContent = "CELL";
     cell.rowSpan = 2;
+    cell.style.borderLeft= "1px solid transparent"
 
     const cell_1 = cellRow.insertCell();
     cell_1.textContent = "1";
@@ -153,6 +162,7 @@ function deleteScheduleCard(results, dfe, date) {
     spanTag.setAttribute('id', date + 'CELL3')
     spanTag.textContent = cell_info1.find(item => item.shift === "E")?.name || "";
     cell_1_E.appendChild(spanTag)
+    cell_1_E.style.borderRight= "1px solid transparent"
 
     // 조립 2차
     const cellRow2 = table.insertRow();
@@ -176,6 +186,7 @@ function deleteScheduleCard(results, dfe, date) {
     spanTag.setAttribute('id', date + 'CELL6')
     spanTag.textContent = cell_info2.find(item => item.shift === "E")?.name || "";
     cell_2_E.appendChild(spanTag)
+    cell_2_E.style.borderRight= "1px solid transparent"
 
 
     //화성 정보 가공
@@ -197,6 +208,7 @@ function deleteScheduleCard(results, dfe, date) {
     const form = formRow.insertCell();
     form.textContent = "FORM";
     form.rowSpan = 2;
+    form.style.borderLeft= "1px solid transparent"
 
     const form_1 = formRow.insertCell();
     form_1.textContent = "1";
@@ -219,6 +231,7 @@ function deleteScheduleCard(results, dfe, date) {
     spanTag.setAttribute('id', date + 'FORM3')
     spanTag.textContent = form_info1.find(item => item.shift === "E")?.name || "";
     form_1_E.appendChild(spanTag)
+    form_1_E.style.borderRight= "1px solid transparent"
 
 
     // 화성 2차
@@ -243,6 +256,7 @@ function deleteScheduleCard(results, dfe, date) {
     spanTag.setAttribute('id', date + 'FORM6')
     spanTag.textContent = form_info2.find(item => item.shift === "E")?.name || "";
     form_2_E.appendChild(spanTag)
+    form_2_E.style.borderRight= "1px solid transparent"
 
 
     //모듈 정보 가공
@@ -265,6 +279,7 @@ function deleteScheduleCard(results, dfe, date) {
     const pack = packRow.insertCell();
     pack.textContent = "PACK";
     pack.rowSpan = 2;
+    pack.style.borderLeft= "1px solid transparent"
 
     const pack_1 = packRow.insertCell();
     pack_1.textContent = "1";
@@ -286,6 +301,7 @@ function deleteScheduleCard(results, dfe, date) {
     spanTag.setAttribute('id', date + 'PACK3')
     spanTag.textContent = pack_info1.find(item => item.shift === "E")?.name || "";
     pack_1_E.appendChild(spanTag)
+    pack_1_E.style.borderRight= "1px solid transparent"
 
     // 모듈 2차
     const packRow2 = table.insertRow();
@@ -309,11 +325,13 @@ function deleteScheduleCard(results, dfe, date) {
     spanTag.setAttribute('id', date + 'PACK6')
     spanTag.textContent = pack_info2.find(item => item.shift === "E")?.name || "";
     pack_2_E.appendChild(spanTag)
+    pack_2_E.style.borderRight= "1px solid transparent"
 
 
     //wms 정보 가공
     let wms_info1 = []
     let wms_info2 = []
+    let wms_info3 = []
 
     results.forEach(item => {
         if (item.process === "WMS") {
@@ -321,6 +339,8 @@ function deleteScheduleCard(results, dfe, date) {
                 wms_info1.push(item);
             } else if (item.priority === "2") {
                 wms_info2.push(item);
+            } else if(item.priority === "3") {
+                wms_info3.push(item);
             }
         }
     });
@@ -330,7 +350,8 @@ function deleteScheduleCard(results, dfe, date) {
     const wmsRow = table.insertRow();
     const wms = wmsRow.insertCell();
     wms.textContent = "WMS";
-    wms.rowSpan = 2;
+    wms.rowSpan = 3;
+    wms.style.borderLeft= "1px solid transparent"
 
     const wms_1 = wmsRow.insertCell();
     wms_1.textContent = "1";
@@ -352,6 +373,7 @@ function deleteScheduleCard(results, dfe, date) {
     spanTag.setAttribute('id', date + 'WMS3')
     spanTag.textContent = wms_info1.find(item => item.shift === "E")?.name || "";
     wms_1_E.appendChild(spanTag)
+    wms_1_E.style.borderRight= "1px solid transparent"
 
     // wms 2차
     const wmsRow2 = table.insertRow();
@@ -375,6 +397,31 @@ function deleteScheduleCard(results, dfe, date) {
     spanTag.setAttribute('id', date + 'WMS6')
     spanTag.textContent = wms_info2.find(item => item.shift === "E")?.name || "";
     wms_2_E.appendChild(spanTag)
+    wms_2_E.style.borderRight= "1px solid transparent"
+
+    // wms 3차
+    const wmsRow3 = table.insertRow();
+    const wms_3 = wmsRow3.insertCell();
+    wms_3.textContent = "3";
+
+    const wms_3_N = wmsRow3.insertCell();
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'WMS7')
+    spanTag.textContent = wms_info3.find(item => item.shift === "N")?.name || "";
+    wms_3_N.appendChild(spanTag)
+
+    const wms_3_D = wmsRow3.insertCell();
+    wms_3_D.textContent = wms_info3.find(item => item.shift === "D")?.name || "";
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'WMS8')
+    wms_3_D.appendChild(spanTag)
+
+    const wms_3_E = wmsRow3.insertCell();
+    spanTag = document.createElement('span')
+    spanTag.setAttribute('id', date + 'WMS9')
+    spanTag.textContent = wms_info3.find(item => item.shift === "E")?.name || "";
+    wms_3_E.appendChild(spanTag)
+    wms_3_E.style.borderRight= "1px solid transparent"
 
 
     //coll 정보 가공
@@ -397,6 +444,7 @@ function deleteScheduleCard(results, dfe, date) {
     const coll = collRow.insertCell();
     coll.textContent = "COLL";
     coll.rowSpan = 2;
+    coll.style.borderLeft= "1px solid transparent"
 
     const coll_1 = collRow.insertCell();
     coll_1.textContent = "1";
@@ -418,6 +466,7 @@ function deleteScheduleCard(results, dfe, date) {
     spanTag.setAttribute('id', date + 'COLL3')
     spanTag.textContent = coll_info1.find(item => item.shift === "E")?.name || "";
     coll_1_E.appendChild(spanTag)
+    coll_1_E.style.borderRight= "1px solid transparent"
 
     // coll 2차
     const collRow2 = table.insertRow();
@@ -441,6 +490,7 @@ function deleteScheduleCard(results, dfe, date) {
     spanTag.setAttribute('id', date + 'COLL6')
     spanTag.textContent = coll_info2.find(item => item.shift === "E")?.name || "";
     coll_2_E.appendChild(spanTag)
+    coll_2_E.style.borderRight= "1px solid transparent"
 
 
     //comm 정보 가공
@@ -463,6 +513,8 @@ function deleteScheduleCard(results, dfe, date) {
     const comm = commRow.insertCell();
     comm.textContent = "COMM";
     comm.rowSpan = 2;
+    comm.style.borderLeft= "1px solid transparent"
+
 
     const comm_1 = commRow.insertCell();
     comm_1.textContent = "1";
@@ -484,11 +536,13 @@ function deleteScheduleCard(results, dfe, date) {
     spanTag = document.createElement('span')
     spanTag.setAttribute('id', date + 'COMM3')
     comm_1_E.appendChild(spanTag)
+    comm_1_E.style.borderRight= "1px solid transparent"
 
     // comm 2차
     const commRow2 = table.insertRow();
     const comm_2 = commRow2.insertCell();
     comm_2.textContent = "2";
+    commRow2.style.borderBottom = "1px solid transparent"
 
     const comm_2_N = commRow2.insertCell();
     spanTag = document.createElement('span')
@@ -507,6 +561,7 @@ function deleteScheduleCard(results, dfe, date) {
     spanTag.setAttribute('id', date + 'COMM6')
     spanTag.textContent = comm_info2.find(item => item.shift === "E")?.name || "";
     comm_2_E.appendChild(spanTag)
+    comm_2_E.style.borderRight= "1px solid transparent"
 
 
     // 테이블을 div에 추가

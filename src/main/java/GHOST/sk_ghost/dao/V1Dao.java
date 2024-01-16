@@ -1,6 +1,8 @@
 package GHOST.sk_ghost.dao;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
@@ -26,4 +28,20 @@ public interface V1Dao {
     public void deleteSchedule(List<Map<String, String>> scheduleData);
 
     public void updateSchedule(Map<String, String> scheduleData);
+
+    public String getNameFromId(String id);
+
+    public int isDateHistory(String date);
+
+    // DAO 코드
+    public void insertDateToScheduleHistoryTable(@Param("date") String date, @Param("creator") String creator);
+
+    // history table업데이트
+    public void updateDateToScheduleHistoryTable(@Param("date") String date, @Param("modificator") String modificator);
+
+    // admin_shift 테이블에서 해당 날짜를 가진 투플의 개수 반환.
+    public boolean isDateAdminShiftTable(String date);
+
+    public void deleteDateToScheduleHistoryTable(String date);
+
 }

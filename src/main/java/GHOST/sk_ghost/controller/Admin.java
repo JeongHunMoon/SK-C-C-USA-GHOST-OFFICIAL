@@ -301,6 +301,23 @@ public class Admin {
     public ResponseEntity<String> updateSchedule(@RequestBody List<Map<String, String>> requestBody) throws Exception {
         System.out.println("modifyUpdate from DB : " + requestBody);
         try {
+            Set<String> dateSet = new HashSet<>();
+
+            for (Map<String, String> map : requestBody) {
+                String date = map.get("date");
+                if (date != null && !date.isEmpty()) {
+                    dateSet.add(date);
+                }
+            }
+
+            for (String date : dateSet) {
+                if (v1service.isDateHistory(date)) {
+                    String name = v1service.getNameFromId(requestBody.get(0).get("manager"));
+                    System.out.println(name +"으로" +date +"의 shcedule_hisotry 변경한다");
+                    v1service.updateDateToScheduleHistoryTable(date, name);
+                }
+            }
+
             v1service.updateSchedule(requestBody);
         }
         catch (Exception e) {

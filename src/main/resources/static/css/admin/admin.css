@@ -161,9 +161,28 @@
 
 }
 
+.schedule_top_div {
+    margin: 0;
+    padding: 0;
+    padding-right: 20px;
+    flex-direction: row; /* 가로로 나열하도록 설정 */
+    display: flex;
+
+    justify-content: flex-end;
+    align-items: center;
+    gap: 20px;
+}
+
+.schedule_top_div p{
+    margin: 0;
+
+}
+
 .schedule_div {
     max-width: 450px; /* 최대 너비 */
     width: 100%; /* 최대 크기보다 작은 경우 100%로 설정 */
+    flex-direction: column;
+
 
     height: 97%;
     flex-shrink: 0;
