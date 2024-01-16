@@ -165,6 +165,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -175,7 +176,8 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
-                                        "toBeName": elecinf
+                                        "toBeName": elecinf,
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -186,6 +188,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -213,6 +216,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -223,6 +227,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -233,6 +238,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -259,6 +265,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -269,6 +276,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -279,6 +287,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -305,6 +314,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -315,6 +325,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -325,6 +336,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -351,6 +363,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -361,6 +374,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -371,6 +385,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -397,6 +412,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -407,6 +423,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -417,6 +434,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -443,6 +461,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -453,6 +472,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 
@@ -463,6 +483,7 @@ function modifySaveBtn(beforeCards) {
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "manager" : nowUserId
                                     });
                                 }
 

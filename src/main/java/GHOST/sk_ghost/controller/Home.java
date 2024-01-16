@@ -172,7 +172,6 @@ public class Home {
         for (String card : dateInfo) {
             List<Map<String, String>> lists = v1service.oneDateSchedule(card); // 금일의 대응자 admin을 조회한다.
             payload.add(lists);
-
         }
         System.out.println("조희 결과> " + payload);
 
@@ -184,7 +183,34 @@ public class Home {
     @PostMapping("/saveSchedule")
     public ResponseEntity<String> saveScheduleInsert(@RequestBody List<Map<String, String>> requestBody) throws Exception {
         System.out.println("Save to DB : " + requestBody);
-        try{
+        // date가 있는지 검사한다. > 있다면 무시한다.
+        // > 없다면 card table에 담당자의 이름을 추가한다. id를 넣으면 이름을 가져오는 서비스가 필요함.
+        try {
+
+            Set<String> dateSet = new HashSet<>();
+
+            for (Map<String, String> map : requestBody) {
+                String date = map.get("date");
+                if (date != null && !date.isEmpty()) {
+                    dateSet.add(date);
+                }
+            }
+
+            for (String date : dateSet) {
+                // 해당 카드를 새로 만드는 insert
+                if (!v1service.isDateHistory(date)) {
+                    String name = v1service.getNameFromId(requestBody.get(0).get("manager"));
+                    System.out.println(name +"으로" +date +"의 shcedule_hisotry 를 만든다.");
+                    v1service.insertDateToScheduleHistoryTable(date, name);
+                }
+                // 해당 카드를 수정하는 insert
+                else {
+                    String name = v1service.getNameFromId(requestBody.get(0).get("manager"));
+                    System.out.println(name +"으로" +date +"의 shcedule_hisotry 를 수정한다.");
+                    v1service.updateDateToScheduleHistoryTable(date, name);
+                }
+            }
+
             v1service.saveSchedule(requestBody);
         }
         catch (Exception e) {
@@ -215,6 +241,29 @@ public class Home {
         System.out.println("delete from DB : " + requestBody);
         try {
             v1service.deleteSchedule(requestBody);
+
+            // 날짜 추출 > 해당 날짜가 admin_shift에 없으면 > history_table에서 해당 날짜 제거 하기.
+            Set<String> dateSet = new HashSet<>();
+
+            for (Map<String, String> map : requestBody) {
+                String date = map.get("date");
+                if (date != null && !date.isEmpty()) {
+                    dateSet.add(date);
+                }
+            }
+
+            for (String date : dateSet) {
+                // admin_shift 테이블에 이제 더 이상 운영자가 없기에 히스토리도 지운다.
+                if (!v1service.isDateAdminShiftTable(date)) {
+                    v1service.deleteDateToScheduleHistoryTable(date);
+                }
+                // 누군가 카드를 삭제하긴 했는데 > 아직 살아있기 때문에 수정자 이름을 바꾼다.
+                else {
+                    String name = v1service.getNameFromId(requestBody.get(0).get("manager"));
+                    System.out.println(name +"으로" +date +"의 shcedule_hisotry 를 수정한다.");
+                    v1service.updateDateToScheduleHistoryTable(date, name);
+                }
+            }
         }
         catch (Exception e) {
             return ResponseEntity.ok("Delete Fail");

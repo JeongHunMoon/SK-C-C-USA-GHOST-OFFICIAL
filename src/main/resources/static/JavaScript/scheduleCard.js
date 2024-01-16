@@ -1,5 +1,6 @@
 // 스케줄 정보가 없을 시 빈 배열 results에 전달
 function scheduleCard(results, dfe, date) {
+    console.log(results)
     // 테이블을 담을 div
     const Container = document.getElementById("image-container");
 
@@ -438,7 +439,32 @@ function scheduleCard(results, dfe, date) {
     comm_2_E.style.borderRight= "1px solid transparent"
 
 
+
+    const creatorSpan = document.createElement('p');
+    creatorSpan.style.color = 'gray';
+
+    const modificatorSpan = document.createElement('p');
+    modificatorSpan.style.color = 'gray';
+
+    // 그냥 빈 카드
+    if (results.length === 0) {
+        creatorSpan.textContent = "Created by : - ";
+        modificatorSpan.textContent = "Modified : - ";
+    }
+    // 값이 하나라도 들어 있는 카드
+    else {
+        creatorSpan.textContent = "Created by : " +  results[0]["creator"];
+        modificatorSpan.textContent = "Modified : " + results[0]["modificator"];
+    }
+
     // 테이블을 div에 추가
+    const topDiv = document.createElement('div');
+    topDiv.className = "schedule_top_div"
+    topDiv.appendChild(creatorSpan)
+    topDiv.appendChild(modificatorSpan)
+
+    schedule_div.appendChild(topDiv)
     schedule_div.appendChild(table)
+
     Container.appendChild(schedule_div);
 }

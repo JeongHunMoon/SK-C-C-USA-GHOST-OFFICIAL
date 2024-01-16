@@ -16,8 +16,6 @@ function deleteSaveBtn() {
         let nowUserId = null;
         // 만약 사용자가 로그인이 되어 있는 경우
         if (statusObj.status === 'connected') {
-            deleteOnBtn()
-            loadingOff()
             nowUserId = statusObj.user.kakao_account.email;
             tableSelect=document.querySelectorAll("table") //테이블 가져오기
             console.log("TABLE SELECT" + tableSelect.length)
@@ -194,6 +192,8 @@ function deleteSaveBtn() {
                     console.log(unClicked)
                 }
                 if(i === tableSelect.length-1 && unClicked === tableSelect.length){
+                    deleteOnBtn()
+                    loadingOff()
                     alert("선택된 테이블이 없습니다. 삭제를 원하는 테이블을 클릭 해주세요")
                     return;
                 }
@@ -203,34 +203,123 @@ function deleteSaveBtn() {
 
             // delete 작업
             if (deleteInfo.length !== 0) {
+                deleteOnBtn()
+                loadingOff()
                 let confirmCheck = confirm("정말 삭제하시겠습니까?")
                 if (confirmCheck === true) {
+                    deleteOffBtn()
+                    loadingOn()
                     let delete_xhr = new XMLHttpRequest();
                     delete_xhr.open('POST', '/delete', true);
                     delete_xhr.setRequestHeader("Content-Type", "application/json");
                     delete_xhr.send(JSON.stringify(deleteInfo));
                     delete_xhr.onload = function() {
-                        if (delete_xhr.responseText === "Delete Success") {
-                            alert("삭제 성공")
-                            window.location.href = "/admin?id=" + nowUserId
-                        } else {
-                            alert("서버와 통신 불가")
-                            // return 0;
+                        if (delete_xhr.status === 200) {
+                            if (delete_xhr.responseText === "Delete Success") {
+                                let delete_xhr = new XMLHttpRequest();
+                                delete_xhr.open("GET", "/removeModify?id=" + nowUserId, true);
+                                delete_xhr.send();
+
+                                // Timeout 설정 (예: 5초)
+                                delete_xhr.timeout = 5000;
+
+                                delete_xhr.onload = function () {
+                                    if (delete_xhr.status === 200) {
+                                        if (delete_xhr.responseText === "true") {
+                                            alert("삭제 성공.")
+                                            deleteOnBtn()
+                                            loadingOff()
+                                            window.location.href = "admin?id="+nowUserId;
+                                        }
+                                        else {
+                                            alert("서버 오류 발생.\n데이터는 취소되었으나, 다른 운영자님들이 이용할 수 있게 아래 수동 조치 부탁드립니다.\n" +
+                                                "삭제 페이지에서 cancel버튼을 다시 눌러주세요!")
+                                            deleteOnBtn()
+                                            loadingOff()
+                                            window.location.href = "/";
+                                        }
+
+                                    } else {
+                                        alert("서버 오류 발생.\n데이터는 취소되었으나, 다른 운영자님들이 이용할 수 있게 아래 수동 조치 부탁드립니다.\n" +
+                                            "삭제 페이지에서 cancel버튼을 다시 눌러주세요!")
+                                        deleteOnBtn()
+                                        loadingOff()
+                                        window.location.href = "/";
+                                    }
+                                };
+
+                                // 서버에서 일정시간 응답이 없을 때,
+                                delete_xhr.ontimeout = function () {
+                                    alert("서버 응답 시간이 느립니다.\n삭제 페이지에서 cancel버튼을 눌러주세요!")
+                                    loadingOff();
+                                    button.disabled = false;     // 버튼 활성화
+                                    button.style.opacity = 1; // 투명도를 1로 설정
+                                    window.location.href = "/";
+                                };
+
+                                // 넷웤이 없는데 요청할때 실행
+                                delete_xhr.onerror = function () {
+                                    alert("네트워크가 끊겨있습니다.\n삭제 페이지에서 cancel버튼을 눌러주세요!")
+                                    loadingOff();
+                                    button.disabled = false;     // 버튼 활성화
+                                    button.style.opacity = 1; // 투명도를 1로 설정
+                                    window.location.href = "/";
+                                };
+                            } else {
+                                deleteOnBtn()
+                                loadingOff()
+                                alert("서버 오류.\n스케줄 삭제 재시도 부탁드립니다.")
+                                window.location.href = "/admin?id=" + nowUserId
+                            }
                         }
+                        else {
+                            deleteOnBtn()
+                            loadingOff()
+                            alert("죄송합니다. 서버가 오동작했네요..\n스케줄 삭제 재시도 부탁드립니다.")
+                            window.location.href = "/admin?id=" + nowUserId
+                        }
+
+
+
                     }
+
+                    delete_xhr.timeout = 5000;
+
+                    // 서버에서 일정시간 응답이 없을 때,
+                    delete_xhr.ontimeout = function () {
+                        alert("서버 응답 시간이 느립니다.\n삭제 페이지에서 cancel버튼을 다시 눌러주세요!")
+                        loadingOff();
+                        button.disabled = false;     // 버튼 활성화
+                        button.style.opacity = 1; // 투명도를 1로 설정
+                        window.location.href = "/";
+                    };
+
+                    // 넷웤이 없는데 요청할때 실행
+                    delete_xhr.onerror = function () {
+                        alert("네트워크가 끊겨있습니다.\n삭제 페이지에서 cancel버튼을 다시 눌러주세요!")
+                        loadingOff();
+                        button.disabled = false;     // 버튼 활성화
+                        button.style.opacity = 1; // 투명도를 1로 설정
+                        window.location.href = "/";
+                    };
                 } else {
-                    alert("삭제동의 후 삭제 가능합니다")
+                    deleteOnBtn()
+                    loadingOff()
+                    alert("삭제 동의 후 삭제 가능합니다")
                     return 0;
                 }
             } else if (deleteInfo.length === 0) {
+                deleteOnBtn()
+                loadingOff()
                 alert("선택된 데이터가 없습니다. 삭제가 필요한 카드를 다시 선택해주세요")
                 return 0;
             }
         }
         //로그인 되어있지 않은 경우
         else {
+            deleteOnBtn()
+            loadingOff()
             window.location.href = "/"
-            deleteOffBtn();
             alert("로그인 세션이 만료되었습니다. 다시 로그인 부탁드립니다.")
         }
     });
