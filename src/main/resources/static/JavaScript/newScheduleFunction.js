@@ -259,7 +259,7 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                         document.getElementById('cancelBtnModify').style.display = 'flex'; // 제출 버튼 활성화
                     }
                     // 이 코드 동작안하며 원인 파악 필요함.
-                    else if(start_xhr.responseText === "false") {
+                    else {
                         let payload = start_xhr.responseText
 
                         document.getElementById('slider').style.display = 'flex';
@@ -267,14 +267,8 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
 
                         console.log("누군가 쓰고 있음." + start_xhr.responseText);
                         window.location.href = "/admin?id=" + nowUserId;
-                        alert("다른 운영자님이 스케줄 생성 중입니다.\n 잠시 대기해주세요.")
-                    }
-                    else {
-                        document.getElementById('slider').style.display = 'flex';
-                        document.getElementById('startBtnModify').style.display = 'flex';
 
-                        window.location.href = "/";
-                        alert("잘못된 접근입니다.")
+                        alert(payload + " manager 님께서 스케줄 작성 중 입니다.\n 잠시 대기 부탁드립니다.")
                     }
                 }
                 else {

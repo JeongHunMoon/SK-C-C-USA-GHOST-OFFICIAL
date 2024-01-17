@@ -273,6 +273,10 @@ function deleteScheduleCard(results, dfe, date) {
         }
     });
 
+    console.log(pack_info1)
+    console.log(pack_info2)
+
+
 
     //// 모듈 ////
     const packRow = table.insertRow();
@@ -315,9 +319,9 @@ function deleteScheduleCard(results, dfe, date) {
     pack_2_N.appendChild(spanTag)
 
     const pack_2_D = packRow2.insertCell();
-    pack_2_D.textContent = pack_info2.find(item => item.shift === "D")?.name || "";
     spanTag = document.createElement('span')
     spanTag.setAttribute('id', date + 'PACK5')
+    spanTag.textContent = pack_info2.find(item => item.shift === "D")?.name || "";
     pack_2_D.appendChild(spanTag)
 
     const pack_2_E = packRow2.insertCell();
@@ -387,9 +391,9 @@ function deleteScheduleCard(results, dfe, date) {
     wms_2_N.appendChild(spanTag)
 
     const wms_2_D = wmsRow2.insertCell();
-    wms_2_D.textContent = wms_info2.find(item => item.shift === "D")?.name || "";
     spanTag = document.createElement('span')
     spanTag.setAttribute('id', date + 'WMS5')
+    spanTag.textContent = wms_info2.find(item => item.shift === "D")?.name || "";
     wms_2_D.appendChild(spanTag)
 
     const wms_2_E = wmsRow2.insertCell();
@@ -411,9 +415,9 @@ function deleteScheduleCard(results, dfe, date) {
     wms_3_N.appendChild(spanTag)
 
     const wms_3_D = wmsRow3.insertCell();
-    wms_3_D.textContent = wms_info3.find(item => item.shift === "D")?.name || "";
     spanTag = document.createElement('span')
     spanTag.setAttribute('id', date + 'WMS8')
+    spanTag.textContent = wms_info3.find(item => item.shift === "D")?.name || "";
     wms_3_D.appendChild(spanTag)
 
     const wms_3_E = wmsRow3.insertCell();
@@ -532,9 +536,9 @@ function deleteScheduleCard(results, dfe, date) {
     comm_1_D.appendChild(spanTag)
 
     const comm_1_E = commRow.insertCell();
-    comm_1_E.textContent = comm_info1.find(item => item.shift === "E")?.name || "";
     spanTag = document.createElement('span')
     spanTag.setAttribute('id', date + 'COMM3')
+    spanTag.textContent = comm_info1.find(item => item.shift === "E")?.name || "";
     comm_1_E.appendChild(spanTag)
     comm_1_E.style.borderRight= "1px solid transparent"
 
@@ -551,9 +555,9 @@ function deleteScheduleCard(results, dfe, date) {
     comm_2_N.appendChild(spanTag)
 
     const comm_2_D = commRow2.insertCell();
-    comm_2_D.textContent = comm_info2.find(item => item.shift === "D")?.name || "";
     spanTag = document.createElement('span')
     spanTag.setAttribute('id', date + 'COMM5')
+    spanTag.textContent = comm_info2.find(item => item.shift === "D")?.name || "";
     comm_2_D.appendChild(spanTag)
 
     const comm_2_E = commRow2.insertCell();

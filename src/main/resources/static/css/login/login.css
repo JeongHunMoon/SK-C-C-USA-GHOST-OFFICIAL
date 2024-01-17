@@ -126,7 +126,8 @@
 
     border-radius: 20px;
     background: #E1022A;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.3);
+    border: 1px solid #E1022A;
 
     cursor: pointer;
 }
@@ -144,8 +145,11 @@
     flex-shrink: 0;
 
     border-radius: 20px;
+
     background: #EE7603;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.3);
+    border: 1px solid #EE7603;
+
 
     cursor: pointer;
 
@@ -164,8 +168,9 @@
     flex-shrink: 0;
 
     border-radius: 20px;
-    background: darkgray;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+    background: lightgray;
+    box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.3);
+    border: 1px solid lightgray;
 
     cursor: pointer;
 

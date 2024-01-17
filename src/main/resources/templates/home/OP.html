@@ -39,8 +39,8 @@
 <body id = "body">
 <!--header-->
 <header id = "header"> <!-- div 와  <header>의 차이란?>? -->
-  <img id = "header_sk" src="css/images/Ghost.png" alt = "location images"> <!-- GHOST 트레이드 마크 -->
-  <p id = "header_logo">SK GHOST OP</p>
+  <img id="header_sk" src="css/images/Ghost.png" alt="location images" style="cursor: pointer;" onclick="window.location.href = '/'"> <!-- GHOST 트레이드 마크 -->
+  <p id = "header_logo">SK GHOST AE</p>
 </header>
 <!--section-->
 <div id = "section">
@@ -65,6 +65,20 @@
 </div>
 
 </body>
+<script>
+  // Online 또는 Offline 상태 변경 시 발생하는 이벤트
+  window.addEventListener('online', function () {
+    // 온라인 상태
+    console.log('온라인 상태입니다.');
+  });
+
+  window.addEventListener('offline', function () {
+    window.location.href = "/"
+    // 오프라인 상태
+    alert('인터넷 연결이 끊겼습니다. 다시 연결 후 시도하세요.');
+  });
+</script>
+
 <script>
   // 사용자가 OP 페이지에 들어오면 카카오톡 프로필, 이름을 애니메이션으로 보여준다.
   Kakao.Auth.getStatusInfo(function(statusObj) {

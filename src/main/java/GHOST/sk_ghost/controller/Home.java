@@ -178,6 +178,22 @@ public class Home {
         return ResponseEntity.ok(payload);
     }
 
+    //Create시 ROC멤버 아닌 사람 입력 검증을 위해 member 모두 불러옴
+    @ResponseBody
+    @PostMapping("/checktypo")
+    public HashMap<String, String> checkTypo(@RequestBody Map<String, String> requestBody) {
+        String checkTypo = requestBody.get("CheckTypo"); // 프론트에서 보낸 입력값.
+        List<Map<String, String>> lists = v1service.userList();
+        System.out.println("CheckTypo"+lists);
+
+        HashMap<String, String> rocALlNames = new HashMap<>();
+        for (Map<String, String> list : lists) {
+            rocALlNames.put(list.get("name"), list.get("process"));
+        }
+        System.out.println(rocALlNames);
+        return rocALlNames;
+    }
+
 
     //DB 저장을 위한 Controller
     @PostMapping("/saveSchedule")
@@ -219,22 +235,6 @@ public class Home {
         return ResponseEntity.ok("Save Success");
     }
 
-
-    //Create시 ROC멤버 아닌 사람 입력 검증을 위해 member 모두 불러옴
-    @ResponseBody
-    @PostMapping("/checktypo")
-    public HashMap<String, String> checkTypo(@RequestBody Map<String, String> requestBody) {
-        String checkTypo = requestBody.get("CheckTypo"); // 프론트에서 보낸 입력값.
-        List<Map<String, String>> lists = v1service.userList();
-        System.out.println("CheckTypo"+lists);
-
-        HashMap<String, String> rocALlNames = new HashMap<>();
-        for (Map<String, String> list : lists) {
-            rocALlNames.put(list.get("name"), list.get("process"));
-        }
-        System.out.println(rocALlNames);
-        return rocALlNames;
-    }
     @ResponseBody
     @PostMapping("/delete")
     public ResponseEntity<String> delete(@RequestBody List<Map<String, String>> requestBody) throws Exception {
@@ -260,7 +260,7 @@ public class Home {
                 // 누군가 카드를 삭제하긴 했는데 > 아직 살아있기 때문에 수정자 이름을 바꾼다.
                 else {
                     String name = v1service.getNameFromId(requestBody.get(0).get("manager"));
-                    System.out.println(name +"으로" +date +"의 shcedule_hisotry 를 수정한다.");
+                    System.out.println("삭제 : " + name +"으로" +date +"의 shcedule_hisotry 를 수정한다.");
                     v1service.updateDateToScheduleHistoryTable(date, name);
                 }
             }

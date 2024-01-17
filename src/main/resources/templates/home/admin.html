@@ -94,11 +94,42 @@
 
 <script>
     loadingOn()
+    let usedLogoAlarm = document.getElementById("header_logo");
     let used = document.getElementById("flagValue").value;
     console.log("used 값 : " + used)
     if (used !== "") {
-        alert("현재 " + used + " 운영자님이 수정 중입니다. \n나중에 다시 시도 부탁드립니다.")
+        alert("현재 " + used + " 운영자님 수정 중이며 조회만 가능합니다.\n페이지 새로고침을 통해 완료 여부를 확인할 수 있습니다.")
         loadingOff()
+        usedLogoAlarm.style.fontSize = "20px";
+
+        usedLogoAlarm.innerText = "현재 " + used + " manager님 수정 중";
+    }
+    else {
+        let xhr1 = new XMLHttpRequest();
+        xhr1.open('POST', '/getUsedName', true);
+        xhr1.setRequestHeader("Content-Type", "application/json");
+        xhr1.send(JSON.stringify({"date": "usedDateName"}));
+
+        xhr1.onload = function () {
+            if (xhr1.status === 200) {
+                let res = xhr1.responseText
+                if (res !== "False") {
+                    usedLogoAlarm.style.fontSize = "20px";
+                    alert("현재 " + res + " 운영자님 수정 중이며 조회만 가능합니다.\n페이지 새로고침을 통해 완료 여부를 확인할 수 있습니다.")
+                    usedLogoAlarm.innerText = "현재 " + res + " manager님 수정 중";
+                }
+            }
+            else {
+                alert("인터넷 접속을 확인하세요.\n재시도 부탁드립니다.")
+                window.location.href = "/"
+            }
+        }
+
+        // 넷웤이 없는데 요청할때 실행
+        xhr1.onerror = function () {
+            alert("인터넷 접속을 확인하세요.\n재시도 부탁드립니다.")
+            window.location.href = "/"
+        };
     }
 </script>
 <script>

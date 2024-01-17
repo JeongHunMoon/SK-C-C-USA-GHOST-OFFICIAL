@@ -32,7 +32,7 @@ function savedwithSession() {
             payload += (elementValue !== "") ? `${formdate}&${elementId}&${elementValue}?` : "";
         }
 
-        for (let i = 1; i <= 6; i++) {
+        for (let i = 1; i <= 9; i++) {
             let elementId = formdate + "WMS" + i;
             let elementValue = document.getElementById(elementId).value.trim();
             payload += (elementValue !== "") ? `${formdate}&${elementId}&${elementValue}?` : "";
