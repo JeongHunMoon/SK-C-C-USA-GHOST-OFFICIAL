@@ -19,7 +19,6 @@ function scheduleCard(results, dfe, date) {
     table.className = "schedule_card"; // class 설정
     table.setAttribute("border", "1");
     table.style.borderCollapse = "collapse";
-    table.style.borderColor = "lightgray"; // 빨간색 테이블 선
 
     // 상단 해더 고정
     const headerRow = table.insertRow();

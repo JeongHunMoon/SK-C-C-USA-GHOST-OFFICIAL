@@ -92,26 +92,31 @@
 }
 
 #date_submit {
-    padding-top: 5px;
-    background: #F8F8F8;
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
+    margin:0;
+    padding: 3px;
+    padding-right: 8px;
+    padding-left: 8px;
+    height: 25px;
+    background: white;
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.3);
     border: 1px solid #F8F8F8;
     cursor: pointer;
-    border-radius: 50px;
     color: black; /* 글자색을 검은색으로 설정 */
     text-align: center;
+    border: none; /* 테두리 제거 */
 }
 
 #date-range-start, #date-range-end {
     max-width: 180px;
     width: 35%;
     padding: 3px; /* 내부 여백 추가 */
+    padding-top: 1px;
     border: none; /* 테두리 제거 */
-    border-bottom: 1px solid #ddd; /* 하단 경계선 추가 */
     font-size: 16px; /* 글꼴 크기 조절 */
     color: #333; /* 글자색 설정 */
-    background-color: #f7f7f7; /* 배경색 설정 */
+    background-color: white; /* 배경색 설정 */
     outline: none; /* 포커스 시 테두리 제거 */
+    box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.3);
 }
 
 #date-range-start:focus, #date-range-end:focus {

@@ -129,6 +129,14 @@
     background: #E8E8E8;
 }
 
+#startDate, #endDate {
+    display: inline; /* 가운데 정렬을 위해 inline 속성 사용 */
+    text-align: center;
+
+    max-width: 200px;
+    width: 35%;
+}
+
 #section_top {
     display: flex;
     position:absolute;

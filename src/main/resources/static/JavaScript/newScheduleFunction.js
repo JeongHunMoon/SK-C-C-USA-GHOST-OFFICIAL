@@ -13,12 +13,14 @@ loadingOn();
 Kakao.Auth.getStatusInfo(function(statusObj) {
     let nowUserId = null;
     let nowUserNiname = null;
+    let startDateH1 = document.getElementById("startDate");
+    let dateTo = document.getElementById("dateTo");
+    let endDateH1 = document.getElementById("endDate");
 
     // 만약 사용자가 로그인이 되어 있는 경우
     if (statusObj.status === 'connected') {
         nowUserId = statusObj.user.kakao_account.email;
         nowUserNiname = statusObj.user.kakao_account.profile.nickname
-
 
         // 현재 날짜 얻기 함수.
         function getCurrentDate() {
@@ -64,10 +66,14 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
             if (xhr1.status === 200) {
                 let results = xhr1.responseText; // 서버에서 전달 받은 payload
                 if (results === "False") {
+                    startDateH1.innerText = getCurrentDate();
                     date = getCurrentDate();
                     alert("DB에 스케줄 정보가 없습니다. \n오늘 날짜를 기준으로 만드세요!")
                 }
-                else { date = results }
+                else {
+                    startDateH1.innerText = results;
+                    date = results
+                }
 
                 let newYorkTimeZone = "America/New_York";
 
@@ -212,8 +218,19 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
             const slider = document.getElementById('slider');
             const sliderValue = document.getElementById('slider-value');
             const value = slider.value;
+            console.log(value)
 
             sliderValue.textContent = value;
+
+            if ((parseInt(value, 10) - 1) === 0) {
+                dateTo.style.display = 'none';
+                endDateH1.style.display = 'none';
+            }
+            else {
+                dateTo.style.display = 'inline';
+                endDateH1.style.display = 'inline';
+                endDateH1.innerText = getAddedDate(startDateH1.textContent, parseInt(value, 10))
+            }
 
             //다 지우기.
             let imageContainer = document.getElementById("image-container");
@@ -423,3 +440,14 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
         loadingOff();
     }
 })
+
+function getAddedDate(startDate, idx) {
+    // 시작 날짜를 Date 객체로 변환
+    const startDateObject = new Date(startDate);
+    console.log(startDate)
+
+    // UTC 기준으로 일자 설정
+    startDateObject.setDate(startDateObject.getDate() + idx)
+
+    return startDateObject.toISOString().split('T')[0];
+}
