@@ -1,3 +1,4 @@
+
 /* 전체 스크롤 바 스타일 */
 ::-webkit-scrollbar {
     width: 7px; /* 스크롤 바 너비 조절 */
@@ -19,45 +20,6 @@
     background-color: #aaa; /* 마우스 오버 시 핸들 색상 */
 }
 
-#slider {
-    width: 20%;
-    cursor: pointer;
-    -webkit-appearance: none;
-    appearance: none;
-    height: 10px;
-    background: linear-gradient(to right, #B0B0B0, #F0F0F0); /* 회색과 흰색이 섞인 배경 */
-    border-radius: 5px; /* 둥근 테두리 */
-    outline: none;
-    transition: background 0.2s;
-}
-
-#slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    background: #FFF; /* 썸네일의 배경색 */
-    border: 2px solid #B0B0B0; /* 썸네일의 테두리 */
-    border-radius: 50%; /* 썸네일을 둥글게 만듭니다. */
-    cursor: pointer;
-}
-
-#slider:hover::-webkit-slider-thumb {
-    background: #B0B0B0; /* 마우스 오버 시 썸네일의 배경색 변경 */
-}
-
-#slider::-moz-range-thumb {
-    width: 20px;
-    height: 20px;
-    background: #FFF;
-    border: 2px solid #B0B0B0;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-#slider:hover::-moz-range-thumb {
-    background: #B0B0B0;
-}
 #header {
     display: flex;
     position : absolute;
@@ -136,6 +98,7 @@
     max-width: 200px;
     width: 35%;
 }
+
 
 #section_top {
     display: flex;
@@ -265,16 +228,13 @@
     gap: 2vw; /* 버튼 간격 설정 */
 }
 
-
-#cancelBtnModify,
-#startBtnModify,
-#doneBtnModify,
-#saveBtnModify{
+#modify_cancel,
+#modify_save {
     display: flex;
     width: 15%;
     min-width: 120px;
     max-width: 200px;
-    height: 50%;
+    height: 85%;
     padding-top: 20px;
     padding-bottom: 20px;
     justify-content: center;
@@ -284,22 +244,20 @@
     cursor: pointer;
 }
 
-#cancelBtnModify {
+#modify_cancel {
     background: #E1022A;
     box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.3);
     border: 1px solid #E1022A;
 }
 
-#startBtnModify, #doneBtnModify, #saveBtnModify{
+#modify_save {
     background: #EE7603;
     box-shadow: 4px 4px 4px 4px rgba(0, 0, 0, 0.3);
     border: 1px solid #EE7603;
 }
 
 #text1,
-#text2,
-#text3,
-#text4{
+#text2 {
     flex-grow: 1; /* 텍스트가 버튼 영역을 채울 수 있도록 함 */
     text-align: center; /* 텍스트를 가운데 정렬함 */
     overflow: hidden; /* 텍스트가 버튼을 벗어나지 않도록 함 */

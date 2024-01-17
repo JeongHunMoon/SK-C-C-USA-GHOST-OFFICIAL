@@ -17,6 +17,10 @@
   <script> Kakao.init('2e39201190179fe7cd5eb25903daba8a'); </script> <!--SDK를 초기화 (애플리케이션>앱설정>앱키:JAVASCRIPTKEY -->
 
   <!-- 자바스크립트 함수 정의 -->
+  <script src = "../../JavaScript/loginAram.js"></script>
+  <script src = "../../JavaScript/loadingOn.js"></script>
+  <script src = "../../JavaScript/loadingOff.js"></script>
+
   <script src = "../../JavaScript/loginOPWithKakao.js"></script>
   <script src = "../../JavaScript/loginWithKakaoForAdmin.js"></script>
   <script src = "../../JavaScript/unlinkWithKakao.js"></script>
@@ -27,9 +31,6 @@
   <script src = "../../JavaScript/refreshAccessToken.js"></script>
   <script src = "../../JavaScript/questionFunction.js"></script>
   <script src = "../../JavaScript/endReport.js"></script>
-  <script src = "../../JavaScript/loginAram.js"></script>
-  <script src = "../../JavaScript/loadingOn.js"></script>
-  <script src = "../../JavaScript/loadingOff.js"></script>
 
   <title>SK GHOST MAIN</title>
 
@@ -38,7 +39,8 @@
 <body id = "body">
 <!-- 메인 해더-->
 <header id = "header">
-  <img id = "header_sk" src="css/images/Ghost.png" alt = "location images"> <!-- GHOST 트레이드 마크 -->
+  <!-- GHOST 트레이드 마크 -->
+  <img id="header_sk" src="css/images/Ghost.png" alt="location images" style="cursor: pointer;" onclick="window.location.href = '/'">
   <span id = "header_logo">SK GHOST</span> <!-- GHOST text -->
 </header>
 
@@ -56,17 +58,17 @@
 <section id = "section_bottom">
   <!-- 사용자 로그인 버튼 -->
   <button id = "user_login" onClick="loginOPWithKakao()">
-    <span id = "text1">OP Login</span>
+    <span id = "text1">AE Login</span>
   </button>
 
   <!-- 운영자 로그인 버튼  -->
   <button id = "admin_login" onClick="loginWithKakaoForAdmin()">
-    <span id = "text2">Admin Login</span>
+    <span id = "text2">SE Login</span>
   </button>
 
   <!-- 질문 하기 버튼  -->
   <button id = "question" onClick="questionFunction()">
-    <span id = "text3">Please ask me</span>
+    <span id = "text3">Ask me</span>
   </button>
 </section>
 
@@ -75,4 +77,38 @@
   <span id ="footer_text">You are best</span>
 </footer>
 </body>
+<script>
+  // Online 또는 Offline 상태 변경 시 발생하는 이벤트
+  window.addEventListener('online', function () {
+    // 온라인 상태
+    console.log('온라인 상태입니다.');
+  });
+
+  window.addEventListener('offline', function () {
+    window.location.href = "/"
+    // 오프라인 상태
+    alert('인터넷 연결이 끊겼습니다. 다시 연결 후 시도하세요.');
+  });
+</script>
+
+<script>
+  // 쿠키를 지원하는지 확인
+  function areCookiesEnabled() {
+    try {
+      document.cookie = "testcookie=test; SameSite=None; Secure";
+      var cookieEnabled = document.cookie.indexOf("testcookie") !== -1;
+      return cookieEnabled;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  // 쿠키 사용 여부 확인
+  if (!areCookiesEnabled()) {
+    // 쿠키를 사용하지 않을 경우 사용자에게 알림 표시
+    alert("쿠키를 허용해주세요. 사이트의 일부 기능이 작동하지 않을 수 있습니다.");
+  }
+
+</script>
+
 </html>

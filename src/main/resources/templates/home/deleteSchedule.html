@@ -9,7 +9,7 @@
 
     <!-- CSS 정의 -->
     <link rel = "stylesheet" href = "css/init.css">
-    <link rel = "stylesheet" href = "css/admin/admin.css">
+    <link rel = "stylesheet" href = "css/admin/deleteAdmin.css">
 
     <!-- 카카오 API를 사용하기 위한 라이브러리 선언-->
     <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -20,69 +20,64 @@
     <script src = "../../JavaScript/loginAram.js"></script>
     <script src = "../../JavaScript/loadingOn.js"></script>
     <script src = "../../JavaScript/loadingOff.js"></script>
-    <script src = "../../JavaScript/adminDateSearch.js"></script>
-    <script src = "../../JavaScript/scheduleCard.js"></script>
-    <script src = "../../JavaScript/createScheduleCard.js"></script>
-    <script src = "../../JavaScript/createSchedule.js"></script>
 
-    <script src = "../../JavaScript/modifyBtn.js"></script>
-    <script src = "../../JavaScript/newBtn.js"></script>
-    <title>SK GHOST ADMIN</title>
+    <script src = "../../JavaScript/deleteCancelBtn.js"></script>
+    <script src = "../../JavaScript/deleteSaveBtn.js"></script>
+    <script src = "../../JavaScript/deleteScheduleFunction.js"></script>
+    <script src = "../../JavaScript/deleteScheduleCard.js"></script>
+    <title>Delete Schedule</title>
 
 </head>
 <script>
 </script>
 
 <body id = "body">
+
 <!-- 메인 해더-->
 <header id = "header">
-    <img id = "header_sk" src="css/images/Ghost.png" alt = "location images"> <!-- GHOST 트레이드 마크 -->
-    <span id = "header_logo">SK GHOST Admin</span> <!-- GHOST text -->
+    <img id="header_sk" src="css/images/Ghost.png" alt="location images" style="cursor: pointer;" onclick="window.location.href = '/'">
+    <span id = "header_logo">Delete Schedule</span> <!-- GHOST text -->
 </header>
 
 <section id = "section_date">
-    <form id = "dateForm">
-        <input type="date" id="date-range-start" name="date-range-start"> <!-- 시작일 -->
-        <span> to </span>
-        <input type="date" id="date-range-end" name="date-range-end"> <!-- 종료일 -->
-        <input type="submit" id = "date_submit" value="Submit">
-    </form>
-
-
+    <h1 id="startDate" th:text="${start}"></h1>
+    <h1>~</h1>
+    <h1 id="endDate" th:text="${end}"></h1>
 </section>
 <!-- 전체 seciton은 top과 bottom으로 구성된다.-->
 <section id="section_top">
     <div id="image-container">
-
+        <!-- 동적 DOM 트리 담기는 위치-->
     </div>
 </section>
 
 <!-- 메인 푸터  -->
 <footer id = "footer">
-    <!-- 스케줄 수정 -->
-    <button id = "modify_schedule" onClick="loginOPWithKakao()">
-        <span id = "text1">Modify</span>
+    <!-- 취소 버튼 -->
+    <button id = "delete_cancel">
+        <span id = "text1">Cancel</span>
     </button>
 
-    <!-- 스케줄 저장 -->
-    <!--    type="submit"으로 변경 필요-->
-    <button id = "new_schedule" type="button" form="createForm" onClick="createSchedule('2024-01-01')">
-        <span id = "text2">New</span>
+    <!-- 스케줄 삭제 -->
+    <button id = "delete_save">
+        <span id = "text2">Delete</span>
     </button>
 </footer>
 </body>
-
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        let container = document.getElementById('image-container');
-
-        container.addEventListener('wheel', function (e) {
-            container.scrollLeft += e.deltaY;
-            e.preventDefault();
-        });
+    // Online 또는 Offline 상태 변경 시 발생하는 이벤트
+    window.addEventListener('online', function () {
+        // 온라인 상태
+        console.log('온라인 상태입니다.');
     });
 
-    createScheduleCard([], "Mon", "2024-01-01")
-    createScheduleCard([], "Tue", "2024-01-02")
+    window.addEventListener('offline', function () {
+        window.location.href = "/"
+        // 오프라인 상태
+        alert('인터넷 연결이 끊겼습니다. 다시 연결 후 시도하세요.');
+    });
+</script>
+<script>
+    deleteScheduleFunction()
 </script>
 </html>

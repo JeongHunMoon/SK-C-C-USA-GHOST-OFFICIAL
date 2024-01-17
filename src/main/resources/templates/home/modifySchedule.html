@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"> <!-- HTML 파일 문서 호환성을 edge버전으로 통일-->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> <!-- HTML 4.0.1 버전 기준 문자인코딩 방식 정의 -->
+  <!-- 현재 사용자가 접속한 디바이스의 가로 세로 길이에 맞게 앱 사이즈를 조절함. 초기, 최대, 최소 비율은 모두 1이며, 사용자가 드레그로 크기 조정 불가능-->
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale = 1.0, user-scalable=no">
+
+  <!-- CSS 정의 -->
+  <link rel = "stylesheet" href = "css/init.css">
+  <link rel = "stylesheet" href = "css/admin/modiyAdmin.css">
+
+  <!-- 카카오 API를 사용하기 위한 라이브러리 선언-->
+  <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+  <script> Kakao.init('2e39201190179fe7cd5eb25903daba8a'); </script> <!--SDK를 초기화 (애플리케이션>앱설정>앱키:JAVASCRIPTKEY -->
+
+  <!-- 자바스크립트 함수 정의 -->
+  <script src = "../../JavaScript/unlinkWithKakao.js"></script>
+  <script src = "../../JavaScript/loginAram.js"></script>
+  <script src = "../../JavaScript/loadingOn.js"></script>
+  <script src = "../../JavaScript/loadingOff.js"></script>
+
+  <script src = "../../JavaScript/createCardStored.js"></script>
+  <script src = "../../JavaScript/modifyScheduleFunction.js"></script>
+  <script src = "../../JavaScript/modifyCancelBtn.js"></script>
+  <script src = "../../JavaScript/modifySaveBtn.js"></script>
+
+  <title>Modify schedule</title>
+
+</head>
+<script>
+</script>
+
+<body id = "body">
+<!-- 메인 해더-->
+<header id = "header">
+  <img id="header_sk" src="css/images/Ghost.png" alt="location images" style="cursor: pointer;" onclick="window.location.href = '/'"> <!-- GHOST 트레이드 마크 -->
+  <span id = "header_logo">Modify schedule</span> <!-- GHOST text -->
+</header>
+
+<section id = "section_date">
+  <h1 id="startDate" th:text="${start}"></h1>
+  <h1>~</h1>
+  <h1 id="endDate" th:text="${end}"></h1>
+</section>
+
+<!-- 전체 seciton은 top과 bottom으로 구성된다.-->
+<section id="section_top">
+  <div id="image-container">
+
+  </div>
+</section>
+
+<!-- 메인 푸터  -->
+<footer id = "footer">
+  <!-- 스케줄 수정 취소 -->
+  <button id = "modify_cancel">
+    <span id = "text1" >Cancel</span>
+  </button>
+
+  <!-- 스케줄 수정 저장 -->
+  <button id = "modify_save">
+    <span id = "text2">Done</span>
+  </button>
+</footer>
+</body>
+<script>
+  // Online 또는 Offline 상태 변경 시 발생하는 이벤트
+  window.addEventListener('online', function () {
+    // 온라인 상태
+    console.log('온라인 상태입니다.');
+  });
+
+  window.addEventListener('offline', function () {
+    window.location.href = "/"
+    // 오프라인 상태
+    alert('인터넷 연결이 끊겼습니다. 다시 연결 후 시도하세요.');
+  });
+</script>
+
+<script>
+  modifyScheduleFunction();
+</script>
+
+</html>

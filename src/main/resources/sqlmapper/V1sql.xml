@@ -25,13 +25,15 @@
 
     <!-- 해당 날짜의 운영자 스케줄 조희 -->
     <select id="oneDateSchedule" resultType="map">
-        select A.name, CAST(A.date as CHAR) as date, A.shift, A.priority, B.process
+        SELECT A.name, CAST(A.date as CHAR) as date, A.shift, A.priority, B.process, COALESCE(C.creator, '-') as creator, COALESCE(C.modificator, '-') as modificator
         FROM admin_shift A
-        LEFT JOIN member B
-        on A.name = B.name
-        where A.date = #{dateInfo}
+        LEFT JOIN member B ON A.name = B.name
+        LEFT JOIN schedule_history C ON A.date = C.date
+        WHERE A.date = #{dateInfo}
+
     </select>
 
+    <!-- 입력된 운영자 스케줄 저장 -->
     <insert id="saveSchedule" parameterType="java.util.List">
         insert into admin_shift (name,date,shift,priority)
         values
@@ -49,6 +51,84 @@
     <select id="adminShiftLastDate" resultType="String">
         SELECT date from admin_shift
     </select>
+
+    <!-- 선택된 운영자 스케줄 삭제 -->
+    <delete id="deleteSchedule" parameterType="java.util.List">
+        delete from admin_shift
+        where
+        <foreach collection="list" item="listItem" separator="OR">
+            <trim prefix="(" suffix=")" suffixOverrides=",">
+                name = #{listItem.name, jdbcType=VARCHAR}
+            </trim>
+            <trim prefix="AND" prefixOverrides="OR">
+                date = #{listItem.date, jdbcType=DATE}
+            </trim>
+            <trim prefix="AND" prefixOverrides="OR">
+                shift = #{listItem.shift, jdbcType=VARCHAR}
+            </trim>
+            <trim prefix="AND" prefixOverrides="OR">
+                priority = #{listItem.priority, jdbcType=VARCHAR}
+            </trim>
+        </foreach>
+    </delete>
+
+    <update id="updateSchedule" parameterType="java.util.Map">
+        UPDATE admin_shift
+        SET
+        name = #{toBeName, jdbcType=VARCHAR},
+        date = #{date, jdbcType=DATE},
+        shift = #{shift, jdbcType=VARCHAR},
+        priority = #{priority, jdbcType=VARCHAR}
+        WHERE
+        name = #{name, jdbcType=VARCHAR}
+        AND date = #{date, jdbcType=DATE}
+        AND shift = #{shift, jdbcType=VARCHAR}
+        AND priority = #{priority, jdbcType=VARCHAR}
+    </update>
+
+
+    <select id="getNameFromId" resultType="java.lang.String">
+        SELECT name FROM member WHERE id = #{id}
+    </select>
+
+
+    <select id="isDateHistory" resultType="int">
+        SELECT COUNT(*) FROM schedule_history WHERE date = #{date}
+    </select>
+
+
+    <!-- schedule_history 테이블에 생성자 이름을 삽입 -->
+    <insert id="insertDateToScheduleHistoryTable" parameterType="String">
+        INSERT INTO schedule_history (date, creator, modificator)
+        VALUES (#{date, jdbcType=DATE}, #{creator, jdbcType=VARCHAR}, NULL)
+    </insert>
+
+    <!-- schedule_history 테이블에 수정자 이름을 삽입 -->
+    <update id="updateDateToScheduleHistoryTable">
+        UPDATE schedule_history
+        SET modificator = #{modificator, jdbcType=VARCHAR}
+        WHERE date = #{date, jdbcType=DATE}
+    </update>
+
+    <!-- admin_shift 테이블에 date가 들어있는지 검사  -->
+    <select id="isDateAdminShiftTable" resultType="boolean">
+        SELECT EXISTS (
+        SELECT 1
+        FROM admin_shift
+        WHERE date = #{date, jdbcType=DATE}
+        LIMIT 1
+        ) AS result
+    </select>
+
+    <!-- shedule_admin 테이블에서 해당 날짜를 삭제하는 쿼리 -->
+    <delete id="deleteDateToScheduleHistoryTable" parameterType="java.lang.String">
+        DELETE FROM schedule_history
+        WHERE date = #{date, jdbcType=DATE}
+    </delete>
+
+
+
+
 
 </mapper>
 
