@@ -377,7 +377,7 @@ function modifySaveBtn(beforeCards) {
                                 // 변경(업데이트) "A" > "B"
                                 else if (rocMembers.hasOwnProperty(wmsinf) && rocMembers[wmsinf] === "WMS" && beforeCards[idInf] !== "" && beforeCards[idInf] !== wmsinf) {
                                     updateInfo.push({
-                                        "name": wmsinf,
+                                        "name": beforeCards[idInf],
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": (i < 4) ? '1' : (i < 7) ? '2' : '3',

@@ -516,6 +516,7 @@ function createCardStored(results, dfe, date, fl) {
     comm.textContent = "COMM";
     comm.rowSpan = 2;
     comm.style.borderLeft = "1px solid transparent"
+    comm.style.borderBottom = "1px solid transparent"
 
     const comm_1 = commRow.insertCell();
     comm_1.textContent = "1";
