@@ -96,7 +96,7 @@ function createSchedule() {
                         packInfo.push(document.getElementById(formdate + "PACK4").value)
                         packInfo.push(document.getElementById(formdate + "PACK5").value)
                         packInfo.push(document.getElementById(formdate + "PACK6").value)
-                        // wms 1,2 차 정보
+                        // wms 1,2,3 차 정보
                         let wmsInfo = []
                         wmsInfo.push(document.getElementById(formdate + "WMS1").value)
                         wmsInfo.push(document.getElementById(formdate + "WMS2").value)
@@ -104,6 +104,9 @@ function createSchedule() {
                         wmsInfo.push(document.getElementById(formdate + "WMS4").value)
                         wmsInfo.push(document.getElementById(formdate + "WMS5").value)
                         wmsInfo.push(document.getElementById(formdate + "WMS6").value)
+                        wmsInfo.push(document.getElementById(formdate + "WMS7").value)
+                        wmsInfo.push(document.getElementById(formdate + "WMS8").value)
+                        wmsInfo.push(document.getElementById(formdate + "WMS9").value)
                         // 수집 1,2 차 정보
                         let collInfo = []
                         collInfo.push(document.getElementById(formdate + "COLL1").value)
@@ -202,7 +205,7 @@ function createSchedule() {
                                 document.getElementById(`${formdate}PACK${i}`).style.color = "red";
                             }
                         }
-                        for (let i = 1; i < 7; i++) {
+                        for (let i = 1; i < 10; i++) {
                             let wmsinf = wmsInfo[i - 1].trim();
                             if (wmsinf === "") {
                             } else if (rocMembers.hasOwnProperty(wmsinf) && rocMembers[wmsinf] === "WMS") {
@@ -212,7 +215,7 @@ function createSchedule() {
                                     "name": wmsinf,
                                     "date": formdate,
                                     "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
-                                    "priority": i < 4 ? '1' : '2',
+                                    "priority": (i < 4) ? '1' : (i < 7) ? '2' : '3',
                                     "manager" : nowUserId
                                 });
                             } else {

@@ -23,6 +23,17 @@ public class Admin {
     private static String newAdminhashValue = null;
     //private static String newAdminhashValue = null;
 
+    @PostMapping("/getUsedName")
+    @ResponseBody
+    public ResponseEntity<String> getUsedName(@RequestBody Map<String, String> requestBody) {
+        if (newAdminhashValue == null) {
+            return ResponseEntity.ok("False");
+        }
+        else {
+            return ResponseEntity.ok(v1service.getNameFromId(newAdminhashValue));
+        }
+    }
+
     @PostMapping("/adminShiftLastDate")
     @ResponseBody
     public ResponseEntity<String> adminShiftLastDate(@RequestBody Map<String, String> requestBody) {
@@ -78,7 +89,8 @@ public class Admin {
                     }
                     else {
                         System.out.println("누군가 쓰고 있음." + newAdminhashValue);
-                        return ResponseEntity.ok("false");
+
+                        return ResponseEntity.ok(v1service.getNameFromId(newAdminhashValue));
                     }
                 } else {
                     System.out.println("신규 접속");
@@ -236,7 +248,7 @@ public class Admin {
                     }
                     else {
                         System.out.println("누군가 쓰고 있음." + newAdminhashValue);
-                        model.addAttribute("flag", id); // 이름으로 전달 필요.
+                        model.addAttribute("flag", v1service.getNameFromId(newAdminhashValue)); // 이름으로 전달 필요.
                         return "home/admin";
                     }
                 } else {
@@ -282,7 +294,7 @@ public class Admin {
                     }
                     else {
                         System.out.println("누군가 쓰고 있음." + newAdminhashValue);
-                        model.addAttribute("flag", id); // 이름으로 전달 필요.
+                        model.addAttribute("flag", v1service.getNameFromId(newAdminhashValue)); // 이름으로 전달 필요.
                         return "home/admin";
                     }
                 } else {

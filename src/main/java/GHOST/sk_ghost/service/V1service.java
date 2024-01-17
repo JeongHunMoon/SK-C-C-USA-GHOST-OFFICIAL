@@ -63,15 +63,11 @@ public class V1service {
     @Transactional
     public void updateSchedule(List<Map<String, String>> itemList) {
         try {
-            System.out.println("변경 준비 완료");
+            System.out.println("변경 준비 완료 : " + itemList);
 
             for (Map<String, String> scheduleItem : itemList) {
                 // 업데이트는 반드시
                 v1Dao.updateSchedule(scheduleItem);
-
-                if (isDateHistory(scheduleItem.get(0))) {
-
-                }
             }
 
         } catch (Exception e) {
@@ -97,7 +93,7 @@ public class V1service {
     }
 
     public void insertDateToScheduleHistoryTable(String date, String creator){
-        System.out.println(date + " : " + creator + "이 값을 히스토리에 넣음");
+        System.out.println("삽입" + date + " : " + creator + "이 값을 히스토리에 넣음");
 
         v1Dao.insertDateToScheduleHistoryTable(date, creator);
     }
@@ -115,7 +111,7 @@ public class V1service {
     }
 
     public void deleteDateToScheduleHistoryTable(String date) {
-        System.out.println(date + "shedule_admin 테이블에서 삭제 요청됨");
+        System.out.println("삭제 : " +date + "shedule_admin 테이블에서 삭제 요청됨");
         v1Dao.deleteDateToScheduleHistoryTable(date);
     }
 

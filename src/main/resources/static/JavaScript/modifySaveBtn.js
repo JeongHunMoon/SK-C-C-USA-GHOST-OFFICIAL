@@ -132,6 +132,10 @@ function modifySaveBtn(beforeCards) {
                             wmsInfo.push(document.getElementById(formdate + "WMS4").value)
                             wmsInfo.push(document.getElementById(formdate + "WMS5").value)
                             wmsInfo.push(document.getElementById(formdate + "WMS6").value)
+                            wmsInfo.push(document.getElementById(formdate + "WMS7").value)
+                            wmsInfo.push(document.getElementById(formdate + "WMS8").value)
+                            wmsInfo.push(document.getElementById(formdate + "WMS9").value)
+
                             // 수집 1,2 차 정보
                             let collInfo = []
                             collInfo.push(document.getElementById(formdate + "COLL1").value)
@@ -223,10 +227,11 @@ function modifySaveBtn(beforeCards) {
                                 // 변경(업데이트) "A" > "B"
                                 else if (rocMembers.hasOwnProperty(cellinf) && rocMembers[cellinf] === "CELL" && beforeCards[idInf] !== "" && beforeCards[idInf] !== cellinf) {
                                     updateInfo.push({
-                                        "name": cellinf,
+                                        "name": beforeCards[idInf],
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "toBeName": cellinf,
                                         "manager" : nowUserId
                                     });
                                 }
@@ -272,10 +277,11 @@ function modifySaveBtn(beforeCards) {
                                 // 변경(업데이트) "A" > "B"
                                 else if (rocMembers.hasOwnProperty(forminf) && rocMembers[forminf] === "FORM" && beforeCards[idInf] !== "" && beforeCards[idInf] !== forminf) {
                                     updateInfo.push({
-                                        "name": forminf,
+                                        "name": beforeCards[idInf],
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "toBeName": forminf,
                                         "manager" : nowUserId
                                     });
                                 }
@@ -321,10 +327,11 @@ function modifySaveBtn(beforeCards) {
                                 // 변경(업데이트) "A" > "B"
                                 else if (rocMembers.hasOwnProperty(packinf) && rocMembers[packinf] === "PACK" && beforeCards[idInf] !== "" && beforeCards[idInf] !== packinf) {
                                     updateInfo.push({
-                                        "name": packinf,
+                                        "name": beforeCards[idInf],
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "toBeName": packinf,
                                         "manager" : nowUserId
                                     });
                                 }
@@ -347,7 +354,7 @@ function modifySaveBtn(beforeCards) {
                             }
 
                             // WMS
-                            for (let i = 1; i < 7; i++) {
+                            for (let i = 1; i < 10; i++) {
                                 let wmsinf = wmsInfo[i - 1].trim(); // 하나의 값
                                 let idInf = `${formdate}WMS${i}`;
                                 document.getElementById(idInf).style.color = "black";
@@ -362,7 +369,7 @@ function modifySaveBtn(beforeCards) {
                                         "name": beforeCards[idInf],
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
-                                        "priority": i < 4 ? '1' : '2',
+                                        "priority": (i < 4) ? '1' : (i < 7) ? '2' : '3',
                                         "manager" : nowUserId
                                     });
                                 }
@@ -373,7 +380,8 @@ function modifySaveBtn(beforeCards) {
                                         "name": wmsinf,
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
-                                        "priority": i < 4 ? '1' : '2',
+                                        "priority": (i < 4) ? '1' : (i < 7) ? '2' : '3',
+                                        "toBeName": wmsinf,
                                         "manager" : nowUserId
                                     });
                                 }
@@ -384,7 +392,7 @@ function modifySaveBtn(beforeCards) {
                                         "name": wmsinf,
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
-                                        "priority": i < 4 ? '1' : '2',
+                                        "priority": (i < 4) ? '1' : (i < 7) ? '2' : '3',
                                         "manager" : nowUserId
                                     });
                                 }
@@ -419,10 +427,11 @@ function modifySaveBtn(beforeCards) {
                                 // 변경(업데이트) "A" > "B"
                                 else if (rocMembers.hasOwnProperty(collinf) && rocMembers[collinf] === "COLL" && beforeCards[idInf] !== "" && beforeCards[idInf] !== collinf) {
                                     updateInfo.push({
-                                        "name": collinf,
+                                        "name": beforeCards[idInf],
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "toBeName": collinf,
                                         "manager" : nowUserId
                                     });
                                 }
@@ -468,10 +477,11 @@ function modifySaveBtn(beforeCards) {
                                 // 변경(업데이트) "A" > "B"
                                 else if (rocMembers.hasOwnProperty(comminf) && rocMembers[comminf] === "COMM" && beforeCards[idInf] !== "" && beforeCards[idInf] !== comminf) {
                                     updateInfo.push({
-                                        "name": comminf,
+                                        "name": beforeCards[idInf],
                                         "date": formdate,
                                         "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                         "priority": i < 4 ? '1' : '2',
+                                        "toBeName": comminf,
                                         "manager" : nowUserId
                                     });
                                 }
@@ -506,14 +516,6 @@ function modifySaveBtn(beforeCards) {
                                     console.log("이 값들이 디비에 삭제됨.", deleteInfo)
                                     console.log("이 값들이 디비에 변경됨.", updateInfo)
 
-                                    // 비동기 작업 카운터 초기화
-                                    let asyncTotalCounter = 0;
-                                    let asyncCounter = 0;
-                                    if (insertInfo.length !== 0) {asyncTotalCounter +=1}
-                                    if (deleteInfo.length !== 0) {asyncTotalCounter +=1}
-                                    if (updateInfo.length !== 0) {asyncTotalCounter +=1}
-                                    console.log("=================", asyncTotalCounter)
-
                                     // Promise를 사용하여 비동기 작업 정의
                                     function performAsyncOperation(xhr, infoArray) {
                                         return new Promise(function(resolve) {
@@ -530,54 +532,88 @@ function modifySaveBtn(beforeCards) {
                                         });
                                     }
 
-                                    // insert 작업
-                                    if (insertInfo.length !== 0) {
-                                        let insert_xhr = new XMLHttpRequest();
-                                        insert_xhr.open('POST', '/saveSchedule', true);
-                                        insert_xhr.setRequestHeader("Content-Type", "application/json");
+                                    // 동기적으로 처리하기 위해 async 함수 사용
+                                    async function performSyncOperations() {
+                                        // insert 작업
+                                        if (insertInfo.length !== 0) {
+                                            let insert_xhr = new XMLHttpRequest();
+                                            insert_xhr.open('POST', '/saveSchedule', true);
+                                            insert_xhr.setRequestHeader("Content-Type", "application/json");
+                                            await performAsyncOperation(insert_xhr, insertInfo);
+                                        }
 
-                                        performAsyncOperation(insert_xhr, insertInfo)
-                                            .then(function() {
-                                                asyncCounter++;
-                                                checkAllOperationsComplete();
-                                            });
+                                        // delete 작업
+                                        if (deleteInfo.length !== 0) {
+                                            let delete_xhr = new XMLHttpRequest();
+                                            delete_xhr.open('POST', '/delete', true);
+                                            delete_xhr.setRequestHeader("Content-Type", "application/json");
+                                            await performAsyncOperation(delete_xhr, deleteInfo);
+                                        }
+
+                                        // update 작업
+                                        if (updateInfo.length !== 0) {
+                                            let update_xhr = new XMLHttpRequest();
+                                            update_xhr.open('POST', '/updateSchedule', true);
+                                            update_xhr.setRequestHeader("Content-Type", "application/json");
+                                            await performAsyncOperation(update_xhr, updateInfo);
+                                        }
+
+                                        // 모든 작업이 완료된 후에 수행할 로직
+                                        checkAllOperationsComplete();
                                     }
 
-                                    // delete 작업
-                                    if (deleteInfo.length !== 0) {
-                                        let delete_xhr = new XMLHttpRequest();
-                                        delete_xhr.open('POST', '/delete', true);
-                                        delete_xhr.setRequestHeader("Content-Type", "application/json");
-
-                                        performAsyncOperation(delete_xhr, deleteInfo)
-                                            .then(function() {
-                                                asyncCounter++;
-                                                checkAllOperationsComplete();
-                                            });
-                                    }
-
-                                    // update 작업
-                                    if (updateInfo.length !== 0) {
-                                        let update_xhr = new XMLHttpRequest();
-                                        update_xhr.open('POST', '/updateSchedule', true);
-                                        update_xhr.setRequestHeader("Content-Type", "application/json");
-
-                                        performAsyncOperation(update_xhr, updateInfo)
-                                            .then(function() {
-                                                asyncCounter++;
-                                                checkAllOperationsComplete();
-                                            });
-                                    }
+                                    // performSyncOperations 함수 호출
+                                    performSyncOperations();
 
                                     // 모든 비동기 작업이 완료되었는지 확인하는 함수
                                     function checkAllOperationsComplete() {
-                                        if (asyncCounter === asyncTotalCounter) {
-                                            // 모든 작업이 완료된 후에 실행될 동작
-                                            window.location.href = "/admin?id=" + nowUserId
+                                        let delete_xhr = new XMLHttpRequest();
+                                        delete_xhr.open("GET", "/removeModify?id=" + nowUserId, true);
+                                        delete_xhr.send();
+
+                                        // Timeout 설정 (예: 5초)
+                                        delete_xhr.timeout = 5000;
+
+                                        delete_xhr.onload = function () {
+                                            if (delete_xhr.status === 200) {
+                                                if (delete_xhr.responseText === "true") {
+                                                    window.location.href = "/admin?id=" + nowUserId
+                                                    document.getElementById("modify_save").disabled = false;
+                                                    document.getElementById("modify_save").style.opacity = 1;
+                                                    alert("작업 모두 완료.");
+                                                }
+                                                else {
+                                                    window.location.href = "/"
+                                                    document.getElementById("modify_save").disabled = false;
+                                                    document.getElementById("modify_save").style.opacity = 1;
+                                                    alert("서버 오류 발생.\n데이터는 수정되었으나, 다른 운영자님들이 이용할 수 있게 아래 수동 조치 부탁드립니다.\n" +
+                                                        "수정 페이지에서 cancel버튼을 다시 눌러주세요!")
+                                                }
+
+                                            } else {
+                                                window.location.href = "/"
+                                                document.getElementById("modify_save").disabled = false;
+                                                document.getElementById("modify_save").style.opacity = 1;
+                                                alert("서버 오류 발생.\n데이터는 수정 되었으나, 다른 운영자님들이 이용할 수 있게 아래 수동 조치 부탁드립니다.\n" +
+                                                    "수정 페이지에서 cancel버튼을 다시 눌러주세요!")
+                                            }
+                                        };
+
+                                        // 서버에서 일정시간 응답이 없을 때,
+                                        delete_xhr.ontimeout = function () {
+                                            alert("서버 응답 시간이 느립니다.\n수정 페이지에서 cancel버튼을 눌러주세요!")
+                                            window.location.href = "/"
                                             document.getElementById("modify_save").disabled = false;
                                             document.getElementById("modify_save").style.opacity = 1;
-                                            alert("작업 모두 완료");
-                                        }
+                                        };
+
+                                        // 넷웤이 없는데 요청할때 실행
+                                        delete_xhr.onerror = function () {
+                                            alert("네트워크가 끊겨있습니다.\n수정 페이지에서 cancel버튼을 눌러주세요!")
+                                            window.location.href = "/"
+                                            document.getElementById("modify_save").disabled = false;
+                                            document.getElementById("modify_save").style.opacity = 1;
+                                        };
                                     }
                                 }
                                 else {

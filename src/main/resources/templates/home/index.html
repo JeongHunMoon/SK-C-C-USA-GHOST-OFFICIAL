@@ -17,6 +17,10 @@
   <script> Kakao.init('2e39201190179fe7cd5eb25903daba8a'); </script> <!--SDK를 초기화 (애플리케이션>앱설정>앱키:JAVASCRIPTKEY -->
 
   <!-- 자바스크립트 함수 정의 -->
+  <script src = "../../JavaScript/loginAram.js"></script>
+  <script src = "../../JavaScript/loadingOn.js"></script>
+  <script src = "../../JavaScript/loadingOff.js"></script>
+
   <script src = "../../JavaScript/loginOPWithKakao.js"></script>
   <script src = "../../JavaScript/loginWithKakaoForAdmin.js"></script>
   <script src = "../../JavaScript/unlinkWithKakao.js"></script>
@@ -27,9 +31,6 @@
   <script src = "../../JavaScript/refreshAccessToken.js"></script>
   <script src = "../../JavaScript/questionFunction.js"></script>
   <script src = "../../JavaScript/endReport.js"></script>
-  <script src = "../../JavaScript/loginAram.js"></script>
-  <script src = "../../JavaScript/loadingOn.js"></script>
-  <script src = "../../JavaScript/loadingOff.js"></script>
 
   <title>SK GHOST MAIN</title>
 
@@ -57,17 +58,17 @@
 <section id = "section_bottom">
   <!-- 사용자 로그인 버튼 -->
   <button id = "user_login" onClick="loginOPWithKakao()">
-    <span id = "text1">OP Login</span>
+    <span id = "text1">AE Login</span>
   </button>
 
   <!-- 운영자 로그인 버튼  -->
   <button id = "admin_login" onClick="loginWithKakaoForAdmin()">
-    <span id = "text2">Admin Login</span>
+    <span id = "text2">SE Login</span>
   </button>
 
   <!-- 질문 하기 버튼  -->
   <button id = "question" onClick="questionFunction()">
-    <span id = "text3">Please ask me</span>
+    <span id = "text3">Ask me</span>
   </button>
 </section>
 

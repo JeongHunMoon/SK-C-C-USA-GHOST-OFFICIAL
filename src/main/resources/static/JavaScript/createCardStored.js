@@ -405,7 +405,7 @@ function createCardStored(results, dfe, date, fl) {
     // wms 3차
     const wmsRow3 = table.insertRow();
     const wms_3 = wmsRow3.insertCell();
-    wms_3.textContent = "2";
+    wms_3.textContent = "3";
 
     const wms_3_N = wmsRow3.insertCell();
     inputTag = document.createElement('input')

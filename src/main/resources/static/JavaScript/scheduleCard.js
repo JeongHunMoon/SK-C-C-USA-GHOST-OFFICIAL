@@ -19,10 +19,11 @@ function scheduleCard(results, dfe, date) {
     table.className = "schedule_card"; // class 설정
     table.setAttribute("border", "1");
     table.style.borderCollapse = "collapse";
+    table.style.borderColor = "lightgray"; // 빨간색 테이블 선
 
     // 상단 해더 고정
     const headerRow = table.insertRow();
-    headerRow.style.borderTop = "1px solid transparent"
+    //headerRow.style.borderTop = "1px solid transparent"
 
     const partHeader = headerRow.insertCell();
     partHeader.textContent = "Part";
@@ -325,7 +326,7 @@ function scheduleCard(results, dfe, date) {
     wms_3_N.textContent = wms_info3.find(item => item.shift === "N")?.name || "";
 
     const wms_3_D = wmsRow3.insertCell();
-    wms_2_D.textContent = wms_info3.find(item => item.shift === "D")?.name || "";
+    wms_3_D.textContent = wms_info3.find(item => item.shift === "D")?.name || "";
 
     const wms_3_E = wmsRow3.insertCell();
     wms_3_E.textContent = wms_info3.find(item => item.shift === "E")?.name || "";
@@ -449,12 +450,12 @@ function scheduleCard(results, dfe, date) {
     // 그냥 빈 카드
     if (results.length === 0) {
         creatorSpan.textContent = "Created by : - ";
-        modificatorSpan.textContent = "Modified : - ";
+        modificatorSpan.textContent = "Modified by : - ";
     }
     // 값이 하나라도 들어 있는 카드
     else {
         creatorSpan.textContent = "Created by : " +  results[0]["creator"];
-        modificatorSpan.textContent = "Modified : " + results[0]["modificator"];
+        modificatorSpan.textContent = "Modified by : " + results[0]["modificator"];
     }
 
     // 테이블을 div에 추가

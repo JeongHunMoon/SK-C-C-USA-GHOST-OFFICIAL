@@ -24,6 +24,7 @@ function deleteSaveBtn() {
             for(let i=0; i<tableSelect.length; i++){
                 if(tableSelect[i].style.backgroundColor === "darkgrey" && tableSelect[i].style.color === "white"){
                     tableDate = tableSelect[i].querySelector("#dateInfo").textContent; //현재 테이블 날짜 가져오기
+                    console.log(document.getElementById(tableDate + "PACK5").textContent)
                     // 전극 1,2 차 정보
                     let elecInfo = []
                     elecInfo.push(document.getElementById(tableDate + "ELEC1").textContent)
@@ -56,7 +57,8 @@ function deleteSaveBtn() {
                     packInfo.push(document.getElementById(tableDate + "PACK4").textContent)
                     packInfo.push(document.getElementById(tableDate + "PACK5").textContent)
                     packInfo.push(document.getElementById(tableDate + "PACK6").textContent)
-                    // wms 1,2 차 정보
+                    console.log(packInfo)
+                    // wms 1,2,3 차 정보
                     let wmsInfo = []
                     wmsInfo.push(document.getElementById(tableDate + "WMS1").textContent)
                     wmsInfo.push(document.getElementById(tableDate + "WMS2").textContent)
@@ -64,6 +66,9 @@ function deleteSaveBtn() {
                     wmsInfo.push(document.getElementById(tableDate + "WMS4").textContent)
                     wmsInfo.push(document.getElementById(tableDate + "WMS5").textContent)
                     wmsInfo.push(document.getElementById(tableDate + "WMS6").textContent)
+                    wmsInfo.push(document.getElementById(tableDate + "WMS7").textContent)
+                    wmsInfo.push(document.getElementById(tableDate + "WMS8").textContent)
+                    wmsInfo.push(document.getElementById(tableDate + "WMS9").textContent)
                     // 수집 1,2 차 정보
                     let collInfo = []
                     collInfo.push(document.getElementById(tableDate + "COLL1").textContent)
@@ -80,6 +85,7 @@ function deleteSaveBtn() {
                     commInfo.push(document.getElementById(tableDate + "COMM4").textContent)
                     commInfo.push(document.getElementById(tableDate + "COMM5").textContent)
                     commInfo.push(document.getElementById(tableDate + "COMM6").textContent)
+                    console.log(commInfo)
 
                     // 불러온 셀 정보가 공백이 아니고 첫번째 클릭인 경우에 삭제후보배열에 추가한다
                     // 전극
@@ -143,7 +149,7 @@ function deleteSaveBtn() {
                     }
 
                     //wms
-                    for (let i = 1; i < 7; i++) {
+                    for (let i = 1; i < 10; i++) {
                         let wmsinf = wmsInfo[i - 1].trim();
                         //공백이 아니고 첫번째 클린 경우 삭제후보배열에 추가
                         if (wmsinf !== "" ) {
@@ -152,7 +158,7 @@ function deleteSaveBtn() {
                                 "name": wmsinf,
                                 "date": tableDate,
                                 "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
-                                "priority": i < 4 ? '1' : '2',
+                                "priority": (i < 4) ? '1' : (i < 7) ? '2' : '3',
                             });
                         }
                     }
@@ -205,7 +211,7 @@ function deleteSaveBtn() {
             if (deleteInfo.length !== 0) {
                 deleteOnBtn()
                 loadingOff()
-                let confirmCheck = confirm("정말 삭제하시겠습니까?")
+                let confirmCheck = confirm("정말 삭제하시겠습니까?\n" + (tableSelect.length- unClicked) + "개 스케줄이 삭제됩니다.")
                 if (confirmCheck === true) {
                     deleteOffBtn()
                     loadingOn()
