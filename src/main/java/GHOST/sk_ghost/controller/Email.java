@@ -1,21 +1,22 @@
 //package GHOST.sk_ghost.controller;
-//
+//import GHOST.sk_ghost.dto.EmailRequestDto;
 //import GHOST.sk_ghost.service.EmailService;
-//import GHOST.sk_ghost.service.V1service;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Controller;
+//import lombok.RequiredArgsConstructor;
+////import org.hibernate.annotations.Check;
 //import org.springframework.web.bind.annotation.PostMapping;
-//import org.springframework.web.bind.annotation.RequestParam;
+//import org.springframework.web.bind.annotation.RequestBody;
+//import org.springframework.web.bind.annotation.RestController;
 //
-//@Controller
+//import javax.validation.Valid;
+//
+//@RestController
+//@RequiredArgsConstructor
 //public class Email {
-//    @Autowired
-//    private EmailService emailService; // Service 호출을 위한 객체
-//    @PostMapping("/emailConfirm")
-//    public String emailConfirm(@RequestParam String email) throws Exception {
+//    private final EmailService mailService;
 //
-//        String confirm = emailService.sendSimpleMessage(email);
-//
-//        return confirm;
+//    @PostMapping("/mailSend")
+//    public String mailSend(@RequestBody @Valid EmailRequestDto emailDto) {
+//        System.out.println("이메일 인증 이메일 :" + emailDto.getEmail());
+//        return mailService.joinEmail(emailDto.getEmail());
 //    }
 //}
