@@ -4,8 +4,7 @@ function modifySaveBtn(beforeCards) {
 
     Kakao.Auth.getStatusInfo(function(statusObj) {
         let nowUserId = null;
-        let nowUserNiname = null;
-        let allInfos = {}
+        let nowUserNickname = null;
         let form = null;
         let rocMembers = null;
         let flag  = true;
@@ -18,7 +17,7 @@ function modifySaveBtn(beforeCards) {
         // 만약 사용자가 로그인이 되어 있는 경우
         if (statusObj.status === 'connected') {
             nowUserId = statusObj.user.kakao_account.email;
-            nowUserNiname = statusObj.user.kakao_account.profile.nickname
+            nowUserNickname = statusObj.user.kakao_account.profile.nickname
 
             let xhr_check = new XMLHttpRequest(); // REST API 통신을 위한 객체
             xhr_check.open('POST', '/checktypo', true); // REST 정의
@@ -26,9 +25,8 @@ function modifySaveBtn(beforeCards) {
             xhr_check.send(JSON.stringify({"CheckTypo": 'typoPostSample'}));
 
             xhr_check.onload = function () {
-                if(xhr_check.status === 200) {
+                if (xhr_check.status === 200) {
                     rocMembers = JSON.parse(xhr_check.response);
-                    console.log("ROC MEMBERS : " + rocMembers); // 전체 ROC인원을 문자열로 가지는 배열.
                     form = document.querySelectorAll("#createForm");
 
                     //DB에서 member table이 비어 있는 경우
@@ -36,16 +34,13 @@ function modifySaveBtn(beforeCards) {
                         let remove_xhr = new XMLHttpRequest();
                         remove_xhr.open("GET", "/removeModify?id="+nowUserId, true);
 
-                        // Timeout 설정 (예: 5초)
-                        remove_xhr.timeout = 5000;
-
                         remove_xhr.onload = function () {
                             if (remove_xhr.status === 200) {
                                 if (remove_xhr.responseText === "true") {
                                     document.getElementById("modify_save").disabled = false;
                                     document.getElementById("modify_save").style.opacity = 1;
                                     alert("현재 DB ROC 맴버가 없습니다.. 관리자에게 문의해주세요!")
-                                    window.location.href = "admin?id="+nowUserId;
+                                    window.location.href = "admin?id=" + nowUserId;
                                 }
                                 else {
                                     document.getElementById("modify_save").disabled = false;
@@ -60,6 +55,9 @@ function modifySaveBtn(beforeCards) {
                                 alert("취소 실패. 다시 취소 부탁드립니다.")
                             }
                         };
+
+                        // Timeout 설정 (예: 5초)
+                        remove_xhr.timeout = 5000;
 
                         // 서버에서 일정시간 응답이 없을 때,
                         remove_xhr.ontimeout = function () {
@@ -521,12 +519,19 @@ function modifySaveBtn(beforeCards) {
                                         return new Promise(function(resolve) {
                                             xhr.send(JSON.stringify(infoArray));
                                             xhr.onload = function() {
-                                                if (xhr.responseText === "Delete Success" || xhr.responseText === "Save Success" || xhr.responseText === "Update Success") {
-                                                    resolve();
-                                                } else {
-                                                    // 에러 처리 로직 추가
-                                                    console.error("비동기 작업 실패");
-                                                    resolve(); // 실패하더라도 resolve를 호출하여 카운터를 증가시킴
+                                                if (xhr.status === 200) {
+                                                    if (xhr.responseText === "Delete Success" || xhr.responseText === "Save Success" || xhr.responseText === "Update Success") {
+                                                        resolve();
+                                                    }
+                                                    else {
+                                                        // 에러 처리 로직 추가
+                                                        console.error("비동기 작업 실패");
+                                                        resolve(); // 실패하더라도 resolve를 호출하여 카운터를 증가시킴
+                                                    }
+                                                }
+                                                else {
+                                                    alert("수정 중 서버에서 (심각한) 오류가 발생했습니다. 데이터가 잘못 저장되었을 수도 있습니다.\nGHOST팀 에게 이를 알려주시면 감사드리겠습니다.")
+                                                    window.location.href = "/"
                                                 }
                                             };
                                         });
