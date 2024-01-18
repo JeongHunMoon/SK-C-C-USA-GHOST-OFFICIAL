@@ -1,4 +1,4 @@
-#modalWrapper {
+#codeModalWrapper {
     justify-content: center;
     align-items: center;
     display: flex;
@@ -16,7 +16,7 @@
     border-radius: 8px;
 }
 
-.modalBackGround {
+.codeModalBackGround {
     justify-content: center;
     align-items: center;
     display: flex;
@@ -28,7 +28,7 @@
     filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 }
 
-.modalContainer {
+.codeModalContainer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -41,7 +41,7 @@
     background: #FFF;
 }
 
-.modalHeader {
+.codeModalHeader {
     width: 253px;
     height: 31px;
     flex-shrink: 0;
@@ -54,7 +54,7 @@
     line-height: normal;
 }
 
-.modalBody {
+.codeModalBody {
     margin-top:15px;
     width: 253px;
     height: 62px;
@@ -68,30 +68,32 @@
     line-height: normal;
 }
 
-.modalInputContainer {
+.codeModalInputContainer {
     margin-top:10px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 248px;
+    width: 255px;
     height: 47px;
     flex-shrink: 0;
     /*background: #EDB2B2;*/
 }
 
-.modalInputTitle {
-    width: 48px;
+.codeModalInputTitle {
+    width: 60px;
     height: 47px;
     align-items: center;
     display: flex;
     flex-shrink: 0;
+    margin-right:3px;
 }
 
-.modalInputBody {
-    width: 200px;
+.codeModalInputBody {
+    width: 170px;
     height: 32px;
     border-radius: 10%;
     flex-direction: column;
+    margin-left:10px;
     justify-content: center;
     flex-shrink: 0;
     color: #000;
@@ -103,7 +105,7 @@
     line-height: normal;
 }
 
-.modalSubmit {
+#codeModalSubmit {
     width: 265px;
     height: 49px;
     flex-shrink: 0;
