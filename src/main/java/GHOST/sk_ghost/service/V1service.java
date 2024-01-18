@@ -1,6 +1,7 @@
 package GHOST.sk_ghost.service;
 
 import GHOST.sk_ghost.dao.V1Dao;
+import GHOST.sk_ghost.dto.OP.AdminShiftParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,10 +19,11 @@ public class V1service {
         return list;
     }
 
-    public List<Map<String, String>> shiftAdminList() {
-        List<Map<String, String>> list = v1Dao.shiftAdminList();
+    public List<Map<String, String>> shiftAdminList(AdminShiftParam param) {
+        List<Map<String, String>> list = v1Dao.shiftAdminList(param);
         return list;
     }
+
 
 
     public List<Map<String, String>> oneDateSchedule(String dateInfo) {

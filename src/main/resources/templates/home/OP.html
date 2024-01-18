@@ -24,6 +24,12 @@
   <script src = "../../JavaScript/loginAram.js"></script>
   <script src = "../../JavaScript/loadingOn.js"></script>
   <script src = "../../JavaScript/loadingOff.js"></script>
+  <script src = "../../JavaScript/getNewYorkTime.js"></script>
+  <script src = "../../JavaScript/isCurrentTimeInDayRange.js"></script>
+  <script src = "../../JavaScript/isCurrentTimeInEveningRange.js"></script>
+  <script src = "../../JavaScript/isCurrentTimeInNightRange.js"></script>
+
+
 
   <script src = "../../JavaScript/loginOPWithKakao.js"></script>
   <script src = "../../JavaScript/loginWithKakaoForAdmin.js"></script>
@@ -52,7 +58,7 @@
   </div>
   <!--section_botttom-->
   <div id = "section_bottom">
-    <button id="custom-startwork-btn" onClick="sendToMe(); sendFriends()">
+    <button id="custom-startwork-btn" onClick="sendFriends()">
       <span class = "bntText">Start Work</span>
     </button>
 
@@ -68,6 +74,7 @@
 
 </body>
 <script>
+  console.log(getNewYorkTime())
   // Online 또는 Offline 상태 변경 시 발생하는 이벤트
   window.addEventListener('online', function () {
     // 온라인 상태
