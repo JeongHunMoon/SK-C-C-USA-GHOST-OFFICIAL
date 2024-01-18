@@ -1,5 +1,6 @@
 package GHOST.sk_ghost.controller;
 
+import GHOST.sk_ghost.dto.OP.AdminShiftParam;
 import GHOST.sk_ghost.service.V1service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -74,17 +75,17 @@ public class Home {
 
 
     //출근하기 기능이다. 디비에서 금일의 대응자님 조회하여 list로 조히하여 프론트로 전송한다.
+    // 수정된 컨트롤러
     @PostMapping("/goingToWork")
-    public ResponseEntity<List<Map<String, String>>> goingToWork(@RequestBody Map<String, String> requestBody) {
-        System.out.println("OP 페이지가 실행됨");
-        String shift = requestBody.get("shift"); // 무의미 데이터 무시하세요.
-
-        List<Map<String, String>> lists = v1service.shiftAdminList(); // 금일의 대응자 admin을 조회한다.
+    public ResponseEntity<List<Map<String, String>>> goingToWork(@RequestBody AdminShiftParam requestBody) {
+        System.out.println(requestBody);
+        List<Map<String, String>> lists = v1service.shiftAdminList(requestBody);
 
         System.out.println("조회된 금일 담당 대응자 분들 > " + lists);
 
         return ResponseEntity.ok(lists);
     }
+
 
     // OP 페이지로 이동한다. 사용자가 발급받은 해쉬 값을 추출하여 일치하는지 점검한다.
     @GetMapping("/OP")
