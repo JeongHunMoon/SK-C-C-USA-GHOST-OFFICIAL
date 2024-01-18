@@ -203,7 +203,7 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
 
         // 서버에서 일정시간 응답이 없을 때,
         xhr1.ontimeout = function () {
-            alert("서버 처리 지연./n재시도 부탁드립니다.")
+            alert("서버 처리 지연.\n재시도 부탁드립니다.")
             window.location.href = "/"
         };
 
@@ -232,14 +232,14 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                 endDateH1.innerText = getAddedDate(startDateH1.textContent, parseInt(value, 10))
             }
 
-            //다 지우기.
+            //기존 카드 다 지우기.
             let imageContainer = document.getElementById("image-container");
 
             while (imageContainer.firstChild) {
                 imageContainer.removeChild(imageContainer.firstChild);
             }
 
-            // 다 찍기.
+            // 새로운 카드 모두 찍기.
             for(let i = 0; i < value; i++) {
                 Container.appendChild(cardInfo[i])
             }
@@ -275,7 +275,7 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                         document.getElementById('saveBtnModify').style.display = 'flex'; // 제출 버튼 비활성화
                         document.getElementById('cancelBtnModify').style.display = 'flex'; // 제출 버튼 활성화
                     }
-                    // 이 코드 동작안하며 원인 파악 필요함.
+
                     else {
                         let payload = start_xhr.responseText
 
@@ -285,7 +285,7 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                         console.log("누군가 쓰고 있음." + start_xhr.responseText);
                         window.location.href = "/admin?id=" + nowUserId;
 
-                        alert(payload + " manager 님께서 스케줄 작성 중 입니다.\n 잠시 대기 부탁드립니다.")
+                        //alert(payload + " manager 님께서 스케줄 작성 중 입니다.\n 잠시 대기 부탁드립니다.")
                     }
                 }
                 else {
@@ -400,10 +400,12 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                         window.location.href = "/";
                     }
 
-                } else {
+                }
+                else {
                     cancelForm.disabled = false; // 제출 버튼 활성화
                     cancelForm.style.opacity = 1
-                    alert("취소 실패. 다시 취소 부탁드립니다.")
+                    alert("취소에 실패했습니다. 다른 운영자님들이 사용하실 수 있도록 아래 조치 부탁드립니다.\nnew > cancel 버튼 클릭 부탁드립니다.")
+                    window.location.href = "admin?id="+nowUserId;
                 }
             };
 
@@ -412,6 +414,7 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                 cancelForm.disabled = false; // 제출 버튼 활성화
                 cancelForm.style.opacity = 1
                 alert("Request timed out. Please try again.");
+                window.location.href = "/";
             };
 
             // 넷웤이 없는데 요청할때 실행
@@ -419,6 +422,7 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                 cancelForm.disabled = false; // 제출 버튼 활성화
                 cancelForm.style.opacity = 1
                 alert("Network error occurred. Please check your connection and try again.");
+                window.location.href = "/";
             };
 
             // 프론트에서 네트워크가 있는 경우에 전송
@@ -429,6 +433,7 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                 cancelForm.style.opacity = 1
                 location.reload();
                 alert("No internet connection. Please check your connection and try again.");
+                window.location.href = "/";
             }
 
         })
@@ -436,7 +441,7 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
 
     else {
         window.location.href = "/"
-        alert("세션이 만료되었습니다. 로그인을 다시해주세요.")
+        alert("로그인 세션이 만료되었습니다. 로그인을 다시해주세요.")
         loadingOff();
     }
 })

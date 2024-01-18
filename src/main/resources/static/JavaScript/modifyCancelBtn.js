@@ -13,10 +13,6 @@ function modifyCancelBtn() {
 
             let xhr = new XMLHttpRequest();
             xhr.open("GET", "/removeModify?id="+nowUserId, true);
-
-            // Timeout 설정 (예: 5초)
-            xhr.timeout = 5000;
-
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     if (xhr.responseText === "true") {
@@ -35,6 +31,9 @@ function modifyCancelBtn() {
                     alert("취소 실패. 다시 취소 부탁드립니다.")
                 }
             };
+
+            // Timeout 설정 (예: 5초)
+            xhr.timeout = 5000;
 
             // 서버에서 일정시간 응답이 없을 때,
             xhr.ontimeout = function () {

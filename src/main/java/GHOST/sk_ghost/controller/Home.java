@@ -8,12 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 public class Home {
     private String hashValue = null; // OP 가 로그인 시 서버에서 접근 가능하도록 해쉬 생성
-    private String newhashValue = null;
 
     @Autowired
     V1service v1service; // Service 호출을 위한 객체
@@ -142,43 +140,7 @@ public class Home {
         return ResponseEntity.ok("False"); //DB에 없는 사용자가 로그인을 시도했기에 접근을 차단한다.
     }
 
-
-    // Admin에서 new 버튼 > 생성 페이지 중 카드 드레그 생성 페이지로 이동시킨다.
-    @GetMapping("/newSchedule")
-    public String adminNewSchedule(@RequestParam(value = "id", required = true) String id, Model model) {
-        List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
-        System.out.println("ROC Member" + lists);
-
-        // 로그인한 사용자가 올바른지 검증
-        for (Map<String, String> list : lists) {
-            String rocMember = list.get("id"); // ROC인원의 id
-            String processInfo = list.get("process");
-
-            // 로그인 요청한 사용자가 OP인 경우만 OP 페이지 접속 허가 > 운영자는 OP 페이지 접속 불가.
-            if (rocMember.equals(id)) {
-                System.out.println(id + lists);
-                return "home/newSchedule";
-            }
-        }
-        return "home/400";
-    }
-
-    // 운영자 정보를 가져온다.
-    @PostMapping("/getSchedule")
-    public ResponseEntity<List<List<Map<String, String>>>> getSchedule(@RequestBody Map<String, List<String>> requestBody) {
-        List<String> dateInfo = requestBody.get("date"); // 무의미 데이터 무시하세요.
-        List<List<Map<String, String>>> payload = new Vector<List<Map<String, String>>>();
-
-        for (String card : dateInfo) {
-            List<Map<String, String>> lists = v1service.oneDateSchedule(card); // 금일의 대응자 admin을 조회한다.
-            payload.add(lists);
-        }
-        System.out.println("조희 결과> " + payload);
-
-        return ResponseEntity.ok(payload);
-    }
-
-    //Create시 ROC멤버 아닌 사람 입력 검증을 위해 member 모두 불러옴
+    // admin_shift 생성 시, ROC멤버의 시림이 등록되기 위한 검증을 위해 member 테이블의 정보를 모두 불러온다.
     @ResponseBody
     @PostMapping("/checktypo")
     public HashMap<String, String> checkTypo(@RequestBody Map<String, String> requestBody) {
@@ -192,82 +154,5 @@ public class Home {
         }
         System.out.println(rocALlNames);
         return rocALlNames;
-    }
-
-
-    //DB 저장을 위한 Controller
-    @PostMapping("/saveSchedule")
-    public ResponseEntity<String> saveScheduleInsert(@RequestBody List<Map<String, String>> requestBody) throws Exception {
-        System.out.println("Save to DB : " + requestBody);
-        // date가 있는지 검사한다. > 있다면 무시한다.
-        // > 없다면 card table에 담당자의 이름을 추가한다. id를 넣으면 이름을 가져오는 서비스가 필요함.
-        try {
-
-            Set<String> dateSet = new HashSet<>();
-
-            for (Map<String, String> map : requestBody) {
-                String date = map.get("date");
-                if (date != null && !date.isEmpty()) {
-                    dateSet.add(date);
-                }
-            }
-
-            for (String date : dateSet) {
-                // 해당 카드를 새로 만드는 insert
-                if (!v1service.isDateHistory(date)) {
-                    String name = v1service.getNameFromId(requestBody.get(0).get("manager"));
-                    System.out.println(name +"으로" +date +"의 shcedule_hisotry 를 만든다.");
-                    v1service.insertDateToScheduleHistoryTable(date, name);
-                }
-                // 해당 카드를 수정하는 insert
-                else {
-                    String name = v1service.getNameFromId(requestBody.get(0).get("manager"));
-                    System.out.println(name +"으로" +date +"의 shcedule_hisotry 를 수정한다.");
-                    v1service.updateDateToScheduleHistoryTable(date, name);
-                }
-            }
-
-            v1service.saveSchedule(requestBody);
-        }
-        catch (Exception e) {
-            return ResponseEntity.ok("Save Fail");
-        }
-        return ResponseEntity.ok("Save Success");
-    }
-
-    @ResponseBody
-    @PostMapping("/delete")
-    public ResponseEntity<String> delete(@RequestBody List<Map<String, String>> requestBody) throws Exception {
-        System.out.println("delete from DB : " + requestBody);
-        try {
-            v1service.deleteSchedule(requestBody);
-
-            // 날짜 추출 > 해당 날짜가 admin_shift에 없으면 > history_table에서 해당 날짜 제거 하기.
-            Set<String> dateSet = new HashSet<>();
-
-            for (Map<String, String> map : requestBody) {
-                String date = map.get("date");
-                if (date != null && !date.isEmpty()) {
-                    dateSet.add(date);
-                }
-            }
-
-            for (String date : dateSet) {
-                // admin_shift 테이블에 이제 더 이상 운영자가 없기에 히스토리도 지운다.
-                if (!v1service.isDateAdminShiftTable(date)) {
-                    v1service.deleteDateToScheduleHistoryTable(date);
-                }
-                // 누군가 카드를 삭제하긴 했는데 > 아직 살아있기 때문에 수정자 이름을 바꾼다.
-                else {
-                    String name = v1service.getNameFromId(requestBody.get(0).get("manager"));
-                    System.out.println("삭제 : " + name +"으로" +date +"의 shcedule_hisotry 를 수정한다.");
-                    v1service.updateDateToScheduleHistoryTable(date, name);
-                }
-            }
-        }
-        catch (Exception e) {
-            return ResponseEntity.ok("Delete Fail");
-        }
-        return ResponseEntity.ok("Delete Success");
     }
 }
