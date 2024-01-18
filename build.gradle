@@ -53,16 +53,19 @@ dependencies {
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
 
 	//이메일 인증 의존성 추가
-	//implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.6.3'
+//	//implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '2.6.3'
+//	implementation 'org.springframework.boot:spring-boot-starter-mail'
+//	//implementation 'javax.mail:mail:1.4.7'
+////	// Spring Context Support
+////	implementation 'org.springframework:spring-context-support:5.3.9'
+//	//
+//	implementation 'javax.validation:validation-api:2.0.1.Final'
+////	implementation 'org.hibernate.validator:hibernate-validator:7.0.1.Final'
+////	implementation 'jakarta.mail:1.6.7'
+//	implementation group: 'com.sun.mail', name: 'jakarta.mail', version: '1.6.7'
+
+	implementation group: 'org.glassfish.jaxb', name: 'jaxb-runtime', version: '2.3.2'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	//implementation 'javax.mail:mail:1.4.7'
-//	// Spring Context Support
-//	implementation 'org.springframework:spring-context-support:5.3.9'
-	//
-	implementation 'javax.validation:validation-api:2.0.1.Final'
-//	implementation 'org.hibernate.validator:hibernate-validator:7.0.1.Final'
-//	implementation 'jakarta.mail:1.6.7'
-	implementation group: 'com.sun.mail', name: 'jakarta.mail', version: '1.6.7'
 
 
 }

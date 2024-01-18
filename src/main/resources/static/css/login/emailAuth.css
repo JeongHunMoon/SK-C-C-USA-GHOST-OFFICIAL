@@ -1,0 +1,117 @@
+#modalWrapper {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    max-width: 400px;
+    padding: 20px;
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    text-align: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.modalBackGround {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    flex-shrink: 0;
+    background-color: #383232;
+    opacity: 0.7;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.modalContainer {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    width: 330px;
+    height: 330px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    opacity: 0.95;
+    background: #FFF;
+}
+
+.modalHeader {
+    width: 253px;
+    height: 31px;
+    flex-shrink: 0;
+    color: #000;
+    text-align: center;
+    font-family: Inter, serif;
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.modalBody {
+    margin-top:15px;
+    width: 253px;
+    height: 62px;
+    flex-shrink: 0;
+    color: #000;
+    text-align: center;
+    font-family: Inter, serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.modalInputContainer {
+    margin-top:10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 248px;
+    height: 47px;
+    flex-shrink: 0;
+    /*background: #EDB2B2;*/
+}
+
+.modalInputTitle {
+    width: 48px;
+    height: 47px;
+    align-items: center;
+    display: flex;
+    flex-shrink: 0;
+}
+
+.modalInputBody {
+    width: 200px;
+    height: 32px;
+    border-radius: 10%;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #000;
+    text-align: center;
+    font-family: Inter, serif;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.modalSubmit {
+    width: 265px;
+    height: 49px;
+    flex-shrink: 0;
+    margin-top:20px;
+    color: white;
+    font-size: 20px;
+    border-radius: 20px;
+    background: #0063d4;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+}
+
