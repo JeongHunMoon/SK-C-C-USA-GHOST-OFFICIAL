@@ -31,6 +31,7 @@ function createSchedule() {
 
                     //DB에서 이름을 불러오지 못했을 때
                     if (rocMembers.length === 0) {
+                        loadingOff()
                         document.getElementById('doneBtnModify').disabled = false;
                         document.getElementById('doneBtnModify').style.opacity = 1;
 
@@ -125,6 +126,7 @@ function createSchedule() {
 
                             for (let i = 1; i < 7; i++) {
                                 let elecinf = elecInfo[i - 1].trim();
+                                elecinf = elecinf.trim();
                                 console.log(elecinf)
                                 console.log(rocMembers.hasOwnProperty(elecinf))
                                 //앞뒤로 트립 제거
@@ -149,6 +151,7 @@ function createSchedule() {
                             }
                             for (let i = 1; i < 7; i++) {
                                 let cellinf = cellInfo[i - 1].trim();
+                                cellinf = cellinf.trim();
                                 if (cellinf === "") {
                                 } else if (rocMembers.hasOwnProperty(cellinf) && rocMembers[cellinf] === "CELL") {
                                     noChange = true;
@@ -168,6 +171,7 @@ function createSchedule() {
                             }
                             for (let i = 1; i < 7; i++) {
                                 let forminf = formInfo[i - 1].trim();
+                                forminf = forminf.trim()
                                 if (forminf === "") {
                                 } else if (rocMembers.hasOwnProperty(forminf) && rocMembers[forminf] === "FORM") {
                                     noChange = true;
@@ -187,6 +191,7 @@ function createSchedule() {
                             }
                             for (let i = 1; i < 7; i++) {
                                 let packinf = packInfo[i - 1].trim();
+                                packinf = packinf.trim()
                                 if (packinf === "") {
                                 } else if (rocMembers.hasOwnProperty(packinf) && rocMembers[packinf] === "PACK") {
                                     noChange = true;
@@ -206,6 +211,7 @@ function createSchedule() {
                             }
                             for (let i = 1; i < 10; i++) {
                                 let wmsinf = wmsInfo[i - 1].trim();
+                                wmsinf = wmsinf.trim()
                                 if (wmsinf === "") {
                                 } else if (rocMembers.hasOwnProperty(wmsinf) && rocMembers[wmsinf] === "WMS") {
                                     noChange = true;
@@ -225,6 +231,7 @@ function createSchedule() {
                             }
                             for (let i = 1; i < 7; i++) {
                                 let collinf = collInfo[i - 1].trim();
+                                collinf = collinf.trim()
                                 if (collinf === "") {
                                 } else if (rocMembers.hasOwnProperty(collinf) && rocMembers[collinf] === "COLL") {
                                     noChange = true;
@@ -244,6 +251,7 @@ function createSchedule() {
                             }
                             for (let i = 1; i < 7; i++) {
                                 let comminf = commInfo[i - 1].trim();
+                                comminf = comminf.trim()
                                 if (comminf === "") {
                                 } else if (rocMembers.hasOwnProperty(comminf) && rocMembers[comminf] === "COMM") {
                                     noChange = true;
@@ -265,6 +273,7 @@ function createSchedule() {
                             if (j === form.length - 1) {
                                 // 변경된 데이터가 없는 경우
                                 if (!noChange) {
+                                    loadingOff()
                                     document.getElementById('doneBtnModify').disabled = false;
                                     document.getElementById('doneBtnModify').style.opacity = 1;
                                     alert("저장할 데이터가 없습니다.")
@@ -282,6 +291,7 @@ function createSchedule() {
                                     xhr_check_saveDB.onload = function() {
                                         if (xhr_check_saveDB.status === 200) {
                                             if (xhr_check_saveDB.responseText === "Save Success") {
+                                                loadingOff()
                                                 document.getElementById('doneBtnModify').disabled = false;
                                                 document.getElementById('doneBtnModify').style.opacity = 1;
 
@@ -335,6 +345,7 @@ function createSchedule() {
                                                 };
                                             }
                                             else {
+                                                loadingOff()
                                                 document.getElementById('doneBtnModify').disabled = false;
                                                 document.getElementById('doneBtnModify').style.opacity = 1;
                                                 // 디비에 넣는 서비스가 예외가 일었났으므로 세션 날릴 필요 없음.
@@ -363,6 +374,7 @@ function createSchedule() {
                                     };
                                 }
                                 else {
+                                    loadingOff()
                                     document.getElementById('doneBtnModify').disabled = false;
                                     document.getElementById('doneBtnModify').style.opacity = 1;
                                     alert("오타 및 입력된 운영자님의 공정이 올바른지 확인해주세요.")
@@ -395,6 +407,7 @@ function createSchedule() {
         }
 
         else {
+            loadingOff()
             document.getElementById('doneBtnModify').disabled = false;
             document.getElementById('doneBtnModify').style.opacity = 1;
             // 세션 저장할 필요 없음 > 재로그이 시킨 후 다시 접속 시 세션을 불러와야함.

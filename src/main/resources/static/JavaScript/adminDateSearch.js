@@ -107,6 +107,7 @@ function adminDateSearch() {
     });
 }
 
+/*
 // 오늘 날짜를 가져오는 함수
 function getCurrentDate() {
     const today = new Date();
@@ -140,6 +141,7 @@ function getDates(startDate, endDate) {
     }
     return dateArray;
 }
+*/
 
 function btnOff() {
     const dateForm = document.getElementById('dateForm');
