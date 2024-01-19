@@ -22,21 +22,6 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
         nowUserId = statusObj.user.kakao_account.email;
         nowUserNiname = statusObj.user.kakao_account.profile.nickname
 
-        // 현재 날짜 얻기 함수.
-        function getCurrentDate() {
-            const today = new Date();
-            const year = today.getFullYear();
-            let month = today.getMonth() + 1;
-            let day = today.getDate();
-
-            // 한 자리수인 경우 앞에 0을 추가
-            month = month < 10 ? '0' + month : month;
-            day = day < 10 ? '0' + day : day;
-
-            return `${year}-${month}-${day}`;
-        }
-
-
         //이미지 컨트롤러 스크롤 이벤트
         const Container = document.getElementById("image-container");
         document.addEventListener('DOMContentLoaded', function () {
@@ -47,7 +32,6 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                 e.preventDefault();
             });
         });
-
 
 
         //디비에 저장된 마지막 날짜를 기준 + 1을 default로 출력
@@ -229,7 +213,7 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
             else {
                 dateTo.style.display = 'inline';
                 endDateH1.style.display = 'inline';
-                endDateH1.innerText = getAddedDate(startDateH1.textContent, parseInt(value, 10))
+                endDateH1.innerText = getAddedDate(startDateH1.textContent, parseInt(value, 10)-1)
             }
 
             //기존 카드 다 지우기.
@@ -314,6 +298,7 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
         doneForm2.addEventListener('click', function(event) {
             doneForm2.disabled = true; // 제출 버튼 활성화
             doneForm2.style.opacity = 0.5
+            loadingOn()
             createSchedule()
         })
 
@@ -449,7 +434,6 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
 function getAddedDate(startDate, idx) {
     // 시작 날짜를 Date 객체로 변환
     const startDateObject = new Date(startDate);
-    console.log(startDate)
 
     // UTC 기준으로 일자 설정
     startDateObject.setDate(startDateObject.getDate() + idx)

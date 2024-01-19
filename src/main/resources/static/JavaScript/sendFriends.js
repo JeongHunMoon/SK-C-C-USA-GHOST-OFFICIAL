@@ -1,5 +1,10 @@
 // 친구에게 메시지 보내기 함수 > 담당 대응자에게 자동으로 메시지가 전송된다.
 async function sendFriends() {
+    let button = document.getElementById("custom-startwork-btn");
+    button.disabled = true;
+    button.style.opacity = 0.5; // 투명도를 0.5로 설정
+    loadingOn();
+
     function getCurrentDate() {
         const today = new Date();
         const year = today.getFullYear();
@@ -29,11 +34,6 @@ async function sendFriends() {
         return `${year}-${month}-${day}`;
     }
 
-    let button = document.getElementById("custom-startwork-btn");
-    button.disabled = true;
-    button.style.opacity = 0.5; // 투명도를 0.5로 설정
-    loadingOn();
-
     let xhr_friend = new XMLHttpRequest(); // DB에서 금일 담당 대응자를 조회하기 위한 REST 통신을 위한 AJXA 객체
     xhr_friend.open('POST', '/goingToWork', true); // REST 정의
     xhr_friend.setRequestHeader("Content-Type", "application/json"); // 해더 정의
@@ -61,6 +61,9 @@ async function sendFriends() {
     }
     else {
         alert("AE 출근 보고 시간대가 아닙니다.\n1시간 전 후로만 가능합니다 :)")
+        button.disabled = false;
+        button.style.opacity = 1; // 투명도를 0.5로 설정
+        loadingOff();
         window.location.href = "/"
         return;
     }
@@ -115,7 +118,7 @@ async function sendFriends() {
         button.disabled = false;
         button.style.opacity = 1; // 투명도를 0.5로 설정
         loadingOff();
-        //window.location.href = '/'; // 메인으로 redirect
+        window.location.href = '/'; // 메인으로 redirect
         console.log("출근 보고 성공")
         alert("출근 보고 성공.")
     }
