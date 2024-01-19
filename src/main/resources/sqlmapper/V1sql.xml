@@ -20,7 +20,7 @@
         FROM member mem
         LEFT JOIN admin_shift admin
         ON mem.name = admin.name
-        WHERE admin.priority IN (1,2)
+        WHERE admin.priority = 1
         AND (DATE_FORMAT(#{date}, "%Y-%m-%d") = DATE_FORMAT(admin.date, "%Y-%m-%d"))
         AND admin.shift = #{shift}
     </select>

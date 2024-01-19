@@ -4,6 +4,7 @@ async function sendFriends() {
     button.disabled = true;
     button.style.opacity = 0.5; // 투명도를 0.5로 설정
     loadingOn();
+    let allInfo = []
 
     function getCurrentDate() {
         const today = new Date();
@@ -92,33 +93,34 @@ async function sendFriends() {
                 else if (shiftAdminInfo[i].process === "WMS" )  shiftAdminInfo[i]["Sort"] = 5;
                 else if (shiftAdminInfo[i].process === "COLL" ) shiftAdminInfo[i]["Sort"] = 6;
                 else if (shiftAdminInfo[i].process === "COMM" ) shiftAdminInfo[i]["Sort"] = 7;
+                allInfo.push(shiftAdminInfo[i])
             }
         }
 
         // 공정별 정렬 > 전 조 화 모 W 수 공 순서로 정렬
-        shiftAdminInfo.sort((a, b) => a.Sort - b.Sort);
+        allInfo.sort((a, b) => a.Sort - b.Sort);
         console.log("이 분들께 메시지가 전송 돼요! > ");
-        console.log(shiftAdminInfo);
+        console.log(allInfo);
 
 
         // 각 대응자 마다 모두 받아야할 메시지의 템플릿이 다르므로 전송될 만큼 메시지 REST가 호출된다.
-        for (let i = 0; i < shiftAdminInfo.length; i++) {
+        for (let i = 0; i < allInfo.length; i++) {
             // 힌 운영자에게 전송될 메시지 템플릿
-            let messageScript = "안녕하십니까? " + shiftAdminInfo[i].name + " 매니저님,\n" + "금일 " + shiftAdminInfo[i].date + "일 "
-                + shiftAdminInfo[i].shift + " " + shiftAdminInfo[i].process + " " + shiftAdminInfo[i].priority + "차 대응자 입니다.\n\n" +
+            let messageScript = "안녕하십니까? " + allInfo[i].name + " 매니저님,\n" + "금일 " + allInfo[i].date + "일 "
+                + allInfo[i].shift + " " + allInfo[i].process + " " + allInfo[i].priority + "차 대응자 입니다.\n\n" +
                 "좋은 하루 보내세요 :)";
 
             // 메시지 전송
-            await sendKakaoMessage(shiftAdminInfo[i].uuid, messageScript);
+            await sendKakaoMessage(allInfo[i].uuid, messageScript);
         }
 
         // 날짜, shift, 금일 운영자 정보 > 프로젝트 방에 보고될 나에게 메시지 전송
-        sendToMe(shiftAdminInfo[0].date, shiftAdminInfo[0].shift, shiftAdminInfo)
+        sendToMe(allInfo[0].date, allInfo[0].shift, allInfo)
 
         button.disabled = false;
         button.style.opacity = 1; // 투명도를 0.5로 설정
         loadingOff();
-        window.location.href = '/'; // 메인으로 redirect
+        //window.location.href = '/'; // 메인으로 redirect
         console.log("출근 보고 성공")
         alert("출근 보고 성공.")
     }
