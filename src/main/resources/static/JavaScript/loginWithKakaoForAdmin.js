@@ -13,10 +13,42 @@ function loginWithKakaoForAdmin() {
         if (statusObj.status === 'connected') {
             nowUser = statusObj.user.kakao_account.email; // 사용자 카카오 id
             alert("Welcome manager, "+ statusObj.user.kakao_account.profile.nickname)
-            loadingOff();
-            button.disabled = false;     // 버튼 활성화
-            button.style.opacity = 1; // 투명도를 1로 설정
-            window.location.href = "/admin?id=" + nowUser + "&first=" +  "true";
+
+            // 이 계정이 등록되어 있는 DB 조회하여 판단.
+            let xhr_check = new XMLHttpRequest(); // REST API 통신을 위한 객체
+            let infor = {"Who" : nowUser} // 서버로 사용자의 카카오 id를 요청하여 DB에 등록되어 있는지 검증한다.
+            xhr_check.open('POST', '/checkForasking', true); // REST 정의
+            xhr_check.setRequestHeader("Content-Type", "application/json"); // 헤더 설정
+            xhr_check.send(JSON.stringify(infor)) // REST 요청
+
+            // REST 응답
+            xhr_check.onload = function () {
+                if (xhr_check.status === 200) {
+                    let results = xhr_check.responseText; // 서버의 payload
+
+                    // DB에 등록되지 않은 사용자이므로 경고창 후 로그인 차단
+                    if (results === "False") {
+                        alert("You are not registered in the system.\nContact the Ghost Team.")
+                        loadingOff()
+                        button.disabled = false;
+                        button.style.opacity = 1; // 투명도를 0.5로 설정
+                        unlinkWithKakao() // 추후 이 코드 활성화 시켜 ROC이외 외부 인원을 차단시켜야함.
+                    }
+
+                    // 서버에 등록된 ROC 사람인 경우
+                    else {
+                        loadingOff();
+                        button.disabled = false;     // 버튼 활성화
+                        button.style.opacity = 1; // 투명도를 1로 설정
+                        window.location.href = "/admin?id=" + nowUser + "&first=" +  "true";
+                    }
+                }
+
+                else {
+                    unlinkWithKakao() // 추후 이 코드 활성화 시켜 ROC이외 외부 인원을 차단시켜야함.
+                    window.location.href = "/"
+                }
+            }
         }
 
         // 사용자가 현재 브라우저에 카카오 로그인이 안되어 있는 경우
@@ -50,11 +82,42 @@ function loginWithKakaoForAdmin() {
                         })
                         .then(payload => {
                             nowUser = payload.kakao_account.email; // 사용자 카카오 계정
-                            alert("Welcome manager, "+ payload.properties.nickname)
-                            loadingOff();
-                            button.disabled = false;     // 버튼 활성화
-                            button.style.opacity = 1; // 투명도를 1로 설정
-                            window.location.href = "/admin?id=" + nowUser + "&first=" +  "true";
+
+                            // 이 계정이 등록되어 있는 DB 조회하여 판단.
+                            let xhr_check = new XMLHttpRequest(); // REST API 통신을 위한 객체
+                            let infor = {"Who" : nowUser} // 서버로 사용자의 카카오 id를 요청하여 DB에 등록되어 있는지 검증한다.
+                            xhr_check.open('POST', '/checkForasking', true); // REST 정의
+                            xhr_check.setRequestHeader("Content-Type", "application/json"); // 헤더 설정
+                            xhr_check.send(JSON.stringify(infor)) // REST 요청
+
+                            // REST 응답
+                            xhr_check.onload = function () {
+                                if (xhr_check.status === 200) {
+                                    let results = xhr_check.responseText; // 서버의 payload
+
+                                    // DB에 등록되지 않은 사용자이므로 경고창 후 로그인 차단
+                                    if (results === "False") {
+                                        alert("You are not registered in the system.\nContact the Ghost Team.")
+                                        loadingOff()
+                                        button.disabled = false;
+                                        button.style.opacity = 1; // 투명도를 0.5로 설정
+                                        unlinkWithKakao() // 추후 이 코드 활성화 시켜 ROC이외 외부 인원을 차단시켜야함.
+                                    }
+
+                                    // 서버에 등록된 ROC 사람인 경우
+                                    else {
+                                        alert("Welcome manager, "+ payload.properties.nickname)
+                                        loadingOff();
+                                        button.disabled = false;     // 버튼 활성화
+                                        button.style.opacity = 1; // 투명도를 1로 설정
+                                        window.location.href = "/admin?id=" + nowUser + "&first=" +  "true";
+                                    }
+                                }
+                                else {
+                                    unlinkWithKakao() // 추후 이 코드 활성화 시켜 ROC이외 외부 인원을 차단시켜야함.
+                                    window.location.href = "/"
+                                }
+                            }
                         })
                         .catch(error => {
                             alert("카카오 서버 오류, 사용자 정보를 가져오는데 실패했습니다.\n재시도 부탁드립니다.")

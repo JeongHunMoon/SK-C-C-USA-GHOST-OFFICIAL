@@ -1,5 +1,7 @@
 package GHOST.sk_ghost.controller;
 
+import GHOST.sk_ghost.dto.LoginDto.InsertNewUser;
+import GHOST.sk_ghost.dto.LoginDto.UserNameJudgement;
 import GHOST.sk_ghost.dto.OP.AdminShiftParam;
 import GHOST.sk_ghost.service.V1service;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +38,7 @@ public class Home {
             String processInfo = list.get("process");
 
             // 로그인 요청한 사용자가 OP인 경우만 OP 페이지 접속 허가 > 운영자는 OP 페이지 접속 불가.
-            if (rocMember.equals(who) && processInfo.equals("OP")) {
+            if (rocMember.equals(who) && processInfo.equals("AE")) {
                 hashValue = UUID.randomUUID().toString(); // 해쉬값 생성 후 이 사용자에게 부여한다.(사용자를 식별하는 역할)
                 return ResponseEntity.ok(list.get("name")+ "!@#$%" +hashValue); //정상적으로 DB에 있는 사용자이므로 생성된 해쉬를 프론트로 전달한다.
             }
@@ -155,5 +157,37 @@ public class Home {
         }
         System.out.println(rocALlNames);
         return rocALlNames;
+    }
+
+    // JOIN : 사용자가 입력한 이름이 디비에 있는지 검증하는 라우터이다.
+    @PostMapping("/judgeName")
+    public ResponseEntity<String> judgeName(@RequestBody UserNameJudgement userNameJudgement) throws Exception{
+        try {
+            System.out.println("Controller : 회원가입시 전달된 이름 : " + userNameJudgement.getName());
+            boolean res = v1service.judgeUserNameInDB(userNameJudgement);
+
+            System.out.println("회원가입시 이름 있는지 판단 > " + res);
+            if (!res) return ResponseEntity.ok("True");
+            else return ResponseEntity.ok("False");
+        }
+        catch (Exception e) {
+            return ResponseEntity.ok("Error");
+        }
+    }
+
+    // JOIN : 사용자 정보를 디비에 넣는 라우터
+    // 이다.
+
+    @PostMapping("/insertJoinInfo")
+    public ResponseEntity<String> insertJoinInfo(@RequestBody InsertNewUser insertNewUser) throws Exception {
+        try {
+            System.out.println("Controller : 가입 입력 시 전달된 정보 : " + insertNewUser);
+            v1service.insertJoinInfoToDB(insertNewUser);
+            return ResponseEntity.ok("True");
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.ok("False");
+        }
     }
 }
