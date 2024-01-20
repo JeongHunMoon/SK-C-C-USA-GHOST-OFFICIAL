@@ -34,7 +34,6 @@ public class Email {
     @ResponseBody
     @PostMapping("/sendEmail")
     public String sendEmail(@RequestBody EmailRequestDto emailCheckReq) throws MessagingException, UnsupportedEncodingException {
-        String authCode = emailService.sendEmail(emailCheckReq.getEmail());
-        return authCode;
+        return emailService.sendEmail(emailCheckReq.getEmail());
     }
 }

@@ -131,9 +131,22 @@
         WHERE date = #{date, jdbcType=DATE}
     </delete>
 
+    <!-- member 테이블에 name이 존재하는지 판단 -->
+    <select id="judgeUserNameInDB" resultType="boolean" parameterType="GHOST.sk_ghost.dto.LoginDto.UserNameJudgement">
+        SELECT EXISTS (
+        SELECT 1
+        FROM member
+        WHERE name = #{name}
+        LIMIT 1
+        ) AS result
+    </select>
 
 
-
-
+    <!-- member 테이블에 회원가입시 사용자 정보 입력 삽입 -->
+    <insert id="insertJoinInfoToDB" parameterType="GHOST.sk_ghost.dto.LoginDto.InsertNewUser">
+        INSERT INTO member (id, name, process)
+        VALUES
+        ( #{id}, #{name}, #{process} )
+    </insert>
 </mapper>
 
