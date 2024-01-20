@@ -1,7 +1,7 @@
 function deleteSaveBtn() {
     let button = document.getElementById("delete_save")
     let tableSelect = null;
-    let tableDate=null;
+    let tableDate= null;
     let unClicked = 0;
     let deleteInfo = [];
     button.disabled = true;     // 버튼 비활성화
@@ -17,12 +17,12 @@ function deleteSaveBtn() {
         // 만약 사용자가 로그인이 되어 있는 경우
         if (statusObj.status === 'connected') {
             nowUserId = statusObj.user.kakao_account.email;
-            tableSelect=document.querySelectorAll("table") //테이블 가져오기
-            console.log("TABLE SELECT" + tableSelect.length)
+            tableSelect = document.querySelectorAll("table") //테이블 가져오기
+
             //테이블 클릭 이벤트 시작 추가 - 셀의 값 불러오기 및 삭제 배열에 추가
             // 클릭시 색상변화 -> 수정 : 클릭이 아니라 DOM으로 생성된 테이블 전체를 돌면서 회색인 테이블에 대해서만 값을 불러와서 리스트에 누적. (이 함수 끝나고 DB 호출)
-            for(let i=0; i<tableSelect.length; i++){
-                if(tableSelect[i].style.backgroundColor === "darkgrey" && tableSelect[i].style.color === "white"){
+            for (let i= 0; i < tableSelect.length; i++) {
+                if (tableSelect[i].style.backgroundColor === "darkgrey" && tableSelect[i].style.color === "white") {
                     tableDate = tableSelect[i].querySelector("#dateInfo").textContent; //현재 테이블 날짜 가져오기
                     console.log(document.getElementById(tableDate + "PACK5").textContent)
                     // 전극 1,2 차 정보
@@ -98,7 +98,6 @@ function deleteSaveBtn() {
                                 "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
                                 "priority": i < 4 ? '1' : '2',
                             });
-                            console.log("전극들어감")
                         }
                     }
 
@@ -109,7 +108,6 @@ function deleteSaveBtn() {
                         //공백이 아니고 첫번째 클린 경우 삭제후보배열에 추가
                         if (cellinf !== "" ) {
                             deleteInfo.push({
-                                // "name": beforeCards[idInf],
                                 "name": cellinf,
                                 "date": tableDate,
                                 "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
@@ -124,7 +122,6 @@ function deleteSaveBtn() {
                         //공백이 아니고 첫번째 클린 경우 삭제후보배열에 추가
                         if (forminf !== "" ) {
                             deleteInfo.push({
-                                // "name": beforeCards[idInf],
                                 "name": forminf,
                                 "date": tableDate,
                                 "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
@@ -139,7 +136,6 @@ function deleteSaveBtn() {
                         //공백이 아니고 첫번째 클린 경우 삭제후보배열에 추가
                         if (packinf !== "" ) {
                             deleteInfo.push({
-                                // "name": beforeCards[idInf],
                                 "name": packinf,
                                 "date": tableDate,
                                 "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
@@ -154,7 +150,6 @@ function deleteSaveBtn() {
                         //공백이 아니고 첫번째 클린 경우 삭제후보배열에 추가
                         if (wmsinf !== "" ) {
                             deleteInfo.push({
-                                // "name": beforeCards[idInf],
                                 "name": wmsinf,
                                 "date": tableDate,
                                 "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
@@ -169,7 +164,6 @@ function deleteSaveBtn() {
                         //공백이 아니고 첫번째 클린 경우 삭제후보배열에 추가
                         if (collinf !== "" ) {
                             deleteInfo.push({
-                                // "name": beforeCards[idInf],
                                 "name": collinf,
                                 "date": tableDate,
                                 "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
@@ -184,7 +178,6 @@ function deleteSaveBtn() {
                         //공백이 아니고 첫번째 클린 경우 삭제후보배열에 추가
                         if (comminf !== "" ) {
                             deleteInfo.push({
-                                // "name": beforeCards[idInf],
                                 "name": comminf,
                                 "date": tableDate,
                                 "shift": i % 3 === 1 ? 'N' : i % 3 === 2 ? 'D' : 'E',
@@ -194,10 +187,10 @@ function deleteSaveBtn() {
                     }
                 }
                 else if (tableSelect[i].style.backgroundColor !== "darkgrey" && tableSelect[i].style.color !== "white"){
-                    unClicked+=1;
-                    console.log(unClicked)
+                    unClicked += 1;
                 }
-                if(i === tableSelect.length-1 && unClicked === tableSelect.length){
+
+                if ((i === tableSelect.length - 1) && (unClicked === tableSelect.length)) {
                     deleteOnBtn()
                     loadingOff()
                     alert("선택된 테이블이 없습니다. 삭제를 원하는 테이블을 클릭 해주세요")
@@ -235,7 +228,7 @@ function deleteSaveBtn() {
                                             alert("삭제 성공.")
                                             deleteOnBtn()
                                             loadingOff()
-                                            window.location.href = "admin?id="+nowUserId;
+                                            window.location.href = "admin?id=" + nowUserId;
                                         }
                                         else {
                                             alert("서버 오류 발생.\n데이터는 취소되었으나, 다른 운영자님들이 이용할 수 있게 아래 수동 조치 부탁드립니다.\n" +
@@ -245,7 +238,8 @@ function deleteSaveBtn() {
                                             window.location.href = "/";
                                         }
 
-                                    } else {
+                                    }
+                                    else {
                                         alert("서버 오류 발생.\n데이터는 취소되었으나, 다른 운영자님들이 이용할 수 있게 아래 수동 조치 부탁드립니다.\n" +
                                             "삭제 페이지에서 cancel버튼을 다시 눌러주세요!")
                                         deleteOnBtn()
@@ -271,7 +265,8 @@ function deleteSaveBtn() {
                                     button.style.opacity = 1; // 투명도를 1로 설정
                                     window.location.href = "/";
                                 };
-                            } else {
+                            }
+                            else {
                                 deleteOnBtn()
                                 loadingOff()
                                 alert("서버 오류.\n스케줄 삭제 재시도 부탁드립니다.")
@@ -284,9 +279,6 @@ function deleteSaveBtn() {
                             alert("죄송합니다. 서버가 오동작했네요..\n스케줄 삭제 재시도 부탁드립니다.")
                             window.location.href = "/admin?id=" + nowUserId
                         }
-
-
-
                     }
 
                     delete_xhr.timeout = 5000;
@@ -308,13 +300,15 @@ function deleteSaveBtn() {
                         button.style.opacity = 1; // 투명도를 1로 설정
                         window.location.href = "/";
                     };
-                } else {
+                }
+                else {
                     deleteOnBtn()
                     loadingOff()
                     alert("삭제 동의 후 삭제 가능합니다")
                     return 0;
                 }
-            } else if (deleteInfo.length === 0) {
+            }
+            else if (deleteInfo.length === 0) {
                 deleteOnBtn()
                 loadingOff()
                 alert("선택된 데이터가 없습니다. 삭제가 필요한 카드를 다시 선택해주세요")

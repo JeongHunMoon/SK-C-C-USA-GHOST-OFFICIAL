@@ -1,5 +1,8 @@
 package GHOST.sk_ghost.controller;
 
+import GHOST.sk_ghost.dto.LoginDto.InsertNewUser;
+import GHOST.sk_ghost.dto.LoginDto.UserNameJudgement;
+import GHOST.sk_ghost.dto.OP.AdminShiftParam;
 import GHOST.sk_ghost.service.V1service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,12 +11,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Controller
 public class Home {
     private String hashValue = null; // OP 가 로그인 시 서버에서 접근 가능하도록 해쉬 생성
-    private String newhashValue = null;
 
     @Autowired
     V1service v1service; // Service 호출을 위한 객체
@@ -37,7 +38,7 @@ public class Home {
             String processInfo = list.get("process");
 
             // 로그인 요청한 사용자가 OP인 경우만 OP 페이지 접속 허가 > 운영자는 OP 페이지 접속 불가.
-            if (rocMember.equals(who) && processInfo.equals("OP")) {
+            if (rocMember.equals(who) && processInfo.equals("AE")) {
                 hashValue = UUID.randomUUID().toString(); // 해쉬값 생성 후 이 사용자에게 부여한다.(사용자를 식별하는 역할)
                 return ResponseEntity.ok(list.get("name")+ "!@#$%" +hashValue); //정상적으로 DB에 있는 사용자이므로 생성된 해쉬를 프론트로 전달한다.
             }
@@ -76,17 +77,17 @@ public class Home {
 
 
     //출근하기 기능이다. 디비에서 금일의 대응자님 조회하여 list로 조히하여 프론트로 전송한다.
+    // 수정된 컨트롤러
     @PostMapping("/goingToWork")
-    public ResponseEntity<List<Map<String, String>>> goingToWork(@RequestBody Map<String, String> requestBody) {
-        System.out.println("OP 페이지가 실행됨");
-        String shift = requestBody.get("shift"); // 무의미 데이터 무시하세요.
-
-        List<Map<String, String>> lists = v1service.shiftAdminList(); // 금일의 대응자 admin을 조회한다.
+    public ResponseEntity<List<Map<String, String>>> goingToWork(@RequestBody AdminShiftParam requestBody) {
+        System.out.println(requestBody);
+        List<Map<String, String>> lists = v1service.shiftAdminList(requestBody);
 
         System.out.println("조회된 금일 담당 대응자 분들 > " + lists);
 
         return ResponseEntity.ok(lists);
     }
+
 
     // OP 페이지로 이동한다. 사용자가 발급받은 해쉬 값을 추출하여 일치하는지 점검한다.
     @GetMapping("/OP")
@@ -142,43 +143,7 @@ public class Home {
         return ResponseEntity.ok("False"); //DB에 없는 사용자가 로그인을 시도했기에 접근을 차단한다.
     }
 
-
-    // Admin에서 new 버튼 > 생성 페이지 중 카드 드레그 생성 페이지로 이동시킨다.
-    @GetMapping("/newSchedule")
-    public String adminNewSchedule(@RequestParam(value = "id", required = true) String id, Model model) {
-        List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
-        System.out.println("ROC Member" + lists);
-
-        // 로그인한 사용자가 올바른지 검증
-        for (Map<String, String> list : lists) {
-            String rocMember = list.get("id"); // ROC인원의 id
-            String processInfo = list.get("process");
-
-            // 로그인 요청한 사용자가 OP인 경우만 OP 페이지 접속 허가 > 운영자는 OP 페이지 접속 불가.
-            if (rocMember.equals(id)) {
-                System.out.println(id + lists);
-                return "home/newSchedule";
-            }
-        }
-        return "home/400";
-    }
-
-    // 운영자 정보를 가져온다.
-    @PostMapping("/getSchedule")
-    public ResponseEntity<List<List<Map<String, String>>>> getSchedule(@RequestBody Map<String, List<String>> requestBody) {
-        List<String> dateInfo = requestBody.get("date"); // 무의미 데이터 무시하세요.
-        List<List<Map<String, String>>> payload = new Vector<List<Map<String, String>>>();
-
-        for (String card : dateInfo) {
-            List<Map<String, String>> lists = v1service.oneDateSchedule(card); // 금일의 대응자 admin을 조회한다.
-            payload.add(lists);
-        }
-        System.out.println("조희 결과> " + payload);
-
-        return ResponseEntity.ok(payload);
-    }
-
-    //Create시 ROC멤버 아닌 사람 입력 검증을 위해 member 모두 불러옴
+    // admin_shift 생성 시, ROC멤버의 시림이 등록되기 위한 검증을 위해 member 테이블의 정보를 모두 불러온다.
     @ResponseBody
     @PostMapping("/checktypo")
     public HashMap<String, String> checkTypo(@RequestBody Map<String, String> requestBody) {
@@ -194,80 +159,35 @@ public class Home {
         return rocALlNames;
     }
 
-
-    //DB 저장을 위한 Controller
-    @PostMapping("/saveSchedule")
-    public ResponseEntity<String> saveScheduleInsert(@RequestBody List<Map<String, String>> requestBody) throws Exception {
-        System.out.println("Save to DB : " + requestBody);
-        // date가 있는지 검사한다. > 있다면 무시한다.
-        // > 없다면 card table에 담당자의 이름을 추가한다. id를 넣으면 이름을 가져오는 서비스가 필요함.
+    // JOIN : 사용자가 입력한 이름이 디비에 있는지 검증하는 라우터이다.
+    @PostMapping("/judgeName")
+    public ResponseEntity<String> judgeName(@RequestBody UserNameJudgement userNameJudgement) throws Exception{
         try {
+            System.out.println("Controller : 회원가입시 전달된 이름 : " + userNameJudgement.getName());
+            boolean res = v1service.judgeUserNameInDB(userNameJudgement);
 
-            Set<String> dateSet = new HashSet<>();
-
-            for (Map<String, String> map : requestBody) {
-                String date = map.get("date");
-                if (date != null && !date.isEmpty()) {
-                    dateSet.add(date);
-                }
-            }
-
-            for (String date : dateSet) {
-                // 해당 카드를 새로 만드는 insert
-                if (!v1service.isDateHistory(date)) {
-                    String name = v1service.getNameFromId(requestBody.get(0).get("manager"));
-                    System.out.println(name +"으로" +date +"의 shcedule_hisotry 를 만든다.");
-                    v1service.insertDateToScheduleHistoryTable(date, name);
-                }
-                // 해당 카드를 수정하는 insert
-                else {
-                    String name = v1service.getNameFromId(requestBody.get(0).get("manager"));
-                    System.out.println(name +"으로" +date +"의 shcedule_hisotry 를 수정한다.");
-                    v1service.updateDateToScheduleHistoryTable(date, name);
-                }
-            }
-
-            v1service.saveSchedule(requestBody);
+            System.out.println("회원가입시 이름 있는지 판단 > " + res);
+            if (!res) return ResponseEntity.ok("True");
+            else return ResponseEntity.ok("False");
         }
         catch (Exception e) {
-            return ResponseEntity.ok("Save Fail");
+            return ResponseEntity.ok("Error");
         }
-        return ResponseEntity.ok("Save Success");
     }
 
-    @ResponseBody
-    @PostMapping("/delete")
-    public ResponseEntity<String> delete(@RequestBody List<Map<String, String>> requestBody) throws Exception {
-        System.out.println("delete from DB : " + requestBody);
+    // JOIN : 사용자 정보를 디비에 넣는 라우터
+    // 이다.
+
+    @PostMapping("/insertJoinInfo")
+    public ResponseEntity<String> insertJoinInfo(@RequestBody InsertNewUser insertNewUser) throws Exception {
         try {
-            v1service.deleteSchedule(requestBody);
-
-            // 날짜 추출 > 해당 날짜가 admin_shift에 없으면 > history_table에서 해당 날짜 제거 하기.
-            Set<String> dateSet = new HashSet<>();
-
-            for (Map<String, String> map : requestBody) {
-                String date = map.get("date");
-                if (date != null && !date.isEmpty()) {
-                    dateSet.add(date);
-                }
-            }
-
-            for (String date : dateSet) {
-                // admin_shift 테이블에 이제 더 이상 운영자가 없기에 히스토리도 지운다.
-                if (!v1service.isDateAdminShiftTable(date)) {
-                    v1service.deleteDateToScheduleHistoryTable(date);
-                }
-                // 누군가 카드를 삭제하긴 했는데 > 아직 살아있기 때문에 수정자 이름을 바꾼다.
-                else {
-                    String name = v1service.getNameFromId(requestBody.get(0).get("manager"));
-                    System.out.println("삭제 : " + name +"으로" +date +"의 shcedule_hisotry 를 수정한다.");
-                    v1service.updateDateToScheduleHistoryTable(date, name);
-                }
-            }
+            System.out.println("Controller : 가입 입력 시 전달된 정보 : " + insertNewUser);
+            v1service.insertJoinInfoToDB(insertNewUser);
+            return ResponseEntity.ok("True");
         }
         catch (Exception e) {
-            return ResponseEntity.ok("Delete Fail");
+            System.out.println(e.getMessage());
+            return ResponseEntity.ok("False");
         }
-        return ResponseEntity.ok("Delete Success");
     }
 }

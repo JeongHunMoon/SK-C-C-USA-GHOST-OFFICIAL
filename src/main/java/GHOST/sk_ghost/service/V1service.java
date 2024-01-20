@@ -1,6 +1,9 @@
 package GHOST.sk_ghost.service;
 
 import GHOST.sk_ghost.dao.V1Dao;
+import GHOST.sk_ghost.dto.LoginDto.InsertNewUser;
+import GHOST.sk_ghost.dto.LoginDto.UserNameJudgement;
+import GHOST.sk_ghost.dto.OP.AdminShiftParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,10 +21,11 @@ public class V1service {
         return list;
     }
 
-    public List<Map<String, String>> shiftAdminList() {
-        List<Map<String, String>> list = v1Dao.shiftAdminList();
+    public List<Map<String, String>> shiftAdminList(AdminShiftParam param) {
+        List<Map<String, String>> list = v1Dao.shiftAdminList(param);
         return list;
     }
+
 
 
     public List<Map<String, String>> oneDateSchedule(String dateInfo) {
@@ -115,4 +119,13 @@ public class V1service {
         v1Dao.deleteDateToScheduleHistoryTable(date);
     }
 
+    public boolean judgeUserNameInDB(UserNameJudgement userNameJudgement) {
+        boolean bool = v1Dao.judgeUserNameInDB(userNameJudgement);
+        System.out.println("회원가입시 사용자 이름 디비에 있는지 판단 service : " + bool);
+        return bool;
+    }
+
+    public void insertJoinInfoToDB(InsertNewUser insertNewUser) {
+        v1Dao.insertJoinInfoToDB(insertNewUser);
+    }
 }

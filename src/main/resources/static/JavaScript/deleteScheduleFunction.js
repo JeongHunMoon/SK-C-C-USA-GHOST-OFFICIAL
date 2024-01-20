@@ -78,10 +78,11 @@ function deleteScheduleFunction() {
                         deleteOnBtn()
 
                         // 테이블 클릭 시 색상변화
-                        tableSelect=document.querySelectorAll("table") //테이블 가져오기
-                        for(let i=0; i<tableSelect.length; i++){
-                            clickFlags[i]=-1
+                        tableSelect = document.querySelectorAll("table") //테이블 가져오기
+                        for (let i= 0; i < tableSelect.length; i++) {
+                            clickFlags[i] = -1
                         }
+
                         // let tableDate = table.querySelector("#dateInfo").textContent; //현재 테이블 날짜 가져오기
                         tableSelect.forEach(function (table) {
                             table.addEventListener('click', function (event) {
@@ -138,21 +139,9 @@ function deleteScheduleFunction() {
             deleteOnBtn()
             loadingOff()
             window.location.href = "/"
-            alert("세션이 만료되었습니다. 로그인을 다시해주세요.")
+            alert("로그인 세션이 만료되었습니다. 로그인을 다시해주세요.")
         }
     })
-}
-
-function getDates(startDate, endDate) {
-    const dateArray = [];
-    let currentDate = startDate;
-
-    // 날짜 간의 범위를 계산하며 배열에 추가
-    while (currentDate <= endDate) {
-        dateArray.push(currentDate.toISOString().split('T')[0]);
-        currentDate.setDate(currentDate.getDate() + 1);
-    }
-    return dateArray; //리스트 반환
 }
 
 document.addEventListener('DOMContentLoaded', function () {

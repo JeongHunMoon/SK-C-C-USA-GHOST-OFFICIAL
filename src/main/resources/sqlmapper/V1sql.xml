@@ -13,15 +13,20 @@
     <select id="adminShiftListAll" resultType="map">
         SELECT name,date,shift,priority from admin_shift
     </select>
+
     <!-- 금일 담당 운영 대응자 조회 -->
-    <select id="shiftAdminList" resultType="map">
+    <select id="shiftAdminList" resultType="map" parameterType="GHOST.sk_ghost.dto.OP.AdminShiftParam">
         SELECT mem.id, admin.name, CAST(admin.date as CHAR) as date, admin.shift, mem.uuid, admin.priority, mem.process
         FROM member mem
         LEFT JOIN admin_shift admin
         ON mem.name = admin.name
-        WHERE admin.priority IN (1,2)
-        AND (DATE_FORMAT(CURDATE(), "%Y-%m-%d") = DATE_FORMAT(admin.date, "%Y-%m-%d"))
+        WHERE admin.priority = 1
+        AND (DATE_FORMAT(#{date}, "%Y-%m-%d") = DATE_FORMAT(admin.date, "%Y-%m-%d"))
+        AND admin.shift = #{shift}
     </select>
+
+
+
 
     <!-- 해당 날짜의 운영자 스케줄 조희 -->
     <select id="oneDateSchedule" resultType="map">
@@ -126,9 +131,22 @@
         WHERE date = #{date, jdbcType=DATE}
     </delete>
 
+    <!-- member 테이블에 name이 존재하는지 판단 -->
+    <select id="judgeUserNameInDB" resultType="boolean" parameterType="GHOST.sk_ghost.dto.LoginDto.UserNameJudgement">
+        SELECT EXISTS (
+        SELECT 1
+        FROM member
+        WHERE name = #{name}
+        LIMIT 1
+        ) AS result
+    </select>
 
 
-
-
+    <!-- member 테이블에 회원가입시 사용자 정보 입력 삽입 -->
+    <insert id="insertJoinInfoToDB" parameterType="GHOST.sk_ghost.dto.LoginDto.InsertNewUser">
+        INSERT INTO member (id, name, process)
+        VALUES
+        ( #{id}, #{name}, #{process} )
+    </insert>
 </mapper>
 

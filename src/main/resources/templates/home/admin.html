@@ -22,6 +22,11 @@
     <script src = "../../JavaScript/loadingOff.js"></script>
     <script src = "../../JavaScript/adminDateSearch.js"></script>
     <script src = "../../JavaScript/scheduleCard.js"></script>
+    <script src = "../../JavaScript/scheduleCard.js"></script>
+
+    <script src = "../../JavaScript/getCurrEndDate.js"></script>
+    <script src = "../../JavaScript/getCurrentDate.js"></script>
+    <script src = "../../JavaScript/getDates.js"></script>
 
     <script src = "../../JavaScript/modifyBtn.js"></script>
     <script src = "../../JavaScript/newBtn.js"></script>
@@ -161,8 +166,8 @@
 
                 // 시작일과 종료일이 모두 입력되었고, 시작일이 종료일보다 작은 경우
                 if (startD && endD && startD <= endD) {
-                    if (daysDifference > 60) {
-                        alert('2달 이하로 수정 부탁드립니다.');
+                    if (daysDifference > 180) {
+                        alert('6달 이하로 수정 부탁드립니다.');
                         startTag.value = getCurrentDate();
                         endTag.value = getCurrEndDate();
                     }
@@ -199,8 +204,8 @@
 
                 // 시작일과 종료일이 모두 입력되었고, 시작일이 종료일보다 작은 경우
                 if (startD && endD && startD <= endD) {
-                    if (daysDifference > 60) {
-                        alert('2달 이하로 수정 부탁드립니다.');
+                    if (daysDifference > 180) {
+                        alert('6달 이하로 수정 부탁드립니다.');
                         startTag.value = getCurrentDate();
                         endTag.value = getCurrEndDate();
                     }

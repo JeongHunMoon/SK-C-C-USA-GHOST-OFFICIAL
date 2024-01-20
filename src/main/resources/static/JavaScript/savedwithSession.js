@@ -54,6 +54,6 @@ function savedwithSession() {
         payload = payload.slice(0, -1);
     }
 
-    console.log(">>>>>>>>>>", payload)
+    console.log("저장될 세션 > ", payload)
     return payload
 }

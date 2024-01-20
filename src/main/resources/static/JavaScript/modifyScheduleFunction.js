@@ -26,7 +26,7 @@ function modifyScheduleFunction() {
             const endDate = new Date(endDateString);
             console.log('시작일:', startDateString);
             console.log('종료일:', endDateString);
-            //console.log(getDates(startDate, endDate));
+
             let cards = getDates(startDate, endDate);
             console.log(cards)
 
@@ -65,7 +65,7 @@ function modifyScheduleFunction() {
 
             // 서버에서 일정시간 응답이 없을 때,
             xhr1.ontimeout = function () {
-                alert("서버 처리 지연./n재시도 부탁드립니다.")
+                alert("서버 처리 지연.\n재시도 부탁드립니다.")
                 window.location.href = "/"
             };
 
@@ -92,8 +92,6 @@ function modifyScheduleFunction() {
                         asIsAllInfos[inputs[i].id] = inputs[i].value;
                     }
                 }
-                console.log(asIsAllInfos)
-
 
                 // 버튼 요소 가져오기
                 let button1 = document.getElementById('modify_save');
@@ -116,21 +114,9 @@ function modifyScheduleFunction() {
             loadingOff()
             modifyOnBtn()
             window.location.href = "/"
-            alert("세션이 만료되었습니다. 로그인을 다시해주세요.")
+            alert("로그인 세션이 만료되었습니다. 로그인을 다시해주세요.")
         }
     })
-}
-
-function getDates(startDate, endDate) {
-    const dateArray = [];
-    let currentDate = startDate;
-
-    // 날짜 간의 범위를 계산하며 배열에 추가
-    while (currentDate <= endDate) {
-        dateArray.push(currentDate.toISOString().split('T')[0]);
-        currentDate.setDate(currentDate.getDate() + 1);
-    }
-    return dateArray;
 }
 
 document.addEventListener('DOMContentLoaded', function () {

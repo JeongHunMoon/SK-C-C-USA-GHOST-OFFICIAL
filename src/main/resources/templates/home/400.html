@@ -12,12 +12,17 @@
 <body>
 <h1>Warning!! 잘못된 접근입니다. 로그인 후 이용해주세요!</h1>
 </body>
-<script>
-    unlinkWithKakao();
-    setTimeout(function() {
-        alert("Goodbye :)")
-        window.location.href = "/";
-    }, 1000); // 2000 밀리초(2초) 후에 "/"로 이동
-</script>
 
+<script>
+    Kakao.Auth.logout(function() {
+        console.log('Successfully logged out');
+        setTimeout(function() {
+            alert("Goodbye :)")
+            window.location.href = "/";
+        }, 500); // 2000 밀리초(2초) 후에 "/"로 이동
+
+    }, function(error) {
+        console.log('Logout failed, reason: ' + error);
+    });
+</script>
 </html>

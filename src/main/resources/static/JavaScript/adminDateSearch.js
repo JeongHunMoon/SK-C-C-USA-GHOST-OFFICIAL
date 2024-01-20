@@ -1,3 +1,4 @@
+// Admin 페이지에서 search 버튼을 클릭하면 실행되는 함수이다.
 function adminDateSearch() {
     // 폼 요소를 가져옴
 
@@ -34,11 +35,11 @@ function adminDateSearch() {
             const daysDifference = (endDate - startDate) / (1000 * 60 * 60 * 24);
             console.log("차이", daysDifference)
 
-            if (daysDifference > 60) {
+            if (daysDifference > 180) {
                 startDateInput.value = getCurrentDate();
                 endDateInput.value = getCurrEndDate();
                 btnOn()
-                alert('2달 이하로 조회 부탁드립니다.');
+                alert('6달 이하로 조회 부탁드립니다.');
                 loadingOff()
                 return;
             }
@@ -106,6 +107,7 @@ function adminDateSearch() {
     });
 }
 
+/*
 // 오늘 날짜를 가져오는 함수
 function getCurrentDate() {
     const today = new Date();
@@ -139,6 +141,7 @@ function getDates(startDate, endDate) {
     }
     return dateArray;
 }
+*/
 
 function btnOff() {
     const dateForm = document.getElementById('dateForm');

@@ -1,5 +1,8 @@
 package GHOST.sk_ghost.dao;
 
+import GHOST.sk_ghost.dto.LoginDto.InsertNewUser;
+import GHOST.sk_ghost.dto.LoginDto.UserNameJudgement;
+import GHOST.sk_ghost.dto.OP.AdminShiftParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -13,7 +16,7 @@ public interface V1Dao {
     public List<Map<String, String>> userList();
 
     // 금일 대응 운영자 1, 2차 조회 Dao
-    public List<Map<String, String>> shiftAdminList();
+    public List<Map<String, String>> shiftAdminList(AdminShiftParam param);
 
     public List<Map<String, String>> oneDateSchedule(String dateInfo);
 
@@ -43,5 +46,9 @@ public interface V1Dao {
     public boolean isDateAdminShiftTable(String date);
 
     public void deleteDateToScheduleHistoryTable(String date);
+
+    public boolean judgeUserNameInDB(UserNameJudgement userNameJudgement);
+
+    public void insertJoinInfoToDB(InsertNewUser insertNewUser);
 
 }

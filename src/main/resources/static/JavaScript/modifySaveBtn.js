@@ -1,11 +1,11 @@
 function modifySaveBtn(beforeCards) {
+    loadingOn()
     document.getElementById("modify_save").disabled = true;     // 버튼 비활성화
     document.getElementById("modify_save").style.opacity = 0.5;     // 버튼 비활성화
 
     Kakao.Auth.getStatusInfo(function(statusObj) {
         let nowUserId = null;
-        let nowUserNiname = null;
-        let allInfos = {}
+        let nowUserNickname = null;
         let form = null;
         let rocMembers = null;
         let flag  = true;
@@ -18,7 +18,7 @@ function modifySaveBtn(beforeCards) {
         // 만약 사용자가 로그인이 되어 있는 경우
         if (statusObj.status === 'connected') {
             nowUserId = statusObj.user.kakao_account.email;
-            nowUserNiname = statusObj.user.kakao_account.profile.nickname
+            nowUserNickname = statusObj.user.kakao_account.profile.nickname
 
             let xhr_check = new XMLHttpRequest(); // REST API 통신을 위한 객체
             xhr_check.open('POST', '/checktypo', true); // REST 정의
@@ -26,9 +26,8 @@ function modifySaveBtn(beforeCards) {
             xhr_check.send(JSON.stringify({"CheckTypo": 'typoPostSample'}));
 
             xhr_check.onload = function () {
-                if(xhr_check.status === 200) {
+                if (xhr_check.status === 200) {
                     rocMembers = JSON.parse(xhr_check.response);
-                    console.log("ROC MEMBERS : " + rocMembers); // 전체 ROC인원을 문자열로 가지는 배열.
                     form = document.querySelectorAll("#createForm");
 
                     //DB에서 member table이 비어 있는 경우
@@ -36,18 +35,17 @@ function modifySaveBtn(beforeCards) {
                         let remove_xhr = new XMLHttpRequest();
                         remove_xhr.open("GET", "/removeModify?id="+nowUserId, true);
 
-                        // Timeout 설정 (예: 5초)
-                        remove_xhr.timeout = 5000;
-
                         remove_xhr.onload = function () {
                             if (remove_xhr.status === 200) {
                                 if (remove_xhr.responseText === "true") {
+                                    loadingOff()
                                     document.getElementById("modify_save").disabled = false;
                                     document.getElementById("modify_save").style.opacity = 1;
                                     alert("현재 DB ROC 맴버가 없습니다.. 관리자에게 문의해주세요!")
-                                    window.location.href = "admin?id="+nowUserId;
+                                    window.location.href = "admin?id=" + nowUserId;
                                 }
                                 else {
+                                    loadingOff()
                                     document.getElementById("modify_save").disabled = false;
                                     document.getElementById("modify_save").style.opacity = 1;
                                     alert("잘못된 접근입니다.")
@@ -55,14 +53,19 @@ function modifySaveBtn(beforeCards) {
                                 }
 
                             } else {
+                                loadingOff()
                                 document.getElementById("modify_save").disabled = false;
                                 document.getElementById("modify_save").style.opacity = 1;
                                 alert("취소 실패. 다시 취소 부탁드립니다.")
                             }
                         };
 
+                        // Timeout 설정 (예: 5초)
+                        remove_xhr.timeout = 5000;
+
                         // 서버에서 일정시간 응답이 없을 때,
                         remove_xhr.ontimeout = function () {
+                            loadingOff()
                             document.getElementById("modify_save").disabled = false;
                             document.getElementById("modify_save").style.opacity = 1;
                             alert("Request timed out. Please try again.");
@@ -70,6 +73,7 @@ function modifySaveBtn(beforeCards) {
 
                         // 넷웤이 없는데 요청할때 실행
                         remove_xhr.onerror = function () {
+                            loadingOff()
                             document.getElementById("modify_save").disabled = false;
                             document.getElementById("modify_save").style.opacity = 1;
                             alert("Network error occurred. Please check your connection and try again.");
@@ -79,6 +83,7 @@ function modifySaveBtn(beforeCards) {
                         if (navigator.onLine) {
                             remove_xhr.send();
                         } else {
+                            loadingOff()
                             document.getElementById("modify_save").disabled = false;
                             document.getElementById("modify_save").style.opacity = 1;
                             location.reload();
@@ -155,6 +160,7 @@ function modifySaveBtn(beforeCards) {
 
                             for (let i = 1; i < 7; i++) {
                                 let elecinf = elecInfo[i - 1].trim(); // 하나의 값
+                                elecinf = elecinf.trim(); // 하나의 값
                                 let idInf = `${formdate}ELEC${i}`;
                                 document.getElementById(idInf).style.color = "black";
 
@@ -206,6 +212,7 @@ function modifySaveBtn(beforeCards) {
                             // 조립
                             for (let i = 1; i < 7; i++) {
                                 let cellinf = cellInfo[i - 1].trim(); // 하나의 값
+                                cellinf = cellinf.trim(); // 하나의 값
                                 let idInf = `${formdate}CELL${i}`;
                                 document.getElementById(idInf).style.color = "black";
 
@@ -256,6 +263,7 @@ function modifySaveBtn(beforeCards) {
                             // 화성
                             for (let i = 1; i < 7; i++) {
                                 let forminf = formInfo[i - 1].trim(); // 하나의 값
+                                forminf = forminf.trim(); // 하나의 값
                                 let idInf = `${formdate}FORM${i}`;
                                 document.getElementById(idInf).style.color = "black";
 
@@ -306,6 +314,7 @@ function modifySaveBtn(beforeCards) {
                             // 모듈
                             for (let i = 1; i < 7; i++) {
                                 let packinf = packInfo[i - 1].trim(); // 하나의 값
+                                packinf = packinf.trim(); // 하나의 값
                                 let idInf = `${formdate}PACK${i}`;
                                 document.getElementById(idInf).style.color = "black";
 
@@ -356,6 +365,7 @@ function modifySaveBtn(beforeCards) {
                             // WMS
                             for (let i = 1; i < 10; i++) {
                                 let wmsinf = wmsInfo[i - 1].trim(); // 하나의 값
+                                wmsinf = wmsinf.trim()
                                 let idInf = `${formdate}WMS${i}`;
                                 document.getElementById(idInf).style.color = "black";
 
@@ -399,6 +409,7 @@ function modifySaveBtn(beforeCards) {
 
                                 else {
                                     flag = false;
+                                    console.log(wmsinf)
                                     document.getElementById(`${formdate}WMS${i}`).style.color = "red";
                                 }
                             }
@@ -406,6 +417,7 @@ function modifySaveBtn(beforeCards) {
                             // 수집서버
                             for (let i = 1; i < 7; i++) {
                                 let collinf = collInfo[i - 1].trim(); // 하나의 값
+                                collinf = collinf.trim(); // 하나의 값
                                 let idInf = `${formdate}COLL${i}`;
                                 document.getElementById(idInf).style.color = "black";
 
@@ -456,6 +468,7 @@ function modifySaveBtn(beforeCards) {
                             // 공통
                             for (let i = 1; i < 7; i++) {
                                 let comminf = commInfo[i - 1].trim(); // 하나의 값
+                                comminf = comminf.trim(); // 하나의 값
                                 let idInf = `${formdate}COMM${i}`;
                                 document.getElementById(idInf).style.color = "black";
 
@@ -505,6 +518,7 @@ function modifySaveBtn(beforeCards) {
 
                             if (j === form.length - 1) {
                                 if (noChange) {
+                                    loadingOff()
                                     document.getElementById("modify_save").disabled = false;
                                     document.getElementById("modify_save").style.opacity = 1;
                                     alert("변경 사항이 없습니다.")
@@ -521,12 +535,19 @@ function modifySaveBtn(beforeCards) {
                                         return new Promise(function(resolve) {
                                             xhr.send(JSON.stringify(infoArray));
                                             xhr.onload = function() {
-                                                if (xhr.responseText === "Delete Success" || xhr.responseText === "Save Success" || xhr.responseText === "Update Success") {
-                                                    resolve();
-                                                } else {
-                                                    // 에러 처리 로직 추가
-                                                    console.error("비동기 작업 실패");
-                                                    resolve(); // 실패하더라도 resolve를 호출하여 카운터를 증가시킴
+                                                if (xhr.status === 200) {
+                                                    if (xhr.responseText === "Delete Success" || xhr.responseText === "Save Success" || xhr.responseText === "Update Success") {
+                                                        resolve();
+                                                    }
+                                                    else {
+                                                        // 에러 처리 로직 추가
+                                                        console.error("비동기 작업 실패");
+                                                        resolve(); // 실패하더라도 resolve를 호출하여 카운터를 증가시킴
+                                                    }
+                                                }
+                                                else {
+                                                    alert("수정 중 서버에서 (심각한) 오류가 발생했습니다. 데이터가 잘못 저장되었을 수도 있습니다.\nGHOST팀 에게 이를 알려주시면 감사드리겠습니다.")
+                                                    window.location.href = "/"
                                                 }
                                             };
                                         });
@@ -578,12 +599,14 @@ function modifySaveBtn(beforeCards) {
                                             if (delete_xhr.status === 200) {
                                                 if (delete_xhr.responseText === "true") {
                                                     window.location.href = "/admin?id=" + nowUserId
+                                                    loadingOff()
                                                     document.getElementById("modify_save").disabled = false;
                                                     document.getElementById("modify_save").style.opacity = 1;
                                                     alert("작업 모두 완료.");
                                                 }
                                                 else {
                                                     window.location.href = "/"
+                                                    loadingOff()
                                                     document.getElementById("modify_save").disabled = false;
                                                     document.getElementById("modify_save").style.opacity = 1;
                                                     alert("서버 오류 발생.\n데이터는 수정되었으나, 다른 운영자님들이 이용할 수 있게 아래 수동 조치 부탁드립니다.\n" +
@@ -592,6 +615,7 @@ function modifySaveBtn(beforeCards) {
 
                                             } else {
                                                 window.location.href = "/"
+                                                loadingOff()
                                                 document.getElementById("modify_save").disabled = false;
                                                 document.getElementById("modify_save").style.opacity = 1;
                                                 alert("서버 오류 발생.\n데이터는 수정 되었으나, 다른 운영자님들이 이용할 수 있게 아래 수동 조치 부탁드립니다.\n" +
@@ -601,6 +625,7 @@ function modifySaveBtn(beforeCards) {
 
                                         // 서버에서 일정시간 응답이 없을 때,
                                         delete_xhr.ontimeout = function () {
+                                            loadingOff()
                                             alert("서버 응답 시간이 느립니다.\n수정 페이지에서 cancel버튼을 눌러주세요!")
                                             window.location.href = "/"
                                             document.getElementById("modify_save").disabled = false;
@@ -609,6 +634,7 @@ function modifySaveBtn(beforeCards) {
 
                                         // 넷웤이 없는데 요청할때 실행
                                         delete_xhr.onerror = function () {
+                                            loadingOff()
                                             alert("네트워크가 끊겨있습니다.\n수정 페이지에서 cancel버튼을 눌러주세요!")
                                             window.location.href = "/"
                                             document.getElementById("modify_save").disabled = false;
@@ -617,6 +643,7 @@ function modifySaveBtn(beforeCards) {
                                     }
                                 }
                                 else {
+                                    loadingOff()
                                     document.getElementById("modify_save").disabled = false;
                                     document.getElementById("modify_save").style.opacity = 1;
                                     alert("오타 및 입력된 운영자님의 공정이 올바른지 확인해주세요.")
@@ -627,6 +654,7 @@ function modifySaveBtn(beforeCards) {
                     }
                 }
                 else {
+                    loadingOff()
                     alert("서버 오류.\n재시도 부탁드립니다.")
                     window.location.href = "/"
                 }
@@ -649,6 +677,7 @@ function modifySaveBtn(beforeCards) {
         }
         else {
             window.location.href = "/"
+            loadingOff()
             document.getElementById("modify_save").disabled = false;
             document.getElementById("modify_save").style.opacity = 1;
             alert("로그인 세션이 만료되었습니다. 다시 로그인 부탁드립니다. ")

@@ -15,9 +15,6 @@ function deleteCancelBtn() {
             delete_xhr.open("GET", "/removeModify?id=" + nowUser, true);
             delete_xhr.send();
 
-            // Timeout 설정 (예: 5초)
-            delete_xhr.timeout = 5000;
-
             delete_xhr.onload = function () {
                 if (delete_xhr.status === 200) {
                     if (delete_xhr.responseText === "true") {
@@ -43,6 +40,9 @@ function deleteCancelBtn() {
                     window.location.href = "/";
                 }
             };
+
+            // Timeout 설정 (예: 5초)
+            delete_xhr.timeout = 5000;
 
             // 서버에서 일정시간 응답이 없을 때,
             delete_xhr.ontimeout = function () {

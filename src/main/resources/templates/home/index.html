@@ -11,12 +11,18 @@
   <link rel = "stylesheet" href = "css/init.css">
   <link rel = "stylesheet" href = "css/login/login.css">
   <link rel = "stylesheet" href = "css/OP/EndReport.css">
+  <link rel = "stylesheet" href = "css/login/emailSubmit.css">
+  <link rel = "stylesheet" href = "css/login/emailAuth.css">
+  <link rel = "stylesheet" href = "css/login/emailAuth.css">
+  <link rel = "stylesheet" href = "css/login/emailSignUp.css">
+
 
   <!-- 카카오 API를 사용하기 위한 라이브러리 선언-->
   <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
   <script> Kakao.init('2e39201190179fe7cd5eb25903daba8a'); </script> <!--SDK를 초기화 (애플리케이션>앱설정>앱키:JAVASCRIPTKEY -->
 
   <!-- 자바스크립트 함수 정의 -->
+  <script src = "../../JavaScript/unlinkWithKakao.js"></script>
   <script src = "../../JavaScript/loginAram.js"></script>
   <script src = "../../JavaScript/loadingOn.js"></script>
   <script src = "../../JavaScript/loadingOff.js"></script>
@@ -24,14 +30,13 @@
   <script src = "../../JavaScript/loginOPWithKakao.js"></script>
   <script src = "../../JavaScript/loginWithKakaoForAdmin.js"></script>
   <script src = "../../JavaScript/unlinkWithKakao.js"></script>
-  <script src = "../../JavaScript/shareMessage.js"></script>
-  <script src = "../../JavaScript/sendToMe.js"></script>
-  <script src = "../../JavaScript/sendFriends.js"></script>
-  <script src = "../../JavaScript/getFriendUuid.js"></script>
-  <script src = "../../JavaScript/refreshAccessToken.js"></script>
   <script src = "../../JavaScript/questionFunction.js"></script>
-  <script src = "../../JavaScript/endReport.js"></script>
-
+  <script src = "../../JavaScript/refreshAccessToken.js"></script>
+  <script src = "../../JavaScript/joinFunction.js"></script>
+  <script src = "../../JavaScript/userInfoChangeFuntion.js"></script>
+  <script src = "../../JavaScript/emailSubmit.js"></script>
+  <script src = "../../JavaScript/emailAuth.js"></script>
+  <script src = "../../JavaScript/signUp.js"></script>
   <title>SK GHOST MAIN</title>
 
 </head>
@@ -41,6 +46,8 @@
 <header id = "header">
   <!-- GHOST 트레이드 마크 -->
   <img id="header_sk" src="css/images/Ghost.png" alt="location images" style="cursor: pointer;" onclick="window.location.href = '/'">
+  <span id = "join">Join</span>
+  <span id = "change">Change</span>
   <span id = "header_logo">SK GHOST</span> <!-- GHOST text -->
 </header>
 
@@ -96,7 +103,7 @@
   function areCookiesEnabled() {
     try {
       document.cookie = "testcookie=test; SameSite=None; Secure";
-      var cookieEnabled = document.cookie.indexOf("testcookie") !== -1;
+      let cookieEnabled = document.cookie.indexOf("testcookie") !== -1;
       return cookieEnabled;
     } catch (e) {
       return false;
@@ -108,6 +115,25 @@
     // 쿠키를 사용하지 않을 경우 사용자에게 알림 표시
     alert("쿠키를 허용해주세요. 사이트의 일부 기능이 작동하지 않을 수 있습니다.");
   }
+
+</script>
+
+<script>
+  // span 태그를 가져옵니다.
+  let changeSpan = document.getElementById("change");
+
+  // 클릭 이벤트에 대한 리스너를 추가합니다.
+  changeSpan.addEventListener("click", function() {
+    userInfoChangeFuntion();
+  })
+
+  // span 태그를 가져옵니다.
+  let joinSpan = document.getElementById("join");
+
+  // 클릭 이벤트에 대한 리스너를 추가합니다.
+  joinSpan.addEventListener("click", function() {
+    joinFunction();
+  })
 
 </script>
 
