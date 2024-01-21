@@ -26,7 +26,6 @@ function createSchedule() {
             xhr_check.onload = function () {
                 if (xhr_check.status === 200) {
                     rocMembers = JSON.parse(xhr_check.response)
-                    console.log(rocMembers); // 전체인원
                     form = document.querySelectorAll("#createForm");
 
                     //DB에서 이름을 불러오지 못했을 때
@@ -127,12 +126,9 @@ function createSchedule() {
                             for (let i = 1; i < 7; i++) {
                                 let elecinf = elecInfo[i - 1].trim();
                                 elecinf = elecinf.trim();
-                                console.log(elecinf)
-                                console.log(rocMembers.hasOwnProperty(elecinf))
                                 //앞뒤로 트립 제거
                                 if (elecinf === "") {
                                 } else if (rocMembers.hasOwnProperty(elecinf) && rocMembers[elecinf] === "ELEC") {
-                                    console.log("참참", rocMembers.hasOwnProperty(elecinf))
                                     noChange = true;
                                     document.getElementById(`${formdate}ELEC${i}`).style.color = "black";
                                     //confirmedSchedule 정보 넣기
@@ -281,7 +277,6 @@ function createSchedule() {
                                 }
                                 // 오타가 없는 경우
                                 else if (flag) {
-                                    console.log(JSON.stringify(confirmedSchedule));
                                     let xhr_check_saveDB = new XMLHttpRequest(); // REST API 통신을 위한 객체
                                     xhr_check_saveDB.open('POST', '/saveSchedule', true);
                                     xhr_check_saveDB.setRequestHeader("Content-Type", "application/json"); // 요청 해더 정의 > payload는 Json
@@ -403,7 +398,6 @@ function createSchedule() {
                 alert("인터넷 접속을 확인하세요.\n재시도 부탁드립니다.")
                 window.location.href = "/"
             };
-
         }
 
         else {

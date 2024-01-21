@@ -1,6 +1,5 @@
 // 주어진 시간이 야간(23:00~01:00)에 속하는지 확인하는 함수
 // 사용 예시 const nightRangeResult = isCurrentTimeInNightRange();
-
 function isCurrentTimeInNightRange() {
     const lowerBound = 23; // 23:00
     const upperBound = 1;  // 01:00

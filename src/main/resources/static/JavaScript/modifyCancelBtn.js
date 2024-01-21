@@ -1,6 +1,5 @@
 function modifyCancelBtn() {
     bntOff()
-
     Kakao.Auth.getStatusInfo(function(statusObj) {
         let nowUserId = null;
         let nowUserNiname = null;
@@ -9,7 +8,6 @@ function modifyCancelBtn() {
         if (statusObj.status === 'connected') {
             nowUserId = statusObj.user.kakao_account.email;
             nowUserNiname = statusObj.user.kakao_account.profile.nickname
-
 
             let xhr = new XMLHttpRequest();
             xhr.open("GET", "/removeModify?id="+nowUserId, true);

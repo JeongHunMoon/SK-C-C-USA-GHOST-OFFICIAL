@@ -24,11 +24,7 @@ function modifyScheduleFunction() {
             // 값을 console에 출력
             const startDate = new Date(startDateString);
             const endDate = new Date(endDateString);
-            console.log('시작일:', startDateString);
-            console.log('종료일:', endDateString);
-
             let cards = getDates(startDate, endDate);
-            console.log(cards)
 
             let xhr1 = new XMLHttpRequest();
             let payloadFront = {"date": cards};
@@ -39,7 +35,6 @@ function modifyScheduleFunction() {
             xhr1.onload = function () {
                 if (xhr1.status === 200) {
                     let results = JSON.parse(xhr1.response); // 디비에서 해당 날짜의 운영자가 하나도 없는 경우 [] 반환
-                    console.log(results);
 
                     let idx = 0
                     for (let card of cards) {

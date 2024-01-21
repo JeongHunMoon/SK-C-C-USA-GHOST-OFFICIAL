@@ -61,7 +61,6 @@ function deleteCancelBtn() {
                 button.style.opacity = 1; // 투명도를 1로 설정
                 window.location.href = "/";
             };
-
         }
 
         // 사용자가 현재 브라우저에 카카오 로그인이 안되어 있는 경우

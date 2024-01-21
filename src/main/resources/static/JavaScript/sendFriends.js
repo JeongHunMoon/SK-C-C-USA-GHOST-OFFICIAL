@@ -6,19 +6,6 @@ async function sendFriends() {
     loadingOn();
     let allInfo = []
 
-    function getCurrentDate() {
-        const today = new Date();
-        const year = today.getFullYear();
-        let month = today.getMonth() + 1;
-        let day = today.getDate();
-
-        // 한 자리수인 경우 앞에 0을 추가
-        month = month < 10 ? '0' + month : month;
-        day = day < 10 ? '0' + day : day;
-
-        return `${year}-${month}-${day}`;
-    }
-
     function getNextDate() {
         const today = new Date();
         const nextDate = new Date(today);
@@ -47,7 +34,6 @@ async function sendFriends() {
     else if (isCurrentTimeInEveningRange()) {
         let friendInfor = {"date": getCurrentDate(),  "shift" : "E"};
         xhr_friend.send(JSON.stringify(friendInfor)); // REST Request
-        console.log(friendInfor)
         console.log("Evening 시각")
     }
     else if (isCurrentTimeInNightRange() === 0) {
@@ -99,9 +85,6 @@ async function sendFriends() {
 
         // 공정별 정렬 > 전 조 화 모 W 수 공 순서로 정렬
         allInfo.sort((a, b) => a.Sort - b.Sort);
-        console.log("이 분들께 메시지가 전송 돼요! > ");
-        console.log(allInfo);
-
 
         // 각 대응자 마다 모두 받아야할 메시지의 템플릿이 다르므로 전송될 만큼 메시지 REST가 호출된다.
         for (let i = 0; i < allInfo.length; i++) {
@@ -120,8 +103,7 @@ async function sendFriends() {
         button.disabled = false;
         button.style.opacity = 1; // 투명도를 0.5로 설정
         loadingOff();
-        //window.location.href = '/'; // 메인으로 redirect
-        console.log("출근 보고 성공")
+        window.location.href = '/'; // 메인으로 redirect
         alert("출근 보고 성공.")
     }
 }
@@ -129,7 +111,6 @@ async function sendFriends() {
 // Kakao 메시지 전송 함수
 async function sendKakaoMessage(uuid, messageScript) {
     return new Promise((resolve, reject) => {
-        console.log("메시지 전송 > " + uuid + " : " + messageScript);
         resolve()
         /*
         Kakao.API.request({

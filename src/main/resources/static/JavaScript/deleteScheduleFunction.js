@@ -35,13 +35,7 @@ function deleteScheduleFunction() {
             const endDateString = endDay.innerText;
             const startDate = new Date(startDateString);
             const endDate = new Date(endDateString);
-
-            // 값을 console에 출력
-            console.log('시작일:', startDateString);
-            console.log('종료일:', endDateString);
-            //console.log(getDates(startDate, endDate));
             let cards = getDates(startDate, endDate); // ['2023-01-01', ... '2024-01-07']
-            console.log(cards)
 
             let xhr1 = new XMLHttpRequest();
             let payloadFront = {"date": cards};
@@ -52,7 +46,6 @@ function deleteScheduleFunction() {
             xhr1.onload = function () {
                 if (xhr1.status === 200) {
                     let results = JSON.parse(xhr1.response); // 디비에서 해당 날짜의 운영자가 하나도 없는 경우 [] 반환
-                    console.log(results);
 
                     for(let i = 0; i < results.length; i++) {
                         if (results[i].length !== 0) {
@@ -99,7 +92,6 @@ function deleteScheduleFunction() {
                                     table.style.backgroundColor = "white";
                                     table.style.color = "black";
                                     clickFlags[tableIndex] *= -1;
-                                    //추가 : X표시 CSS
                                 }
                             })
 
@@ -152,7 +144,6 @@ document.addEventListener('DOMContentLoaded', function () {
         e.preventDefault();
     });
 });
-
 
 function deleteOnBtn() {
     document.getElementById("delete_cancel").disabled = false;     // 버튼 활성화
