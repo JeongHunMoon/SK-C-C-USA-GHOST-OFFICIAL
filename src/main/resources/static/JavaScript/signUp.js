@@ -29,6 +29,7 @@ function signUp(emailBackgroundDiv){
                         <option value="WMS">WMS</option>
                         <option value="COLL">Collection</option>
                         <option value="COMM">Common</option>
+                        <option value="PMO">PMO</option>
                     </select>   
                     <input type = "button" value = "DONE" id = "signUpModalSubmit">
                 </div>

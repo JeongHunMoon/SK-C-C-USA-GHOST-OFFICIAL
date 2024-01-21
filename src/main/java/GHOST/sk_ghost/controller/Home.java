@@ -38,7 +38,7 @@ public class Home {
             String processInfo = list.get("process");
 
             // 로그인 요청한 사용자가 OP인 경우만 OP 페이지 접속 허가 > 운영자는 OP 페이지 접속 불가.
-            if (rocMember.equals(who) && processInfo.equals("AE")) {
+            if (rocMember.equals(who) && ((processInfo.equals("AE")) || processInfo.equals("PMO"))) {
                 hashValue = UUID.randomUUID().toString(); // 해쉬값 생성 후 이 사용자에게 부여한다.(사용자를 식별하는 역할)
                 return ResponseEntity.ok(list.get("name")+ "!@#$%" +hashValue); //정상적으로 DB에 있는 사용자이므로 생성된 해쉬를 프론트로 전달한다.
             }
