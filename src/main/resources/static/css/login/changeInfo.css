@@ -7,6 +7,24 @@
     background-color: rgba(0, 0, 0, 0.9); /* 투명도 0.5 */
 }
 
+#changeModalExit {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: fit-content;
+    height: fit-content;
+    padding: 5px;
+    font-size: 1rem;
+    color: grey;
+    cursor: pointer;
+}
+
+#changeModalExit::before {
+    content: "\2716"; /* 유니코드로 "✖" 기호 */
+    font-size: 1.5rem; /* 크기 조절 */
+    font-weight: 100; /* 얇게 만들기 */
+}
+
 #changeModalContainer {
     position: fixed;
     top: 50%;

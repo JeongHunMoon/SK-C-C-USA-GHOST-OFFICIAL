@@ -200,4 +200,38 @@ public class Home {
             return ResponseEntity.ok("False");
         }
     }
+
+    // ID payload REST > name 반환
+    @PostMapping("getUserNameFromId")
+    public ResponseEntity<String> getUserNameFromId(@RequestBody Map<String, String> requestBody) throws Exception {
+        try {
+            String name = v1service.getNameFromId(requestBody.get("id"));
+            if (!name.equals("False")) {
+                return ResponseEntity.ok(name);
+            }
+            else {
+                return ResponseEntity.ok("False");
+            }
+        }
+        catch (Exception e) {
+            return ResponseEntity.ok("False");
+        }
+    }
+
+    // ID payload REST > process 반환
+    @PostMapping("getUserInfoFromId")
+    public ResponseEntity<Map<String, String>> getUserInfoFromId(@RequestBody Map<String, String> requestBody) throws Exception {
+        try {
+            Map<String, String> userInfo = v1service.getUserInfoFromId(requestBody.get("id"));
+            System.out.println(userInfo);
+            if (!userInfo.isEmpty()) {
+                return ResponseEntity.ok(userInfo);
+            } else {
+                return ResponseEntity.ok(Collections.emptyMap());
+            }
+        } catch (Exception e) {
+            return ResponseEntity.ok(Collections.emptyMap());
+        }
+    }
+
 }

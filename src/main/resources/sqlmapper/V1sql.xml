@@ -16,7 +16,7 @@
 
     <!-- 금일 담당 운영 대응자 조회 -->
     <select id="shiftAdminList" resultType="map" parameterType="GHOST.sk_ghost.dto.OP.AdminShiftParam">
-        SELECT mem.id, admin.name, CAST(admin.date as CHAR) as date, admin.shift, mem.uuid, admin.priority, mem.process
+        SELECT mem.id, mem.name, CAST(admin.date as CHAR) as date, admin.shift, mem.uuid, admin.priority, admin.process
         FROM member mem
         LEFT JOIN admin_shift admin
         ON mem.name = admin.name
@@ -27,7 +27,7 @@
 
     <!-- 해당 날짜의 운영자 스케줄 조희 -->
     <select id="oneDateSchedule" resultType="map">
-        SELECT A.name, CAST(A.date as CHAR) as date, A.shift, A.priority, B.process, COALESCE(C.creator, '-') as creator, COALESCE(C.modificator, '-') as modificator
+        SELECT A.name, CAST(A.date as CHAR) as date, A.shift, A.priority, A.process, COALESCE(C.creator, '-') as creator, COALESCE(C.modificator, '-') as modificator
         FROM admin_shift A
         LEFT JOIN member B ON A.name = B.name
         LEFT JOIN schedule_history C ON A.date = C.date
@@ -37,14 +37,15 @@
 
     <!-- 입력된 운영자 스케줄 저장 -->
     <insert id="saveSchedule" parameterType="java.util.List">
-        insert into admin_shift (name,date,shift,priority)
+        insert into admin_shift (name, date, shift, priority, process)
         values
         <foreach collection="list" item="listItem" separator=",">
             (
             #{listItem.name},
             #{listItem.date},
             #{listItem.shift},
-            #{listItem.priority}
+            #{listItem.priority},
+            (select process from member where name = #{listItem.name})
             )
         </foreach>
     </insert>
@@ -91,6 +92,10 @@
 
     <select id="getNameFromId" resultType="java.lang.String">
         SELECT name FROM member WHERE id = #{id}
+    </select>
+
+    <select id="getUserInfoFromId" resultType = "map">
+        SELECT name, process FROM member WHERE id = #{id}
     </select>
 
     <select id="isDateHistory" resultType="int">
@@ -145,13 +150,13 @@
     </insert>
 
     <!-- member 테이블에 회원가입시 사용자 정보 입력 삽입 -->
-    <insert id="updateJoinInfoToDB" parameterType="GHOST.sk_ghost.dto.LoginDto.UpdateUser">
+    <update id="updateJoinInfoToDB" parameterType="GHOST.sk_ghost.dto.LoginDto.UpdateUser">
         UPDATE member
         SET
         name = #{name, jdbcType=VARCHAR},
         process = #{process, jdbcType=VARCHAR}
         WHERE
         id = #{id, jdbcType=VARCHAR}
-    </insert>
+    </update>
 </mapper>
 
