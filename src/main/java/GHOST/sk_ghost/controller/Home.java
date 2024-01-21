@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.*;
 
 @Controller
@@ -47,8 +46,8 @@ public class Home {
     }
 
     // admin 최초 로그인 요청 및 admin 페이지 이동
-    @GetMapping("/admin")
     // 호출 예시 ex) http://localhost:8080/OP?uuid=12313213dwf232fe231321 > 서버에서 발급된 해쉬가 올바르게 요청되야 OP페이지로 이동함.
+    @GetMapping("/admin")
     public String goToAdminPage(
             @RequestParam(value = "id", required = true) String id,
             @RequestParam(value = "first", required = false) String first,
@@ -67,7 +66,6 @@ public class Home {
                     // "first" 파라미터가 전달된 경우 운영자 페이지에 처음 접속한 경우이므로 Model 저달
                     model.addAttribute("firstValue", first);
                 }
-
                 System.out.println(id + lists);
                 return "home/admin";
             }
@@ -75,9 +73,7 @@ public class Home {
         return "home/400";
     }
 
-
     //출근하기 기능이다. 디비에서 금일의 대응자님 조회하여 list로 조히하여 프론트로 전송한다.
-    // 수정된 컨트롤러
     @PostMapping("/goingToWork")
     public ResponseEntity<List<Map<String, String>>> goingToWork(@RequestBody AdminShiftParam requestBody) {
         System.out.println(requestBody);
@@ -87,7 +83,6 @@ public class Home {
 
         return ResponseEntity.ok(lists);
     }
-
 
     // OP 페이지로 이동한다. 사용자가 발급받은 해쉬 값을 추출하여 일치하는지 점검한다.
     @GetMapping("/OP")
@@ -122,9 +117,11 @@ public class Home {
         for (Map<String, String> list : lists) { // 사용자 검증을 진행한다.
             String rocMember = list.get("id");
             if (rocMember.equals(who)) {
+                System.out.println("이미 있음.");
                 return ResponseEntity.ok(list.get("name")); //정상적으로 DB에 있는 사용자이므로 생성된 해쉬를 프론트로 전달한다.
             }
         }
+        System.out.println("없음.");
         return ResponseEntity.ok("False"); //DB에 없는 사용자가 로그인을 시도했기에 접근을 차단한다.
     }
 
@@ -176,8 +173,6 @@ public class Home {
     }
 
     // JOIN : 사용자 정보를 디비에 넣는 라우터
-    // 이다.
-
     @PostMapping("/insertJoinInfo")
     public ResponseEntity<String> insertJoinInfo(@RequestBody InsertNewUser insertNewUser) throws Exception {
         try {
