@@ -1,6 +1,7 @@
 package GHOST.sk_ghost.controller;
 
 import GHOST.sk_ghost.dto.LoginDto.InsertNewUser;
+import GHOST.sk_ghost.dto.LoginDto.UpdateUser;
 import GHOST.sk_ghost.dto.LoginDto.UserNameJudgement;
 import GHOST.sk_ghost.dto.OP.AdminShiftParam;
 import GHOST.sk_ghost.service.V1service;
@@ -156,7 +157,7 @@ public class Home {
         return rocALlNames;
     }
 
-    // JOIN : 사용자가 입력한 이름이 디비에 있는지 검증하는 라우터이다.
+    // judge : 사용자가 입력한 이름이 디비에 있는지 검증하는 라우터이다.
     @PostMapping("/judgeName")
     public ResponseEntity<String> judgeName(@RequestBody UserNameJudgement userNameJudgement) throws Exception{
         try {
@@ -178,6 +179,20 @@ public class Home {
         try {
             System.out.println("Controller : 가입 입력 시 전달된 정보 : " + insertNewUser);
             v1service.insertJoinInfoToDB(insertNewUser);
+            return ResponseEntity.ok("True");
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.ok("False");
+        }
+    }
+
+    // Edit : 사용자 정보를 디비에 변경하는 라우터
+    @PostMapping("/updateJoinInfo")
+    public ResponseEntity<String> updateJoinInfo(@RequestBody UpdateUser updateUser) throws Exception {
+        try {
+            System.out.println("Controller : 변경 시 전달된 정보 : " + updateUser);
+            v1service.updateJoinInfoToDB(updateUser);
             return ResponseEntity.ok("True");
         }
         catch (Exception e) {

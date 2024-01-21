@@ -159,13 +159,91 @@ function changeUserInfoFunction(nowUser) {
 
     document.getElementById('changeModalSubmit').addEventListener('click', function() {
         editBntOff()
-        changeUserInfoBtn(nowUser);
+        loadingOn()
+        changeUserInfoBtn(nowUser, changeBackground);
     });
 }
 
-function changeUserInfoBtn(nowUser) {
+function changeUserInfoBtn(nowUser, changeBackground) {
     // 사용자 아이디 검증할 필요 x 무조건 디비에 사용자 정보 있다고 보장할 수 있음.
-    // 기존에 저장된 정보(이름, 공정)이 달라진게 하나도 없다면 그냥 그대로둘까?
+    let newName = document.getElementById("changeInput1").value;
+    let newProcess = document.getElementById("changeInput2").value;
+    newName = newName.trim();
+    newName = newName.trim();
+
+    if (newName === "") {
+        loadingOff()
+        editBtnOn()
+        alert("이름을 입력하세요.");
+    }
+    else {
+        // 이름이 이미 있는지 검증 하는 REST
+        let verifyNameByID_xhr = new XMLHttpRequest()
+        verifyNameByID_xhr.open('POST', '/judgeName', true); // REST 정의
+        verifyNameByID_xhr.setRequestHeader("Content-Type", "application/json"); // 해더 설정
+        verifyNameByID_xhr.send(JSON.stringify({"name": newName}))
+        verifyNameByID_xhr.onload = function () {
+            if (verifyNameByID_xhr.status === 200 && verifyNameByID_xhr.responseText === "False") {
+                console.log("사용자 카카오 아이디:", nowUser)
+                loadingOff()
+                editBtnOn()
+                alert("매니저님 성함은 이미 사용 중입니다.\n" + newName + "2 와같이 구별 하시는 것을 추천드립니다!")
+            } else if (verifyNameByID_xhr.status === 200 && verifyNameByID_xhr.responseText === "True") {
+                let confirmed = confirm("입력하신 정보로 완료 하시겠습니까?");
+                if (confirmed) {
+                    console.log("최종저장이름." + newName)
+                    // 입력된 정보를 삽입하기 위한 RSET
+                    let new_xhr = new XMLHttpRequest()
+                    new_xhr.open('POST', '/updateJoinInfo', true); // REST 정의
+                    new_xhr.setRequestHeader("Content-Type", "application/json"); // 해더 설정
+                    new_xhr.send(JSON.stringify({"id": nowUser, "name": newName, "process": newProcess}))
+                    new_xhr.onload = function () {
+                        if (new_xhr.status === 200 && new_xhr.responseText === "True") {
+                            loadingOff()
+                            editBtnOn()
+                            document.body.removeChild(changeBackground);
+                            alert("변경이 완료되었습니다!");
+                            window.location.href = "/"
+                        } else {
+                            alert("죄송합니다. 서버에서 정보를 변경하는 과정에서 오류가 발생했습니다\n해당 이름 또한 사용 중인 것 같습니다\n다른 이름으로 변경 후 재시도 부탁드리겠습니다.");
+                            unlinkWithKakao()
+                            window.location.href = "/"
+                        }
+                    };
+                } else {
+                    loadingOff()
+                    editBtnOn()
+                    alert("취소되었습니다.")
+                }
+            } else {
+                loadingOff()
+                editBtnOn()
+                alert("서버에서 매니저님을 인증하는 과정에서 오류가 발생했습니다\n재시도 부탁드리겠습니다.");
+                unlinkWithKakao()
+                window.location.href = "/"
+            }
+        };
+
+        verifyNameByID_xhr.timeout = 15000;
+
+        // 서버에서 일정시간 응답이 없을 때,
+        verifyNameByID_xhr.ontimeout = function () {
+            loadingOff()
+            editBtnOn()
+            unlinkWithKakao()
+            alert("서버 처리 지연.\n가입 재시도 부탁드립니다.")
+            window.location.href = "/"
+        };
+
+        // 넷웤이 없는데 요청할때 실행
+        verifyNameByID_xhr.onerror = function () {
+            loadingOff()
+            editBtnOn()
+            unlinkWithKakao()
+            alert("인터넷 접속을 확인하세요.\n가입 재시도 부탁드립니다.")
+            window.location.href = "/"
+        };
+    }
 }
 
 function editBtnOn() {
