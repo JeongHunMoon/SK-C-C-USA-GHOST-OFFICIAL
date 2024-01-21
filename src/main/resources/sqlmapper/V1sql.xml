@@ -136,11 +136,22 @@
         ) AS result
     </select>
 
+
     <!-- member 테이블에 회원가입시 사용자 정보 입력 삽입 -->
     <insert id="insertJoinInfoToDB" parameterType="GHOST.sk_ghost.dto.LoginDto.InsertNewUser">
         INSERT INTO member (id, name, process)
         VALUES
         ( #{id}, #{name}, #{process} )
+    </insert>
+
+    <!-- member 테이블에 회원가입시 사용자 정보 입력 삽입 -->
+    <insert id="updateJoinInfoToDB" parameterType="GHOST.sk_ghost.dto.LoginDto.UpdateUser">
+        UPDATE member
+        SET
+        name = #{name, jdbcType=VARCHAR},
+        process = #{process, jdbcType=VARCHAR}
+        WHERE
+        id = #{id, jdbcType=VARCHAR}
     </insert>
 </mapper>
 

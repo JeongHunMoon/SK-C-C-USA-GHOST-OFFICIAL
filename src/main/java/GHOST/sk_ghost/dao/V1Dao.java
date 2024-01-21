@@ -1,6 +1,7 @@
 package GHOST.sk_ghost.dao;
 
 import GHOST.sk_ghost.dto.LoginDto.InsertNewUser;
+import GHOST.sk_ghost.dto.LoginDto.UpdateUser;
 import GHOST.sk_ghost.dto.LoginDto.UserNameJudgement;
 import GHOST.sk_ghost.dto.OP.AdminShiftParam;
 import org.apache.ibatis.annotations.Mapper;
@@ -48,4 +49,6 @@ public interface V1Dao {
     public boolean judgeUserNameInDB(UserNameJudgement userNameJudgement);
 
     public void insertJoinInfoToDB(InsertNewUser insertNewUser);
+
+    public void updateJoinInfoToDB(UpdateUser updateUser);
 }
