@@ -28,11 +28,11 @@ function loginWithKakaoForAdmin() {
 
                     // DB에 등록되지 않은 사용자이므로 경고창 후 로그인 차단
                     if (results === "False") {
-                        alert("You are not registered in the system.\nContact the Ghost Team.")
                         loadingOff()
                         button.disabled = false;
                         button.style.opacity = 1; // 투명도를 0.5로 설정
                         unlinkWithKakao() // 추후 이 코드 활성화 시켜 ROC이외 외부 인원을 차단시켜야함.
+                        alert("You are not registered in the system.\nContact the Ghost Team.")
                     }
 
                     // 서버에 등록된 ROC 사람인 경우
@@ -46,6 +46,10 @@ function loginWithKakaoForAdmin() {
 
                 else {
                     unlinkWithKakao() // 추후 이 코드 활성화 시켜 ROC이외 외부 인원을 차단시켜야함.
+                    loadingOff();
+                    button.disabled = false;     // 버튼 활성화
+                    button.style.opacity = 1; // 투명도를 1로 설정
+                    alert("카카오 서버 오류, 사용자 정보를 가져오는데 실패했습니다.\n재시도 부탁드립니다.")
                     window.location.href = "/"
                 }
             }
@@ -97,19 +101,19 @@ function loginWithKakaoForAdmin() {
 
                                     // DB에 등록되지 않은 사용자이므로 경고창 후 로그인 차단
                                     if (results === "False") {
-                                        alert("You are not registered in the system.\nContact the Ghost Team.")
                                         loadingOff()
                                         button.disabled = false;
                                         button.style.opacity = 1; // 투명도를 0.5로 설정
                                         unlinkWithKakao() // 추후 이 코드 활성화 시켜 ROC이외 외부 인원을 차단시켜야함.
+                                        alert("You are not registered in the system.\nContact the Ghost Team.")
                                     }
 
                                     // 서버에 등록된 ROC 사람인 경우
                                     else {
-                                        alert("Welcome manager, "+ payload.properties.nickname)
                                         loadingOff();
                                         button.disabled = false;     // 버튼 활성화
                                         button.style.opacity = 1; // 투명도를 1로 설정
+                                        alert("Welcome manager, "+ payload.properties.nickname)
                                         window.location.href = "/admin?id=" + nowUser + "&first=" +  "true";
                                     }
                                 }
@@ -121,14 +125,16 @@ function loginWithKakaoForAdmin() {
                         })
                         .catch(error => {
                             alert("카카오 서버 오류, 사용자 정보를 가져오는데 실패했습니다.\n재시도 부탁드립니다.")
+                            unlinkWithKakao()
                             window.location.href = "/"
                         });
                 },
                 fail: function (err) { // 로그인 실패시 오류 값 반환
-                    alert("You are not registered in the system.\nContact the Ghost Team.")
                     loadingOff();
                     button.disabled = false;
                     button.style.opacity = 1; // 투명도를 0.5로 설정
+                    unlinkWithKakao()
+                    alert("You are not registered in the system.\nContact the Ghost Team.")
                     window.location.href = "/"
                 },
             })

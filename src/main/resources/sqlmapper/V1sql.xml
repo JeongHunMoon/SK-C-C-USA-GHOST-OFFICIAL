@@ -25,9 +25,6 @@
         AND admin.shift = #{shift}
     </select>
 
-
-
-
     <!-- 해당 날짜의 운영자 스케줄 조희 -->
     <select id="oneDateSchedule" resultType="map">
         SELECT A.name, CAST(A.date as CHAR) as date, A.shift, A.priority, B.process, COALESCE(C.creator, '-') as creator, COALESCE(C.modificator, '-') as modificator
@@ -96,11 +93,9 @@
         SELECT name FROM member WHERE id = #{id}
     </select>
 
-
     <select id="isDateHistory" resultType="int">
         SELECT COUNT(*) FROM schedule_history WHERE date = #{date}
     </select>
-
 
     <!-- schedule_history 테이블에 생성자 이름을 삽입 -->
     <insert id="insertDateToScheduleHistoryTable" parameterType="String">
@@ -140,7 +135,6 @@
         LIMIT 1
         ) AS result
     </select>
-
 
     <!-- member 테이블에 회원가입시 사용자 정보 입력 삽입 -->
     <insert id="insertJoinInfoToDB" parameterType="GHOST.sk_ghost.dto.LoginDto.InsertNewUser">

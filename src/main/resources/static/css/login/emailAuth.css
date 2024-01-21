@@ -19,13 +19,14 @@
 }
 
 .codeModalHeader {
-    width: 253px;
-    height: 31px;
+    width: 100%;
+    height: fit-content;
+    max-width: 250px;
     flex-shrink: 0;
     color: #000;
     text-align: center;
     font-family: Inter, serif;
-    font-size: 19px;
+    font-size: 1.2rem;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -33,44 +34,44 @@
 
 .codeModalBody {
     margin-top:15px;
-    width: 253px;
-    height: 62px;
-    flex-shrink: 0;
+    width: 100%;
+    height: fit-content;
+    max-width: 250px;
     color: #000;
     text-align: center;
     font-family: Inter, serif;
-    font-size: 14px;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
 }
 
 .codeModalInputContainer {
-    margin-top:10px;
+    margin-top:15px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 255px;
-    height: 47px;
-    flex-shrink: 0;
-    /*background: #EDB2B2;*/
+
+    width: fit-content;
+    height: fit-content;
+    max-width: 250px;
 }
 
 .codeModalInputTitle {
-    width: 60px;
-    height: 47px;
+    width: fit-content;
+    height: fit-content;
     align-items: center;
     display: flex;
-    flex-shrink: 0;
-    margin-right:3px;
+    font-size: 0.9rem;
 }
 
 .codeModalInputBody {
-    width: 170px;
+    width: 80%;
+    max-width: 150px;
     height: 32px;
     border-radius: 10%;
     flex-direction: column;
-    margin-left:10px;
+    margin-left:13px;
     justify-content: center;
     flex-shrink: 0;
     color: #000;
@@ -83,12 +84,13 @@
 }
 
 #codeModalSubmit {
-    width: 265px;
+    width: 100%;
+    max-width: 200px;
     height: 49px;
-    flex-shrink: 0;
-    margin-top:20px;
+
+    margin-top : 25px;
     color: white;
-    font-size: 20px;
+    font-size: 1rem;
     border-radius: 20px;
     background: #0063d4;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);

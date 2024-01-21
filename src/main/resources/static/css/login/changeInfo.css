@@ -1,5 +1,4 @@
-
-#emailBackground {
+#changeBackground {
     position: fixed;
     top: 0;
     left: 0;
@@ -8,7 +7,7 @@
     background-color: rgba(0, 0, 0, 0.9); /* 투명도 0.5 */
 }
 
-#signUpModalContainer {
+#changeModalContainer {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -28,7 +27,7 @@
     background: #FFF;
 }
 
-.signUpModalHeader {
+#changeModalHeader {
     width: 100%;
     height: fit-content;
     max-width: 250px;
@@ -42,7 +41,7 @@
     line-height: normal;
 }
 
-.signUpModalSection {
+#changeModalSection {
     margin-top:15px;
     width: 100%;
     max-width: 250px;
@@ -57,7 +56,7 @@
     line-height: normal;
 }
 
-.signUpModalInputContainer {
+#changeModalInputContainer {
     margin-top:10px;
     display: flex;
 
@@ -69,19 +68,7 @@
     height: fit-content;
 }
 
-.signUpLabel {
-    margin-top : 15px;
-    margin-bottom: 5px;
-    font-size: 15px;
-    font-weight: bold;
-}
-.signUpInput {
-    width: 120px;
-    text-align-last: center;
-    font-size: 15px;
-}
-
-#signUpModalSubmit {
+#changeModalSubmit {
     width: 150px;
     height: 30px;
     flex-shrink: 0;
@@ -92,9 +79,8 @@
     background: #0063d4;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
-
 @media screen and (max-width: 400px) {
-    .signUpModalContainer {
+    #changeModalInputContainer {
         flex-basis: 80%; /* Full width for smaller screens */
     }
 }

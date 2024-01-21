@@ -13,8 +13,8 @@ function signUp(emailBackgroundDiv){
             let modalContainer = document.createElement('div');
             modalContainer.id = 'signUpModalContainer'; // 위 태그에 id를 부여한다.
             modalContainer.innerHTML = `
-                <h1 class = "signUpModalHeader"> 회원가입 제목 </h1>
-                <h2 class = "signUpModalSection">  회원가입 본문 </h2>
+                <div class = "signUpModalHeader"><span>정보 입력</span></div>
+                <div class = "signUpModalSection"><span>입력 하시는 성함은 추후 스케줄 관리에 사용 되실 이름 입니다.<br>가입 이후 성함과 공정은 언제 든지 변경 가능 합니다.<br><br>ex) 김길동, 이길동, 박길동</span></div>
                 <div class = "signUpModalInputContainer">
                     <label class="signUpLabel" for="value1">Name</label>
                     <input type="text" class="signUpInput" id="signUpInput1">
@@ -36,21 +36,19 @@ function signUp(emailBackgroundDiv){
 
             emailBackgroundDiv.appendChild(modalContainer);
             document.getElementById('signUpModalSubmit').addEventListener('click', function() {
+                signBtnOff()
                 loadingOn()
                 memberSubmitBtn(nowUserId, emailBackgroundDiv);
             });
         }
         else {
-            alert("로그인 세션이 비정상적으로 만료되었습니다.\n재시도 부탁드립니다.")
+            alert("죄송합니다. 로그인 세션이 만료되었습니다.\n회원가입 재시도 부탁드립니다.")
             window.location.href = "/"
         }
     })
 }
 
 function memberSubmitBtn(nowUserId, emailBackgroundDiv) {
-    console.log(emailBackgroundDiv)
-    signBtnOff()
-
     // Name 입력 필드의 값을 가져옴
     let nameInputValue = document.getElementById("signUpInput1").value;
 
@@ -114,7 +112,7 @@ function memberSubmitBtn(nowUserId, emailBackgroundDiv) {
             else if (verifyName_xhr.status === 200 && verifyName_xhr.responseText === "False") {
                 loadingOff()
                 signBtnOn()
-                alert("매니저님 성함음 이미 사용 중입니다.\n"+nameInputValue+"2 와같이 구별하시는 것을 추천드립니다!");
+                alert("매니저님 성함은 이미 사용 중입니다.\n"+nameInputValue+"2 와같이 구별 하시는 것을 추천드립니다!");
                 nameInputValue.value = "";
             }
             else {
@@ -125,13 +123,36 @@ function memberSubmitBtn(nowUserId, emailBackgroundDiv) {
                 window.location.href = "/"
             }
         };
+
+        verifyName_xhr.timeout = 15000;
+
+        // 서버에서 일정시간 응답이 없을 때,
+        verifyName_xhr.ontimeout = function () {
+            loadingOff()
+            signBtnOn()
+            alert("서버 처리 지연.\n가입 재시도 부탁드립니다.")
+            window.location.href = "/"
+        };
+
+        // 넷웤이 없는데 요청할때 실행
+        verifyName_xhr.onerror = function () {
+            loadingOff()
+            signBtnOn()
+            alert("인터넷 접속을 확인하세요.\n가입 재시도 부탁드립니다.")
+            window.location.href = "/"
+        };
     }
 }
 
 function signBtnOn() {
+    let btn = document.getElementById('signUpModalSubmit');
+    btn.disabled = false;     // 버튼 활성화
+    btn.style.opacity = 1;
 
 }
 
 function signBtnOff() {
-
+    let btn = document.getElementById('signUpModalSubmit');
+    btn.disabled = true;     // 비활성화
+    btn.style.opacity = 0.5;
 }

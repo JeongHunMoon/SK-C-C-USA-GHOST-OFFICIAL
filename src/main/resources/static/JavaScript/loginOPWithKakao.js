@@ -26,21 +26,21 @@ function loginOPWithKakao() {
                     let results = xhr_check.responseText; // 서버에서 전달 받은 payload
 
                     if (results === "False") { // DB에 등록되지 않은 사용자이므로 경고창 후 로그인 차단
-                        alert("You are not registered in the system.\nContact the Ghost Team.")
                         loadingOff() // 로딩창 종료
                         button.disabled = false; // 버튼 활성화
                         button.style.opacity = 1; // 투명도 1
                         unlinkWithKakao() // 로그아웃 시켜 로그인을 차단시킨다.
+                        alert("You are not registered in the system.\nContact the Ghost Team.")
                     }
 
                     // DB에 등록된 올바른 ROC 사람인 경우
                     else {
                         let checkedName = results.split("!@#$%")[0]; // 사용자의 프로필 설정 이름
                         let hashValue = results.split("!@#$%")[1]; // 서버에서 발급 받아 전달 받은 랜덤 uuid 값이며 이 값을 다시 서버에 요청하여 정상적으로 OP 페이지에 접속하도록 요청
-                        alert("Welcome, Manager " + checkedName);
                         loadingOff() // 로딩창 종료
                         button.disabled = false; // 버튼 활성화
                         button.style.opacity = 1; // 투명도 1 설정
+                        alert("Welcome, Manager " + checkedName);
 
                         // 서버에서 1회성 해쉬 값이 생성되며 이 값을 다시 GET 호출하여 OP 페이지로 이동을 요청한다.
                         // 아래 해쉬 값은 서버에서 생성된 랜덤 해쉬 이므로 외부에서 이 uuid를 찾을 수 없다. > 외부로 100% 차단
@@ -113,42 +113,45 @@ function loginOPWithKakao() {
 
                                     // DB에 등록되지 않은 사용자이므로 경고창 후 로그인 차단
                                     if (results === "False") {
-                                        alert("You are not registered in the system.\nContact the Ghost Team.")
                                         loadingOff()
                                         button.disabled = false;
                                         button.style.opacity = 1; // 투명도를 1로 설정
                                         unlinkWithKakao() // 로그아웃 진행 > ROC이외 외부 인원을 차단
+                                        alert("You are not registered in the system.\nContact the Ghost Team.")
                                     }
 
                                     // DB에 정상적으로 등록되어 있는 사용자 == ROC 사람.
                                     else {
                                         let checkedName = results.split("!@#$%")[0]; // 서버에서 발급 받아 전달 받은 랜덤 uuid 값이며 이 값을 다시 서버에 요청하여 정상적으로 OP 페이지에 접속하도록 요청
                                         let hashValue = results.split("!@#$%")[1]; // 사용자의 프로필 설정 이름
-                                        alert("Welcome, Manager " + checkedName);
                                         loadingOff()
                                         button.disabled = false;
                                         button.style.opacity = 1;
+                                        alert("Welcome, Manager " + checkedName);
                                         window.location.href = '/OP'+'?uuid=' + hashValue; // OP 페이지로 이동하기 위한 GET
                                     }
                                 }
                                 else {
+                                    unlinkWithKakao()
                                     alert("서버 응답 오류\n재시도 부탁드립니다.")
                                     window.location.href = "/"
                                 }
                             };
                         })
                         .catch(error => {
+                            unlinkWithKakao()
                             alert("카카오 서버 오류, 사용자 정보를 가져오는데 실패했습니다.\n재시도 부탁드립니다.")
                             window.location.href = "/"
                         });
 
                 },
                 fail: function (err) { // 로그인 실패시 오류 값 반환
-                    alert("카카오 로그인에 실패 했습니다.\n재시도 부탁드립니다.")
                     loadingOff()
+                    unlinkWithKakao()
                     button.disabled = false;
                     button.style.opacity = 1; // 투명도를 0.5로 설정
                     window.location.href = "/"
+                    alert("카카오 로그인에 실패 했습니다.\n재시도 부탁드립니다.")
                 },
             })
         }

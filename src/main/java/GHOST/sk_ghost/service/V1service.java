@@ -7,7 +7,6 @@ import GHOST.sk_ghost.dto.OP.AdminShiftParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 public class V1service {
     @Autowired
     V1Dao v1Dao;
+
     public List<Map<String, String>> userList() {
         List<Map<String, String>> list = v1Dao.userList();
         return list;
@@ -25,8 +25,6 @@ public class V1service {
         List<Map<String, String>> list = v1Dao.shiftAdminList(param);
         return list;
     }
-
-
 
     public List<Map<String, String>> oneDateSchedule(String dateInfo) {
         List<Map<String, String>> list = v1Dao.oneDateSchedule(dateInfo);
@@ -79,7 +77,6 @@ public class V1service {
             e.printStackTrace();
         }
     }
-
 
     // 카카오 id > 사용자의 이름
     public String getNameFromId(String id) {
