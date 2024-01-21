@@ -16,100 +16,71 @@
     justify-content: center;
     align-items: center;
     display: flex;
+
     width: 80%;
     max-width: 320px;
     height: fit-content;
-    padding-top: 30px;
+    padding-top: 40px;
     padding-bottom: 40px;
+
     border-radius: 20px;
     background: #FFF;
 }
 
-.changeModalHeader {
-    width: 253px;
-    height: 31px;
+#changeModalHeader {
+    width: 100%;
+    height: fit-content;
+    max-width: 250px;
     flex-shrink: 0;
     color: #000;
-    text-align: left;
+    text-align: center;
     font-family: Inter, serif;
-    font-size: 19px;
+    font-size: 1.2rem;
     font-style: normal;
-    font-weight: 700;
+    font-weight: bold;
     line-height: normal;
 }
 
-.changeModalBody {
-    margin-top:7px;
-    width: 253px;
-    height: 62px;
-    flex-shrink: 0;
+#changeModalSection {
+    margin-top:15px;
+    width: 100%;
+    max-width: 250px;
+    height: fit-content;
+
     color: #000;
-    text-align: left;
+    text-align: center;
     font-family: Inter, serif;
-    font-size: 14px;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
 }
 
-.changeModalInputContainer {
-    margin-top:7px;
+#changeModalInputContainer {
+    margin-top:10px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 248px;
-    height: 47px;
-    flex-shrink: 0;
-    /*background: #EDB2B2;*/
-}
-.changeModalInputTextContainer{
-    width:248px;
-    background-color: aqua;
-    display:flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
 
-.changeModalInputTitle {
-    width: 48px;
-    height: 27px;
-    flex-shrink: 0;
-    margin-right:3px;
-    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
-}
 
-.changeModalInputBody {
-    width: 180px;
-    height: 27px;
-    border-radius: 10%;
-    /*flex-direction: column;*/
-    flex-shrink: 0;
-    color: #000;
-    text-align: center;
-    font-family: Inter, serif;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+    width: fit-content;
+    height: fit-content;
 }
 
 #changeModalSubmit {
-    width: 265px;
-    height: 49px;
+    width: 150px;
+    height: 30px;
     flex-shrink: 0;
-    margin-top:20px;
+    margin-top : 25px;
     color: white;
-    font-size: 10px;
+    font-size: 12px;
     border-radius: 20px;
     background: #0063d4;
     box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
-
 @media screen and (max-width: 400px) {
-    .changeModalContainer {
+    #changeModalInputContainer {
         flex-basis: 80%; /* Full width for smaller screens */
     }
 }

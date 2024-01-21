@@ -1,4 +1,4 @@
-// 회원가입 버튼을 클릭했을 때 최초 실행되는 함수 
+// 회원가입 버튼을 클릭했을 때 최초 실행되는 함수
 function joinFunction() {
     // 이중 실행을 막기 위한 버튼 비활성화
     bntOff()
@@ -20,7 +20,7 @@ function joinFunction() {
             verify_xhr.setRequestHeader("Content-Type", "application/json"); // 해더 설정
             verify_xhr.send(JSON.stringify({"Who" : nowUser}))
             verify_xhr.onload = function () {
-                if (verify_xhr.status === 200 && verify_xhr.responseText === "True") {
+                if (verify_xhr.status === 200 && verify_xhr.responseText !== "False") {
                     alert("안녕하십니까 " + userName + " manager님, " + "이미 가입이 되셨습니다!");
                     btnOn()
                     window.location.href = "/"
@@ -34,6 +34,7 @@ function joinFunction() {
                 else {
                     unlinkWithKakao()
                     btnOn()
+                    alert("서버 처리 지연\n재시도 부탁드립니다.");
                     window.location.href = "/"
                 }
             };

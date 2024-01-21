@@ -5,7 +5,6 @@ import GHOST.sk_ghost.dto.LoginDto.UserNameJudgement;
 import GHOST.sk_ghost.dto.OP.AdminShiftParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
@@ -36,7 +35,6 @@ public interface V1Dao {
 
     public int isDateHistory(String date);
 
-    // DAO 코드
     public void insertDateToScheduleHistoryTable(@Param("date") String date, @Param("creator") String creator);
 
     // history table업데이트
@@ -50,5 +48,4 @@ public interface V1Dao {
     public boolean judgeUserNameInDB(UserNameJudgement userNameJudgement);
 
     public void insertJoinInfoToDB(InsertNewUser insertNewUser);
-
 }

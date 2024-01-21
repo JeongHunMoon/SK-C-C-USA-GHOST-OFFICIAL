@@ -46,6 +46,10 @@ function loginWithKakaoForAdmin() {
 
                 else {
                     unlinkWithKakao() // 추후 이 코드 활성화 시켜 ROC이외 외부 인원을 차단시켜야함.
+                    loadingOff();
+                    button.disabled = false;     // 버튼 활성화
+                    button.style.opacity = 1; // 투명도를 1로 설정
+                    alert("카카오 서버 오류, 사용자 정보를 가져오는데 실패했습니다.\n재시도 부탁드립니다.")
                     window.location.href = "/"
                 }
             }

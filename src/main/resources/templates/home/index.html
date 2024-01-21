@@ -17,8 +17,6 @@
   <link rel = "stylesheet" href = "css/login/emailSignUp.css">
   <link rel = "stylesheet" href = "css/login/changeInfo.css">
 
-
-
   <!-- 카카오 API를 사용하기 위한 라이브러리 선언-->
   <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
   <script> Kakao.init('2e39201190179fe7cd5eb25903daba8a'); </script> <!--SDK를 초기화 (애플리케이션>앱설정>앱키:JAVASCRIPTKEY -->
@@ -48,14 +46,22 @@
 <header id = "header">
   <!-- GHOST 트레이드 마크 -->
   <img id="header_sk" src="css/images/Ghost.png" alt="location images" style="cursor: pointer;" onclick="window.location.href = '/'">
-  <span id = "join">Join</span>
-  <span id = "change">Change</span>
-  <span id = "header_logo">SK GHOST</span> <!-- GHOST text -->
+  <div id = "index_header_top_section">
+    <span id = "header_logo">SK GHOST</span> <!-- GHOST text -->
+    <div id = "index_header_top_article">
+      <span id = "join">Join</span>
+      <span id = "change">Edit</span>
+    </div>
+  </div>
+
 </header>
 
 <!-- 전체 seciton은 top과 bottom으로 구성된다.-->
 <section id = "section_top">
   <!-- 추가할 이미지가 있다면 class는 아래와 같이 동일하게 하며, 이미지의 경로만 변경하여 아래 누적하여 추가하면 됨.-->
+  <img class = "section_top_image" src="css/images/Main1.jpg" alt = "location images">
+  <img class = "section_top_image" src="css/images/Main2.jpg" alt = "location images">
+  <img class = "section_top_image" src="css/images/Main3.jpg" alt = "location images">
   <img class = "section_top_image" src="css/images/Main1.jpg" alt = "location images">
   <img class = "section_top_image" src="css/images/Main2.jpg" alt = "location images">
   <img class = "section_top_image" src="css/images/Main3.jpg" alt = "location images">
