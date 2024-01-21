@@ -37,6 +37,7 @@ function userInfoChangeFuntion() {
                     loadingOff()
                     editBtnOn()
                     unlinkWithKakao()
+                    alert("죄송합니다. 서버에서 매니저님 계정이 존재하는지 확인 중 에러가 발생했습니다.\n재시도 부탁드립니다.")
                     window.location.href = "/"
                 }
             }
@@ -97,6 +98,7 @@ function userInfoChangeFuntion() {
                                     loadingOff()
                                     editBtnOn()
                                     unlinkWithKakao()
+                                    alert("죄송합니다. 서버에서 매니저님 계정이 존재하는지 확인 중 에러가 발생했습니다.\n재시도 부탁드립니다.")
                                     window.location.href = "/"
                                 }
                             }

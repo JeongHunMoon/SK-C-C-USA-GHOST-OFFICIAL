@@ -32,7 +32,6 @@
         LEFT JOIN member B ON A.name = B.name
         LEFT JOIN schedule_history C ON A.date = C.date
         WHERE A.date = #{dateInfo}
-
     </select>
 
     <!-- 입력된 운영자 스케줄 저장 -->
