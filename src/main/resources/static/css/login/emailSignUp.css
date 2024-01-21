@@ -29,27 +29,29 @@
 }
 
 .signUpModalHeader {
-    width: fit-content;
+    width: 100%;
     height: fit-content;
+    max-width: 250px;
     flex-shrink: 0;
     color: #000;
     text-align: center;
     font-family: Inter, serif;
-    font-size: 19px;
+    font-size: 1.2rem;
     font-style: normal;
-    font-weight: 700;
+    font-weight: bold;
     line-height: normal;
 }
 
 .signUpModalSection {
-    margin-top: 5px;
-    width: fit-content;
+    margin-top:15px;
+    width: 100%;
+    max-width: 250px;
     height: fit-content;
 
     color: #000;
     text-align: center;
     font-family: Inter, serif;
-    font-size: 14px;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
