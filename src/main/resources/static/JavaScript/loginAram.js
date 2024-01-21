@@ -1,4 +1,3 @@
-
 function loginAram(profile, name) {
     const loginAlarmDiv = document.createElement('div');
     loginAlarmDiv.id = 'loginAlarm';
@@ -12,8 +11,8 @@ function loginAram(profile, name) {
     loginAlarmDiv.style.width = '10vw';
     loginAlarmDiv.style.height = '10vw';
 
-    loginAlarmDiv.style.maxWidth = '80px';
-    loginAlarmDiv.style.maxHeight = '80px';
+    loginAlarmDiv.style.maxWidth = '60px';
+    loginAlarmDiv.style.maxHeight = '60px';
 
     loginAlarmDiv.style.minWidth = '50px';
     loginAlarmDiv.style.minHeight = '50px';
@@ -82,18 +81,18 @@ function loginAram(profile, name) {
             }
 
             25% {
-                top: 21%;
+                top: 20%;
                 opacity: 1;
             }
 
             50% {
-                top: 21%;
+                top: 20%;
                 opacity: 1;
                 animation-timing-function: ease-out; // 머무는 동안의 타이밍 함수 조절
             }
 
             75% {
-                top: 21%;
+                top: 20%;
                 opacity: 1;
             }
 

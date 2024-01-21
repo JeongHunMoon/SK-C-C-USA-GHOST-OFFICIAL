@@ -10,7 +10,6 @@ function deleteSaveBtn() {
     deleteOffBtn()
 
     // 현재 모든 폼 nodeList로 가져와서 > 비활성 카드는(반드시 안에 데이터들어 있다고 보장할 수 있음) > /delete 호출하면 됨(페이로드는 [{}, {}, {}]
-
     //카카오 접속 확인
     Kakao.Auth.getStatusInfo(function(statusObj) {
         let nowUserId = null;
@@ -24,7 +23,7 @@ function deleteSaveBtn() {
             for (let i= 0; i < tableSelect.length; i++) {
                 if (tableSelect[i].style.backgroundColor === "darkgrey" && tableSelect[i].style.color === "white") {
                     tableDate = tableSelect[i].querySelector("#dateInfo").textContent; //현재 테이블 날짜 가져오기
-                    console.log(document.getElementById(tableDate + "PACK5").textContent)
+
                     // 전극 1,2 차 정보
                     let elecInfo = []
                     elecInfo.push(document.getElementById(tableDate + "ELEC1").textContent)
@@ -57,7 +56,6 @@ function deleteSaveBtn() {
                     packInfo.push(document.getElementById(tableDate + "PACK4").textContent)
                     packInfo.push(document.getElementById(tableDate + "PACK5").textContent)
                     packInfo.push(document.getElementById(tableDate + "PACK6").textContent)
-                    console.log(packInfo)
                     // wms 1,2,3 차 정보
                     let wmsInfo = []
                     wmsInfo.push(document.getElementById(tableDate + "WMS1").textContent)
@@ -85,7 +83,6 @@ function deleteSaveBtn() {
                     commInfo.push(document.getElementById(tableDate + "COMM4").textContent)
                     commInfo.push(document.getElementById(tableDate + "COMM5").textContent)
                     commInfo.push(document.getElementById(tableDate + "COMM6").textContent)
-                    console.log(commInfo)
 
                     // 불러온 셀 정보가 공백이 아니고 첫번째 클릭인 경우에 삭제후보배열에 추가한다
                     // 전극
@@ -186,7 +183,7 @@ function deleteSaveBtn() {
                         }
                     }
                 }
-                else if (tableSelect[i].style.backgroundColor !== "darkgrey" && tableSelect[i].style.color !== "white"){
+                else if (tableSelect[i].style.backgroundColor !== "darkgrey" && tableSelect[i].style.color !== "white") {
                     unClicked += 1;
                 }
 
@@ -197,8 +194,6 @@ function deleteSaveBtn() {
                     return;
                 }
             }
-
-            console.log("이 값들이 디비에 삭제됨.", deleteInfo);
 
             // delete 작업
             if (deleteInfo.length !== 0) {

@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @EnableEncryptableProperties
 public class JasyptConfig {
-
     @Bean("jasyptEncryptor")
     public StringEncryptor stringEncryptor() {
         //PooledPBEStringEncryptor를 생성하고 설정
@@ -29,11 +28,8 @@ public class JasyptConfig {
 //      암호화한 db_text 복호화 및 정상출력 확인
 //      String decryptedText = encryptor.decrypt(encrypted_db_text);
 //      System.out.println("Dec = " + decryptedText);
-
-
+        
         return encryptor;
     }
-
-
 }
 

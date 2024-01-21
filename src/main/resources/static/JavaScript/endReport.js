@@ -72,9 +72,6 @@ function submitValues() {
     // 사용자가 입력한 값을 가져온 후, DOM에서 퇴근 보고 태그를 삭제한다.
     document.body.removeChild(document.getElementById('inputWrapper'));
 
-    // Log the values to the console
-    console.log('Values:', values);
-
     // 사용자가 입력하지 란에 대해서는 0으로 기입한다.
     for (let i = 0; i < values.length; i++) {
         if (values[i] === "") {
@@ -85,7 +82,6 @@ function submitValues() {
     // 퇴근 보고 템플릿
     let endReportText = "SOP: New " + values[0] + ", Done " + values[2] + ", Open " + values[4] + ", Transferred " + values[6]
         + "\nITS: New " + values[1] + ", Done " + values[3] + ", Waiting " + values[5] + ", Transferred " + values[7]
-    console.log(endReportText)
 
     // 해당 퇴근 보고는 나에게 전송된다.
     Kakao.API.request({

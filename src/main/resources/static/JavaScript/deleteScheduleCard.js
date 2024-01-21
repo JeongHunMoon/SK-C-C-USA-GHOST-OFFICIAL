@@ -35,7 +35,6 @@ function deleteScheduleCard(results, dfe, date) {
     dateHeader.setAttribute('id', "dateInfo");
     dateHeader.style.borderRight= "1px solid transparent"
 
-
     // 날짜 행 추가
     const dateRow = table.insertRow();
     const nHeader = dateRow.insertCell();
@@ -47,7 +46,6 @@ function deleteScheduleCard(results, dfe, date) {
     const eHeader = dateRow.insertCell();
     eHeader.textContent = "E";
     eHeader.style.borderRight= "1px solid transparent"
-
 
     //전극 정보 가공
     let elec_info1 = []
@@ -62,7 +60,6 @@ function deleteScheduleCard(results, dfe, date) {
             }
         }
     });
-
 
     //// 전극 ////
     const elecRow = table.insertRow();
@@ -79,7 +76,6 @@ function deleteScheduleCard(results, dfe, date) {
     spanTag.setAttribute('id', date + 'ELEC1')
     spanTag.textContent = elec_info1.find(item => item.shift === "N")?.name || "";
     elec_1_N.appendChild(spanTag)
-
 
     const elec_1_D = elecRow.insertCell();
     spanTag = document.createElement('span')
@@ -118,8 +114,6 @@ function deleteScheduleCard(results, dfe, date) {
     elec_2_E.appendChild(spanTag)
     elec_2_E.style.borderRight= "1px solid transparent"
 
-
-
     //조립 정보 가공
     let cell_info1 = []
     let cell_info2 = []
@@ -133,7 +127,6 @@ function deleteScheduleCard(results, dfe, date) {
             }
         }
     });
-
 
     //// 조립 ////
     const cellRow = table.insertRow();
@@ -188,7 +181,6 @@ function deleteScheduleCard(results, dfe, date) {
     cell_2_E.appendChild(spanTag)
     cell_2_E.style.borderRight= "1px solid transparent"
 
-
     //화성 정보 가공
     let form_info1 = []
     let form_info2 = []
@@ -219,7 +211,6 @@ function deleteScheduleCard(results, dfe, date) {
     spanTag.textContent = form_info1.find(item => item.shift === "N")?.name || "";
     form_1_N.appendChild(spanTag)
 
-
     const form_1_D = formRow.insertCell();
     spanTag = document.createElement('span')
     spanTag.setAttribute('id', date + 'FORM2')
@@ -232,7 +223,6 @@ function deleteScheduleCard(results, dfe, date) {
     spanTag.textContent = form_info1.find(item => item.shift === "E")?.name || "";
     form_1_E.appendChild(spanTag)
     form_1_E.style.borderRight= "1px solid transparent"
-
 
     // 화성 2차
     const formRow2 = table.insertRow();
@@ -258,7 +248,6 @@ function deleteScheduleCard(results, dfe, date) {
     form_2_E.appendChild(spanTag)
     form_2_E.style.borderRight= "1px solid transparent"
 
-
     //모듈 정보 가공
     let pack_info1 = []
     let pack_info2 = []
@@ -272,11 +261,6 @@ function deleteScheduleCard(results, dfe, date) {
             }
         }
     });
-
-    console.log(pack_info1)
-    console.log(pack_info2)
-
-
 
     //// 모듈 ////
     const packRow = table.insertRow();
@@ -331,7 +315,6 @@ function deleteScheduleCard(results, dfe, date) {
     pack_2_E.appendChild(spanTag)
     pack_2_E.style.borderRight= "1px solid transparent"
 
-
     //wms 정보 가공
     let wms_info1 = []
     let wms_info2 = []
@@ -348,7 +331,6 @@ function deleteScheduleCard(results, dfe, date) {
             }
         }
     });
-
 
     //// wms ////
     const wmsRow = table.insertRow();
@@ -427,7 +409,6 @@ function deleteScheduleCard(results, dfe, date) {
     wms_3_E.appendChild(spanTag)
     wms_3_E.style.borderRight= "1px solid transparent"
 
-
     //coll 정보 가공
     let coll_info1 = []
     let coll_info2 = []
@@ -441,7 +422,6 @@ function deleteScheduleCard(results, dfe, date) {
             }
         }
     });
-
 
     //// coll ////
     const collRow = table.insertRow();
@@ -496,7 +476,6 @@ function deleteScheduleCard(results, dfe, date) {
     coll_2_E.appendChild(spanTag)
     coll_2_E.style.borderRight= "1px solid transparent"
 
-
     //comm 정보 가공
     let comm_info1 = []
     let comm_info2 = []
@@ -510,7 +489,6 @@ function deleteScheduleCard(results, dfe, date) {
             }
         }
     });
-
 
     //// comm ////
     const commRow = table.insertRow();
@@ -567,7 +545,6 @@ function deleteScheduleCard(results, dfe, date) {
     spanTag.textContent = comm_info2.find(item => item.shift === "E")?.name || "";
     comm_2_E.appendChild(spanTag)
     comm_2_E.style.borderRight= "1px solid transparent"
-
 
     // 테이블을 div에 추가
     schedule_div.appendChild(table)

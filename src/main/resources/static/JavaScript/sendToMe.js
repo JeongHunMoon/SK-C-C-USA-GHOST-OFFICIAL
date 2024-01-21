@@ -72,7 +72,7 @@ function sendToMe(nowDate, nowShift, info) {
                             },
                         })
                             .then(function (res) {
-                                console.log('출근 보고 나에게 보내기 성공!');
+                                //console.log('출근 보고 나에게 보내기 성공!');
                             })
                             .catch(function (err) {
                                 alert("실패\n금일은 수동 출근 보고 부탁드립니다.");
@@ -98,7 +98,6 @@ function sendToMe(nowDate, nowShift, info) {
                 alert("와이파이가 끊겨있습니다. 이에 에게 메시지 보내기가 실패했습니다.\n프로젝트 방에는 수동 보고 부탁드립니다.")
                 window.location.href = "/"
             };
-
         }
         else {
             alert("로그인 세션이 만료되었습니다.\n프로젝트 방에는 수동 보고 부탁드립니다..")

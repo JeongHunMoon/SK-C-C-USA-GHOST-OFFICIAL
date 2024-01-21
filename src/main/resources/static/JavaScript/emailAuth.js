@@ -28,7 +28,6 @@ function codeSubmitBtn(authNum, emailBackground, codeModalContainer) {
     // 사용자가 입력한 인증번호 문자열 을 받아온다.
     let inputValue = document.getElementById('value').value.trim();
     inputValue = inputValue.trim(); // 2중 trim
-    //console.log("입력 >" + inputValue, "정답 > " + authNum)
 
     // 공백 입력시
     if (inputValue === "") {

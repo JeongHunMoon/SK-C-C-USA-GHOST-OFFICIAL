@@ -1,6 +1,5 @@
 // 스케줄 정보가 없을 시 빈 배열 results에 전달
 function scheduleCard(results, dfe, date) {
-    console.log(results)
     // 테이블을 담을 div
     const Container = document.getElementById("image-container");
 
@@ -41,7 +40,6 @@ function scheduleCard(results, dfe, date) {
     dateHeader.textContent = date;
     dateHeader.style.borderRight = "1px solid transparent"
 
-
     // 날짜 행 추가
     const dateRow = table.insertRow();
     const nHeader = dateRow.insertCell();
@@ -53,7 +51,6 @@ function scheduleCard(results, dfe, date) {
     const eHeader = dateRow.insertCell();
     eHeader.textContent = "E";
     eHeader.style.borderRight = "1px solid transparent"
-
 
     //전극 정보 가공
     let elec_info1 = []
@@ -68,7 +65,6 @@ function scheduleCard(results, dfe, date) {
             }
         }
     });
-
 
     //// 전극 ////
     const elecRow = table.insertRow();
@@ -106,7 +102,6 @@ function scheduleCard(results, dfe, date) {
     elec_2_E.style.borderRight = "1px solid transparent"
 
 
-
     //조립 정보 가공
     let cell_info1 = []
     let cell_info2 = []
@@ -141,7 +136,6 @@ function scheduleCard(results, dfe, date) {
     cell_1_E.textContent = cell_info1.find(item => item.shift === "E")?.name || "";
     cell_1_E.style.borderRight = "1px solid transparent"
 
-
     // 조립 2차
     const cellRow2 = table.insertRow();
     const cell_2 = cellRow2.insertCell();
@@ -157,8 +151,6 @@ function scheduleCard(results, dfe, date) {
     cell_2_E.textContent = cell_info2.find(item => item.shift === "E")?.name || "";
     cell_2_E.style.borderRight = "1px solid transparent"
 
-
-
     //화성 정보 가공
     let form_info1 = []
     let form_info2 = []
@@ -172,7 +164,6 @@ function scheduleCard(results, dfe, date) {
             }
         }
     });
-
 
     //// 화성 ////
     const formRow = table.insertRow();
@@ -209,8 +200,6 @@ function scheduleCard(results, dfe, date) {
     form_2_E.textContent = form_info2.find(item => item.shift === "E")?.name || "";
     form_2_E.style.borderRight = "1px solid transparent"
 
-
-
     //모듈 정보 가공
     let pack_info1 = []
     let pack_info2 = []
@@ -224,7 +213,6 @@ function scheduleCard(results, dfe, date) {
             }
         }
     });
-
 
     //// 모듈 ////
     const packRow = table.insertRow();
@@ -262,7 +250,6 @@ function scheduleCard(results, dfe, date) {
     pack_2_E.style.borderRight = "1px solid transparent"
 
 
-
     //wms 정보 가공
     let wms_info1 = []
     let wms_info2 = []
@@ -279,7 +266,6 @@ function scheduleCard(results, dfe, date) {
             }
         }
     });
-
 
     //// wms ////
     const wmsRow = table.insertRow();
@@ -331,8 +317,6 @@ function scheduleCard(results, dfe, date) {
     wms_3_E.textContent = wms_info3.find(item => item.shift === "E")?.name || "";
     wms_3_E.style.borderRight = "1px solid transparent"
 
-
-
     //coll 정보 가공
     let coll_info1 = []
     let coll_info2 = []
@@ -346,7 +330,6 @@ function scheduleCard(results, dfe, date) {
             }
         }
     });
-
 
     //// coll ////
     const collRow = table.insertRow();
@@ -383,7 +366,6 @@ function scheduleCard(results, dfe, date) {
     coll_2_E.textContent = coll_info2.find(item => item.shift === "E")?.name || "";
     coll_2_E.style.borderRight = "1px solid transparent"
 
-
     //comm 정보 가공
     let comm_info1 = []
     let comm_info2 = []
@@ -398,8 +380,6 @@ function scheduleCard(results, dfe, date) {
         }
     });
 
-
-
     //// comm ////
     const commRow = table.insertRow();
     const comm = commRow.insertCell();
@@ -407,8 +387,6 @@ function scheduleCard(results, dfe, date) {
     comm.rowSpan = 2;
     comm.style.borderLeft= "1px solid transparent"
     comm.style.borderBottom = "1px solid transparent"
-
-
 
     const comm_1 = commRow.insertCell();
     comm_1.textContent = "1";
@@ -438,8 +416,6 @@ function scheduleCard(results, dfe, date) {
     const comm_2_E = commRow2.insertCell();
     comm_2_E.textContent = comm_info2.find(item => item.shift === "E")?.name || "";
     comm_2_E.style.borderRight= "1px solid transparent"
-
-
 
     const creatorSpan = document.createElement('p');
     creatorSpan.style.color = 'gray';

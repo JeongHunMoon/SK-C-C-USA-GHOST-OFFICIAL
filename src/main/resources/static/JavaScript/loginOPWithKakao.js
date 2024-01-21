@@ -1,7 +1,7 @@
 // 사용자 카카오 소셜 로그인
 function loginOPWithKakao() {
     let userRefreshToken = null; // 로그인 시 사용자로부터 refreshtoken을 받아옴.
-    let nowUser = null           // authObj.user_id // 현재 로그인을 시도한 사람의 카카오 id를 받아오기.
+    let nowUser = null // authObj.user_id // 현재 로그인을 시도한 사람의 카카오 id를 받아오기.
     let button = document.getElementById("user_login") //로그인 버튼을 비활성화 하기 위한 태그 가져오기
     button.disabled = true;     // 버튼 비활성화
     button.style.opacity = 0.5; // 투명도를 0.5로 설정
@@ -57,7 +57,7 @@ function loginOPWithKakao() {
 
             // 서버에서 일정시간 응답이 없을 때,
             xhr_check.ontimeout = function () {
-                alert("서버 처리 지연./n재시도 부탁드립니다.")
+                alert("서버 처리 지연.\n재시도 부탁드립니다.")
                 window.location.href = "/"
             };
 
@@ -76,9 +76,6 @@ function loginOPWithKakao() {
                     Kakao.Auth.setAccessToken(authObj.access_token); // 사용자 처음 로그인시 발급된 토큰으로 설정
                     userRefreshToken = authObj.refresh_token // refresh token 값 저장.
                     //refreshAccessToken(userRefreshToken) // > 삭제 필요
-
-                    console.log("처음 로그인 시 설정된 토큰" + Kakao.Auth.getAccessToken());
-                    console.log("처음 로그인 시 발급 받은 리프레시 토큰" + userRefreshToken);
 
                     // 로그인한 사용자 정보 가져오는 REST
                     let url = 'https://kapi.kakao.com/v2/user/me';

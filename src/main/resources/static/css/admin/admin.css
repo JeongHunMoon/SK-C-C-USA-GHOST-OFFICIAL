@@ -1,4 +1,3 @@
-
 /* 전체 스크롤 바 스타일 */
 ::-webkit-scrollbar {
     width: 7px; /* 스크롤 바 너비 조절 */
@@ -39,13 +38,12 @@
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.3);
 }
 
-
 #header_sk {
     position : absolute;
-    top : 10px;
+    top : 15px;
     left : 20px;
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
 
     animation: ghost 0.8s /* 속도 */
     linear 0s   /* 처음부터 끝까지 일정 속도로 진행 */
@@ -53,8 +51,8 @@
 }
 
 @keyframes ghost {
-    0% {top: 5px; opacity : 1} /* 처음 위치 */
-    100% {top: 15px; opacity : 0.5} /* 마지막 위치 */
+    0% {top: 12px; opacity : 1} /* 처음 위치 */
+    100% {top: 17px; opacity : 0.5} /* 마지막 위치 */
 }
 
 #header_logo {
@@ -70,7 +68,6 @@
     font-weight: 700;
     line-height: normal;
 }
-
 
 #section_date {
     flex-direction: row; /* 가로로 나열하도록 설정 */
@@ -166,7 +163,6 @@
     overflow-x: auto; /* 가로 스크롤을 가능하게 함 */
     white-space: nowrap; /* 텍스트가 한 줄로 유지되도록 함 */
     flex-wrap:nowrap;
-
 }
 
 .schedule_top_div {
@@ -192,7 +188,6 @@
     max-width: 450px; /* 최대 너비 */
     width: 100%; /* 최대 크기보다 작은 경우 100%로 설정 */
     flex-direction: column;
-
 
     height: 97%;
     flex-shrink: 0;
@@ -224,8 +219,6 @@
     /* 추가적인 스타일을 필요에 따라 설정하세요 */
 }
 
-
-
 /*
 @keyframes bannermove {
     0% {
@@ -236,7 +229,6 @@
     }
 }
 */
-
 
 #section_bottom {
     display: flex;

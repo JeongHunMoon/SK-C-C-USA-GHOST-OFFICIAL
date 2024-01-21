@@ -37,7 +37,6 @@ function questionFunction() {
                     fail: function (error) {
                         alert("You have exceeded the number of questions per day");
                         loadingOff()
-                        console.log(error);
                     },
                 });
             }

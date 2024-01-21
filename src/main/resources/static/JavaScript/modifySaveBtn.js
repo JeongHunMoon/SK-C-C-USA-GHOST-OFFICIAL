@@ -409,7 +409,6 @@ function modifySaveBtn(beforeCards) {
 
                                 else {
                                     flag = false;
-                                    console.log(wmsinf)
                                     document.getElementById(`${formdate}WMS${i}`).style.color = "red";
                                 }
                             }
