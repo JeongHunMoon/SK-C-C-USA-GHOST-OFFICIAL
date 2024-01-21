@@ -34,6 +34,8 @@ public interface V1Dao {
 
     public String getNameFromId(String id);
 
+    public Map<String, String> getUserInfoFromId(String id);
+
     public int isDateHistory(String date);
 
     public void insertDateToScheduleHistoryTable(@Param("date") String date, @Param("creator") String creator);
