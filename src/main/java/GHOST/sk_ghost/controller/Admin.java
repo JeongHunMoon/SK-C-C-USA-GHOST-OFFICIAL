@@ -61,7 +61,6 @@ public class Admin {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             String nextDayString = nextDay.format(formatter);
 
-            System.out.println("Next Day: " + nextDayString);
             return ResponseEntity.ok(nextDayString);
         }
     }
@@ -129,7 +128,6 @@ public class Admin {
     @GetMapping("/newSchedule")
     public String adminNewSchedule(@RequestParam(value = "id", required = true) String id, Model model) {
         List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
-        System.out.println("ROC Member" + lists);
 
         // 로그인한 사용자가 올바른지 검증
         for (Map<String, String> list : lists) {
@@ -138,7 +136,6 @@ public class Admin {
 
             // 로그인 요청한 사용자가 OP인 경우만 OP 페이지 접속 허가 > 운영자는 OP 페이지 접속 불가.
             if (rocMember.equals(id)) {
-                System.out.println(id + lists);
                 return "home/newSchedule";
             }
         }
@@ -151,7 +148,6 @@ public class Admin {
     public ResponseEntity<String> uniquePage(HttpSession session, @RequestParam String id) {
         session.setMaxInactiveInterval(-1);
         List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
-        System.out.println("ROC Member" + lists);
 
         // 로그인한 사용자가 올바른지 검증
         for (Map<String, String> list : lists) {
@@ -160,7 +156,6 @@ public class Admin {
 
             // 로그인 요청한 사용자가 OP인 경우만 OP 페이지 접속 허가 > 운영자는 OP 페이지 접속 불가.
             if (rocMember.equals(id)) {
-                System.out.println(id + lists);
                 // 세션이 없으면 ? 일단 uuid도 없어야함.
                 if (session == null) { setNewAdminhashValue(null);}
                 // 크롬에서 세션을 만들었다면,
@@ -203,7 +198,6 @@ public class Admin {
             @RequestParam(value = "end", required = true) String end,
             Model model) {
         List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
-        System.out.println("ROC Member" + lists);
 
         // 로그인한 사용자가 올바른지 검증
         for (Map<String, String> list : lists) {
@@ -212,7 +206,6 @@ public class Admin {
 
             // 로그인 요청한 사용자가 OP인 경우만 OP 페이지 접속 허가 > 운영자는 OP 페이지 접속 불가.
             if (rocMember.equals(id)) {
-                System.out.println(start + end);
                 // 여기에서 start와 end를 사용하여 필요한 작업 수행
                 model.addAttribute("start", start);
                 model.addAttribute("end", end);
@@ -249,7 +242,6 @@ public class Admin {
             @RequestParam(value = "end", required = true) String end,
             Model model) {
         List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
-        System.out.println("ROC Member" + lists);
 
         // 로그인한 사용자가 올바른지 검증
         for (Map<String, String> list : lists) {
@@ -258,7 +250,6 @@ public class Admin {
 
             // 로그인 요청한 사용자가 OP인 경우만 OP 페이지 접속 허가 > 운영자는 OP 페이지 접속 불가.
             if (rocMember.equals(id)) {
-                System.out.println(start + end);
                 // 여기에서 start와 end를 사용하여 필요한 작업 수행
                 model.addAttribute("start", start);
                 model.addAttribute("end", end);
@@ -336,7 +327,6 @@ public class Admin {
                 List<Map<String, String>> lists = v1service.oneDateSchedule(card); // 금일의 대응자 admin을 조회한다.
                 payload.add(lists);
             }
-            System.out.println("조희 결과> " + payload);
 
             return ResponseEntity.ok(payload);
         }
