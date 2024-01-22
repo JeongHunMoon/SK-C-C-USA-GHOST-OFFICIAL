@@ -1,9 +1,9 @@
 package GHOST.sk_ghost.service;
 
 import GHOST.sk_ghost.dao.V1Dao;
-import GHOST.sk_ghost.dto.LoginDto.InsertNewUser;
-import GHOST.sk_ghost.dto.LoginDto.UpdateUser;
-import GHOST.sk_ghost.dto.LoginDto.UserNameJudgement;
+import GHOST.sk_ghost.dto.loginDto.InsertNewUser;
+import GHOST.sk_ghost.dto.loginDto.UpdateUser;
+import GHOST.sk_ghost.dto.loginDto.UserNameJudgement;
 import GHOST.sk_ghost.dto.OP.AdminShiftParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

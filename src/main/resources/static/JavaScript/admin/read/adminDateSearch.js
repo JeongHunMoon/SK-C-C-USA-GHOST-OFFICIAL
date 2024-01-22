@@ -49,7 +49,6 @@ function adminDateSearch() {
             xhr1.onload = function () {
                 if (xhr1.status === 200) {
                     let results = JSON.parse(xhr1.response); // 디비에서 해당 날짜의 운영자가 하나도 없는 경우 [] 반환
-                    console.log(results);
 
                     let idx = 0
                     for (let card of cards) {

@@ -18,7 +18,7 @@ function joinFunction() {
             let verify_xhr = new XMLHttpRequest()
             verify_xhr.open('POST', '/checkForasking', true); // REST 정의
             verify_xhr.setRequestHeader("Content-Type", "application/json"); // 해더 설정
-            verify_xhr.send(JSON.stringify({"Who" : nowUser}))
+            verify_xhr.send(JSON.stringify({"id" : nowUser}))
             verify_xhr.onload = function () {
                 if (verify_xhr.status === 200 && verify_xhr.responseText !== "False") {
                     alert("안녕하십니까 " + userName + " manager님, " + "이미 가입이 되셨습니다!");
@@ -74,7 +74,7 @@ function joinFunction() {
                             let verify_xhr = new XMLHttpRequest()
                             verify_xhr.open('POST', '/checkForasking', true); // REST 정의
                             verify_xhr.setRequestHeader("Content-Type", "application/json"); // 해더 설정
-                            verify_xhr.send(JSON.stringify({"Who" : nowUser}))
+                            verify_xhr.send(JSON.stringify({"id" : nowUser}))
                             verify_xhr.onload = function () {
                                 if (verify_xhr.status === 200 && verify_xhr.responseText !== "False") {
                                     btnOn()

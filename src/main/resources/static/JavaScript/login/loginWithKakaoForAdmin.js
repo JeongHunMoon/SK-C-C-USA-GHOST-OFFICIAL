@@ -17,7 +17,7 @@ function loginWithKakaoForAdmin() {
 
             // 이 계정이 등록되어 있는 DB 조회하여 판단.
             let xhr_check = new XMLHttpRequest(); // REST API 통신을 위한 객체
-            let infor = {"Who" : nowUser} // 서버로 사용자의 카카오 id를 요청하여 DB에 등록되어 있는지 검증한다.
+            let infor = {"id" : nowUser} // 서버로 사용자의 카카오 id를 요청하여 DB에 등록되어 있는지 검증한다.
             xhr_check.open('POST', '/checkForasking', true); // REST 정의
             xhr_check.setRequestHeader("Content-Type", "application/json"); // 헤더 설정
             xhr_check.send(JSON.stringify(infor)) // REST 요청
@@ -105,7 +105,7 @@ function loginWithKakaoForAdmin() {
                             nowUser = payload.kakao_account.email; // 사용자 카카오 계정
 
                             // 이 계정이 등록되어 있는 DB 조회하여 판단.
-                            let infor = {"Who": nowUser};
+                            let infor = {"id": nowUser};
                             fetch('/checkForasking', {
                                 method: 'POST',
                                 headers: {

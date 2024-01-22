@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale = 1.0, user-scalable=no">
 
     <!-- CSS 정의 -->
-    <link rel = "stylesheet" href = "css/init.css">
+    <link rel = "stylesheet" href = "css/init/init.css">
     <link rel = "stylesheet" href = "css/admin/admin.css">
 
     <!-- 카카오 API를 사용하기 위한 라이브러리 선언-->
@@ -16,27 +16,24 @@
     <script> Kakao.init('2e39201190179fe7cd5eb25903daba8a'); </script> <!--SDK를 초기화 (애플리케이션>앱설정>앱키:JAVASCRIPTKEY -->
 
     <!-- 자바스크립트 함수 정의 -->
-    <script src = "../../JavaScript/unlinkWithKakao.js"></script>
-    <script src = "../../JavaScript/loginAram.js"></script>
-    <script src = "../../JavaScript/loadingOn.js"></script>
-    <script src = "../../JavaScript/loadingOff.js"></script>
-    <script src = "../../JavaScript/adminDateSearch.js"></script>
-    <script src = "../../JavaScript/scheduleCard.js"></script>
-    <script src = "../../JavaScript/scheduleCard.js"></script>
+    <script src = "../../JavaScript/logout/unlinkWithKakao.js"></script>
+    <script src = "../../JavaScript/item/loginAram.js"></script>
+    <script src = "../../JavaScript/item/loadingOn.js"></script>
+    <script src = "../../JavaScript/item/loadingOff.js"></script>
 
-    <script src = "../../JavaScript/getCurrEndDate.js"></script>
-    <script src = "../../JavaScript/getCurrentDate.js"></script>
-    <script src = "../../JavaScript/getDates.js"></script>
+    <script src = "../../JavaScript/time/getCurrEndDate.js"></script>
+    <script src = "../../JavaScript/time/getCurrentDate.js"></script>
+    <script src = "../../JavaScript/time/getDates.js"></script>
 
-    <script src = "../../JavaScript/modifyBtn.js"></script>
-    <script src = "../../JavaScript/newBtn.js"></script>
-    <script src = "../../JavaScript/deleteBtn.js"></script>
+    <script src = "../../JavaScript/admin/main/modifyBtn.js"></script>
+    <script src = "../../JavaScript/admin/main/newBtn.js"></script>
+    <script src = "../../JavaScript/admin/main/deleteBtn.js"></script>
+
+    <script src = "../../JavaScript/admin/read/adminDateSearch.js"></script> <!--admin page의 search 버튼 -->
+    <script src = "../../JavaScript/admin/read/scheduleCard.js"></script>
 
     <title>SK GHOST ADMIN</title>
 </head>
-<script>
-</script>
-
 <body id = "body">
 <input type="hidden" id="flagValue" th:value="${flag}" />
 <input type="hidden" id="firstValue" th:value="${firstValue}" />
@@ -53,9 +50,8 @@
         <input type="date" id="date-range-end" name="date-range-end"> <!-- 종료일 -->
         <input type="submit" id = "date_submit" value="Search">
     </form>
-
-
 </section>
+
 <!-- 전체 seciton은 top과 bottom으로 구성된다.-->
 <section id="section_top">
     <div id="image-container">
@@ -102,11 +98,11 @@
     let used = document.getElementById("flagValue").value;
     console.log("used 값 : " + used)
     if (used !== "") {
-        alert("현재 " + used + " 운영자님 수정 중이며 조회만 가능합니다.\n페이지 새로고침을 통해 완료 여부를 확인할 수 있습니다.")
+        alert("현재 " + used + " 운영자님 스케줄 조정 중이며, 조회만 가능합니다.\n페이지 새로 고침을 통해 완료 여부를 확인할 수 있습니다.")
         loadingOff()
         usedLogoAlarm.style.fontSize = "20px";
 
-        usedLogoAlarm.innerText = "현재 " + used + " manager님 수정 중";
+        usedLogoAlarm.innerText = "현재 " + used + " manager님 스케줄 조정 중";
     }
     else {
         let xhr1 = new XMLHttpRequest();
@@ -173,7 +169,6 @@
                     else {
                         modifyBtn(startD, endD);
                     }
-
                 }
                 else {
                     alert('시작일은 종료일보다 작아야 합니다. 다시 입력해주세요.');
@@ -187,7 +182,6 @@
 
             // 클릭 이벤트에 리스너 등록
             deleteButton.addEventListener('click', function() {
-
                 let startTag = document.getElementById('date-range-start');
                 let endTag = document.getElementById('date-range-end');
 
@@ -198,8 +192,6 @@
                 const startDate = new Date(startD);
                 const endDate = new Date(endD);
                 const daysDifference = (endDate - startDate) / (1000 * 60 * 60 * 24);
-                console.log("수정 시 날짜 차이", daysDifference)
-
 
                 // 시작일과 종료일이 모두 입력되었고, 시작일이 종료일보다 작은 경우
                 if (startD && endD && startD <= endD) {
@@ -211,7 +203,6 @@
                     else {
                         deleteBtn(startD, endD);
                     }
-
                 }
                 else {
                     alert('시작일은 종료일보다 작아야 합니다. 다시 입력해주세요.');
@@ -237,11 +228,7 @@
             // 값을 console에 출력
             const startDate = new Date(startDateString);
             const endDate = new Date(endDateString);
-            console.log('시작일:', startDateString);
-            console.log('종료일:', endDateString);
-            //console.log(getDates(startDate, endDate));
             let cards = getDates(startDate, endDate);
-            console.log(cards)
 
             let xhr1 = new XMLHttpRequest();
             let payloadFront = {"date": cards};
@@ -252,7 +239,6 @@
             xhr1.onload = function () {
                 if (xhr1.status === 200) {
                     let results = JSON.parse(xhr1.response);
-                    console.log(results);
 
                     let idx = 0
                     for (let card of cards){
@@ -267,7 +253,6 @@
 
                     // 초기 로딩이 끝나면, off
                     let isItFirst = document.getElementById("firstValue").value;
-                    console.log("isItFirst 값 : " + isItFirst)
                     if (isItFirst === "true") {
                         loginAram(userImage, userId)
                     }
