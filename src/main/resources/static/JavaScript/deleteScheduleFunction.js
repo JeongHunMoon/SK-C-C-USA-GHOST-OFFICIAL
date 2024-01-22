@@ -94,21 +94,20 @@ function deleteScheduleFunction() {
                                     clickFlags[tableIndex] *= -1;
                                 }
                             })
-
                         })
                     }
                     else {
-                        alert("삭제할 카드가 없습니다.")
                         loadingOff()
                         deleteOnBtn()
-                        window.location.href = "/admin?id=" + userId
+                        deleteSession(userId)
+                        alert("삭제할 카드가 없습니다.")
                     }
                 }
                 else {
                     alert("스케줄을 불러오던 중 서버에 오류가 있습니다. \n재시도 부탁드립니다.")
                     loadingOff()
                     deleteOnBtn()
-                    window.location.href = "/admin?id=" + userId
+                    deleteSession(userId)
                 }
             }
 
@@ -116,14 +115,14 @@ function deleteScheduleFunction() {
 
             // 서버에서 일정시간 응답이 없을 때,
             xhr1.ontimeout = function () {
+                deleteSession(userId)
                 alert("서버 처리 지연.\n재시도 부탁드립니다.")
-                window.location.href = "/"
             };
 
             // 넷웤이 없는데 요청할때 실행
             xhr1.onerror = function () {
+                deleteSession(userId)
                 alert("인터넷 접속을 확인하세요.\n재시도 부탁드립니다.")
-                window.location.href = "/"
             };
         }
         // 로그인 실패 시
@@ -131,7 +130,7 @@ function deleteScheduleFunction() {
             deleteOnBtn()
             loadingOff()
             window.location.href = "/"
-            alert("로그인 세션이 만료되었습니다. 로그인을 다시해주세요.")
+            alert("로그인 세션이 만료되었습니다. 로그인 후 삭제 페이지에서 cancel을 눌러주세요!")
         }
     })
 }

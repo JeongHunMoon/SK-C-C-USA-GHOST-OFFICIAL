@@ -26,7 +26,7 @@ function userInfoChangeFuntion() {
                         loadingOff()
                         editBtnOn()
                         unlinkWithKakao()
-                        alert("You are not registered in the system.\nContact the Ghost Team.")
+                        alert("You are not registered in the system.\nPlease click the “Join” button to join.")
                     }
 
                     // 서버에 등록된 ROC 사람인 경우
@@ -63,6 +63,10 @@ function userInfoChangeFuntion() {
                     fetch(url, {method: 'GET', headers: headers})
                         .then(response => {
                             if (!response.ok) {
+                                loadingOff()
+                                editBtnOn()
+                                unlinkWithKakao()
+                                alert("죄송합니다. 서버에서 매니저님 계정이 존재하는지 확인 중 에러가 발생했습니다.\n재시도 부탁드립니다.")
                                 throw new Error('Network response was not ok');
                             }
                             return response.json();
@@ -87,7 +91,7 @@ function userInfoChangeFuntion() {
                                         loadingOff()
                                         editBtnOn()
                                         unlinkWithKakao()
-                                        alert("You are not registered in the system.\nContact the Ghost Team.")
+                                        alert("You are not registered in the system.\nPlease click the “Join” button to join.")
                                     }
 
                                     // 서버에 등록된 ROC 사람인 경우
@@ -115,7 +119,7 @@ function userInfoChangeFuntion() {
                     loadingOff()
                     editBtnOn()
                     unlinkWithKakao()
-                    alert("You are not registered in the system.\nContact the Ghost Team.")
+                    alert("Please agree to join!")
                     window.location.href = "/"
                 },
             })

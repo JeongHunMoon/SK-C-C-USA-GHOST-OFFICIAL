@@ -3,7 +3,11 @@ function unlinkWithKakao() {
     Kakao.Auth.logout(function() {
         console.log('Successfully logged out');
     }, function(error) {
-        console.log('Logout failed, reason: ' + error);
+        Kakao.Auth.logout(function() {
+            console.log('Successfully logged out');
+        }, function(error) {
+            console.log('Logout failed, reason: ' + error);
+        });
     });
 
 }

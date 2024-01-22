@@ -61,10 +61,10 @@ async function sendFriends() {
 
         // DB에 금일 대응 운영자가 없으면 아래 함수가 호출됨. > 시스템 오류로 호출되면 안되는 구문이지만 > 시스템 down 방지 차 작성 됨.
         if (shiftAdminInfo.length === 0) {
-            alert("DB에 오늘 운영자가 없네요?\n오늘은 수동으로 출근 보고 해주시고, GHOST 팀에게 이를 알려주세요!");
             button.disabled = false;
             button.style.opacity = 1; // 투명도를 0.5로 설정
             loadingOff();
+            alert("DB에 오늘 운영자가 없네요?\n오늘은 수동으로 출근 보고 해주시고, GHOST 팀에게 이를 알려주세요!");
             window.location.href = '/'; // 메인으로 redirect
             return;
         }
@@ -99,12 +99,6 @@ async function sendFriends() {
 
         // 날짜, shift, 금일 운영자 정보 > 프로젝트 방에 보고될 나에게 메시지 전송
         sendToMe(allInfo[0].date, allInfo[0].shift, allInfo)
-
-        button.disabled = false;
-        button.style.opacity = 1; // 투명도를 0.5로 설정
-        loadingOff();
-        window.location.href = '/'; // 메인으로 redirect
-        alert("출근 보고 성공.")
     }
 }
 
@@ -129,9 +123,12 @@ async function sendKakaoMessage(uuid, messageScript) {
             success: function (response) {
                 resolve(response);
             },
-            fail: function (error) {
+            fail: function (error) { // 메시지 보내기 실패지 발생.
+                loadingOff();
+                alert("메시지를 보낼 수 있는 운영자님께는 성공적으로 보냈어요!\n하지만 일부 운영자님은 아직 메시지를 받을 수 없는 상태입니다.\n\n빠른 시일내 운영자님꼐 가입 요청하겠습니다.\n이를 GHOST팀에게 알려주세요!\n\n감사합니다 :)");
+                window.location.href = "/"
                 reject(error);
             },
-        });*/
+        }); */
     });
 }
