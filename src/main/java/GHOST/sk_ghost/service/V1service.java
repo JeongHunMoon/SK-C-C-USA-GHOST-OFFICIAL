@@ -66,8 +66,6 @@ public class V1service {
     @Transactional
     public void updateSchedule(List<Map<String, String>> itemList) {
         try {
-            System.out.println("변경 준비 완료 : " + itemList);
-
             for (Map<String, String> scheduleItem : itemList) {
                 // 업데이트는 반드시
                 v1Dao.updateSchedule(scheduleItem);
@@ -95,7 +93,6 @@ public class V1service {
     // 해당 날짜가 history 테이블에 있는지 검사
     public boolean isDateHistory(String date) {
         int count = v1Dao.isDateHistory(date);
-        System.out.println("서비스 : " + date + "가 디비에 있나? >" + count);
         return count > 0;
     }
 

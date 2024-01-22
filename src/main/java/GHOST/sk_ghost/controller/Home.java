@@ -34,9 +34,7 @@ public class Home {
     @PostMapping("/check")
     public ResponseEntity<String> checkOfUser(@RequestBody CheckIDInDB checkIDInDB) {
         String who = checkIDInDB.getId(); // who는 프론트에서 전달 받은 로그인 시도한 사용자의 카카오 id.
-        System.out.println("??"+who);
         List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
-        System.out.println("ROC Member" + lists);
 
         // 로그인한 사용자가 올바른지 검증
         for (Map<String, String> list : lists) {
@@ -60,7 +58,6 @@ public class Home {
             @RequestParam(value = "first", required = false) String first,
             Model model) {
         List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
-        System.out.println("ROC Member" + lists);
 
         // 로그인한 사용자가 올바른지 검증
         for (Map<String, String> list : lists) {
@@ -73,7 +70,6 @@ public class Home {
                     // "first" 파라미터가 전달된 경우 운영자 페이지에 처음 접속한 경우이므로 Model 저달
                     model.addAttribute("firstValue", first);
                 }
-                System.out.println(id + lists);
                 return "home/admin";
             }
         }
@@ -83,11 +79,7 @@ public class Home {
     //출근하기 기능이다. 디비에서 금일의 대응자님 조회하여 list로 조히하여 프론트로 전송한다.
     @PostMapping("/goingToWork")
     public ResponseEntity<List<Map<String, String>>> goingToWork(@RequestBody AdminShiftParam requestBody) {
-        System.out.println(requestBody);
         List<Map<String, String>> lists = v1service.shiftAdminList(requestBody);
-
-        System.out.println("조회된 금일 담당 대응자 분들 > " + lists);
-
         return ResponseEntity.ok(lists);
     }
 
@@ -119,16 +111,13 @@ public class Home {
     public ResponseEntity<String> checkForasking(@RequestBody CheckIDInDB checkIDInDB) {
         String who = checkIDInDB.getId(); // who는 프론트에서 전달 받은 로그인 시도한 사용자의 카카오 id이다.
         List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
-        System.out.println(lists);
 
         for (Map<String, String> list : lists) { // 사용자 검증을 진행한다.
             String rocMember = list.get("id");
             if (rocMember.equals(who)) {
-                System.out.println("이미 있음.");
                 return ResponseEntity.ok(list.get("name")); //정상적으로 DB에 있는 사용자이므로 생성된 해쉬를 프론트로 전달한다.
             }
         }
-        System.out.println("없음.");
         return ResponseEntity.ok("False"); //DB에 없는 사용자가 로그인을 시도했기에 접근을 차단한다.
     }
 
@@ -153,13 +142,11 @@ public class Home {
     public HashMap<String, String> checkTypo(@RequestBody Map<String, String> requestBody) {
         String checkTypo = requestBody.get("CheckTypo"); // 프론트에서 보낸 입력값.
         List<Map<String, String>> lists = v1service.userList();
-        System.out.println("CheckTypo"+lists);
 
         HashMap<String, String> rocALlNames = new HashMap<>();
         for (Map<String, String> list : lists) {
             rocALlNames.put(list.get("name"), list.get("process"));
         }
-        System.out.println(rocALlNames);
         return rocALlNames;
     }
 
@@ -167,10 +154,8 @@ public class Home {
     @PostMapping("/judgeName")
     public ResponseEntity<String> judgeName(@RequestBody UserNameJudgement userNameJudgement) throws Exception{
         try {
-            System.out.println("Controller : 회원가입시 전달된 이름 : " + userNameJudgement.getName());
             boolean res = v1service.judgeUserNameInDB(userNameJudgement);
 
-            System.out.println("회원가입시 이름 있는지 판단 > " + res);
             if (!res) return ResponseEntity.ok("True");
             else return ResponseEntity.ok("False");
         }
@@ -183,7 +168,6 @@ public class Home {
     @PostMapping("/insertJoinInfo")
     public ResponseEntity<String> insertJoinInfo(@RequestBody InsertNewUser insertNewUser) throws Exception {
         try {
-            System.out.println("Controller : 가입 입력 시 전달된 정보 : " + insertNewUser);
             v1service.insertJoinInfoToDB(insertNewUser);
             return ResponseEntity.ok("True");
         }
@@ -197,7 +181,6 @@ public class Home {
     @PostMapping("/updateJoinInfo")
     public ResponseEntity<String> updateJoinInfo(@RequestBody UpdateUser updateUser) throws Exception {
         try {
-            System.out.println("Controller : 변경 시 전달된 정보 : " + updateUser);
             v1service.updateJoinInfoToDB(updateUser);
             return ResponseEntity.ok("True");
         }
@@ -229,7 +212,6 @@ public class Home {
     public ResponseEntity<Map<String, String>> getUserInfoFromId(@RequestBody CheckIDInDB checkIDInDB) throws Exception {
         try {
             Map<String, String> userInfo = v1service.getUserInfoFromId(checkIDInDB.getId());
-            System.out.println(userInfo);
             if (!userInfo.isEmpty()) {
                 return ResponseEntity.ok(userInfo);
             } else {
