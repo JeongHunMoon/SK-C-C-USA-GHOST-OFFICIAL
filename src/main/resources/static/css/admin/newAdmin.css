@@ -176,7 +176,7 @@
 
 .schedule_div {
     max-width: 450px; /* 최대 너비 */
-    width: 100%; /* 최대 크기보다 작은 경우 100%로 설정 */
+    width: 98%; /* 최대 크기보다 작은 경우 100%로 설정 */
 
     height: 97%;
     flex-shrink: 0;
