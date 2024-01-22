@@ -8,7 +8,7 @@
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale = 1.0, user-scalable=no">
 
   <!-- CSS 정의 -->
-  <link rel = "stylesheet" href = "css/init.css">
+  <link rel = "stylesheet" href = "css/init/init.css">
   <link rel = "stylesheet" href = "css/admin/modiyAdmin.css">
 
   <!-- 카카오 API를 사용하기 위한 라이브러리 선언-->
@@ -16,26 +16,25 @@
   <script> Kakao.init('2e39201190179fe7cd5eb25903daba8a'); </script> <!--SDK를 초기화 (애플리케이션>앱설정>앱키:JAVASCRIPTKEY -->
 
   <!-- 자바스크립트 함수 정의 -->
-  <script src = "../../JavaScript/unlinkWithKakao.js"></script>
-  <script src = "../../JavaScript/loginAram.js"></script>
-  <script src = "../../JavaScript/loadingOn.js"></script>
-  <script src = "../../JavaScript/loadingOff.js"></script>
+  <script src = "../../JavaScript/logout/unlinkWithKakao.js"></script>
+  <script src = "../../JavaScript/item/loginAram.js"></script>
+  <script src = "../../JavaScript/item/loadingOn.js"></script>
+  <script src = "../../JavaScript/item/loadingOff.js"></script>
 
-  <script src = "../../JavaScript/getCurrEndDate.js"></script>
-  <script src = "../../JavaScript/getCurrentDate.js"></script>
-  <script src = "../../JavaScript/getDates.js"></script>
+  <script src = "../../JavaScript/time/getCurrEndDate.js"></script>
+  <script src = "../../JavaScript/time/getCurrentDate.js"></script>
+  <script src = "../../JavaScript/time/getDates.js"></script>
 
-  <script src = "../../JavaScript/createCardStored.js"></script>
-  <script src = "../../JavaScript/modifyScheduleFunction.js"></script>
-  <script src = "../../JavaScript/modifyCancelBtn.js"></script>
-  <script src = "../../JavaScript/modifySaveBtn.js"></script>
-  <script src = "../../JavaScript/deleteSession.js"></script>
+  <script src = "../../JavaScript/admin/create/createCardStored.js"></script>
+  <script src = "../../JavaScript/admin/delete/deleteSession.js"></script>
+
+  <script src = "../../JavaScript/admin/update/modifyScheduleFunction.js"></script>
+  <script src = "../../JavaScript/admin/update/modifyCancelBtn.js"></script>
+  <script src = "../../JavaScript/admin/update/modifySaveBtn.js"></script>
+
 
   <title>Modify schedule</title>
 </head>
-<script>
-</script>
-
 <body id = "body">
 <!-- 메인 해더-->
 <header id = "header">
@@ -86,5 +85,4 @@
 <script>
   modifyScheduleFunction();
 </script>
-
 </html>

@@ -1,4 +1,4 @@
-package GHOST.sk_ghost.dto.LoginDto;
+package GHOST.sk_ghost.dto.loginDto;
 
 import lombok.Getter;
 import lombok.Setter;

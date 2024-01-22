@@ -1,6 +1,11 @@
 package GHOST.sk_ghost.controller;
 
+import GHOST.sk_ghost.dto.OP.CheckIDInDB;
+import GHOST.sk_ghost.dto.admin.LastShiftDate;
+import GHOST.sk_ghost.dto.admin.SaveData;
 import GHOST.sk_ghost.service.V1service;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -20,42 +25,27 @@ public class Admin {
     @Autowired
     private V1service v1service; // Service 호출을 위한 객체
 
+    @Getter
+    @Setter
     private static String newAdminhashValue = null;
 
-    // 미사용 라우터(삭제 예정)
-    @GetMapping("/done")
-    @ResponseBody
-    public String done(HttpSession session, @RequestParam String id) {
-        session.setMaxInactiveInterval(-1);
-        // 수정된 부분
-        if (newAdminhashValue != null && newAdminhashValue.equals(id)) {
-            session.invalidate(); // 모든 세션 제거 및 session > null
-            newAdminhashValue = null;
-            System.out.println("정상적으로 세션 종료. 다른 사용자 접속 허용");
-        }
-        else {
-            System.out.println("이상한 사용자가 종료 처리 요청함");
-        }
-        return "OK"; // 수정된 부분
-    }
-
-    // 카카오 id > 사용자 이름 매핑하는 API이다.
+    // 현재 운영자 페이지 접속시 누가 사용 중인지 알림을 주는 라우터. 카카오 id > 사용자 이름 매핑하는 API이다.
     @PostMapping("/getUsedName")
     @ResponseBody
     public ResponseEntity<String> getUsedName(@RequestBody Map<String, String> requestBody) {
-        if (newAdminhashValue == null) {
+        if (getNewAdminhashValue() == null) {
             return ResponseEntity.ok("False");
         }
         else {
-            return ResponseEntity.ok(v1service.getNameFromId(newAdminhashValue));
+            return ResponseEntity.ok(v1service.getNameFromId(getNewAdminhashValue()));
         }
     }
 
     // 현재 admin_shift 테이블에 등록되어 있는 날짜 중 가장 마지막 날짜를 가져오는 라우터이다.
     @PostMapping("/adminShiftLastDate")
     @ResponseBody
-    public ResponseEntity<String> adminShiftLastDate(@RequestBody Map<String, String> requestBody) {
-        String dateInfo = requestBody.get("date");
+    public ResponseEntity<String> adminShiftLastDate(@RequestBody LastShiftDate lastShiftDate) {
+        String dateInfo = lastShiftDate.getDate();
 
         ArrayList<String> lists = v1service.adminShiftLastDate();
         if (lists.isEmpty()) {
@@ -79,13 +69,13 @@ public class Admin {
     // 생성 페이지의 Save 버튼 클릭 시 동작한다. 현재까지 입력된 데이터를 세션으로 백업한다.
     @PostMapping("/saveData")
     @ResponseBody
-    public ResponseEntity<String> saveData(HttpSession session, @RequestBody Map<String, String> requestBody) {
+    public ResponseEntity<String> saveData(HttpSession session, @RequestBody SaveData saveData) {
         session.setMaxInactiveInterval(-1);
         if (session.getAttribute("myArray") != null) {
             session.removeAttribute("myArray");
         }
 
-        String datas = requestBody.get("datas");
+        String datas = saveData.getDatas();
         boolean flag = false;
         // '?'로 분리
         String[] dataArray = datas.split("\\?");
@@ -120,11 +110,11 @@ public class Admin {
     // 생성시 Save 하였던 세션에 저장된 데이터 프론트로 반환한다.
     @PostMapping("/getSavedData")
     @ResponseBody
-    public ResponseEntity<List<List<String>>> getSavedData(HttpSession session, @RequestBody Map<String, String> requestBody) {
+    public ResponseEntity<List<List<String>>> getSavedData(HttpSession session, @RequestBody CheckIDInDB checkIDInDB) {
         session.setMaxInactiveInterval(-1);
-        String userId = requestBody.get("id");
+        String userId = checkIDInDB.getId();
 
-        if (session.getAttribute("myArray") != null && userId.equals(newAdminhashValue)) {
+        if (session.getAttribute("myArray") != null && userId.equals(getNewAdminhashValue())) {
             @SuppressWarnings("unchecked")
             List<List<String>> savedD = (List<List<String>>) session.getAttribute("myArray");
             System.out.println("저장된 세션 얻기" + savedD);
@@ -172,26 +162,26 @@ public class Admin {
             if (rocMember.equals(id)) {
                 System.out.println(id + lists);
                 // 세션이 없으면 ? 일단 uuid도 없어야함.
-                if (session == null) { newAdminhashValue = null; }
+                if (session == null) { setNewAdminhashValue(null);}
                 // 크롬에서 세션을 만들었다면,
                 //session.getAttribute("visited") != null
 
-                if (newAdminhashValue != null) {
+                if (getNewAdminhashValue() != null) {
                     System.out.println("==세션 있음.==");
-                    System.out.println(newAdminhashValue);
+                    System.out.println(getNewAdminhashValue());
 
-                    if (newAdminhashValue.equals(id)) {
+                    if (getNewAdminhashValue().equals(id)) {
                         System.out.println("재접속");
                         return ResponseEntity.ok("true");
                     }
                     else {
-                        System.out.println("누군가 쓰고 있음." + newAdminhashValue);
+                        System.out.println("누군가 쓰고 있음." + getNewAdminhashValue());
 
-                        return ResponseEntity.ok(v1service.getNameFromId(newAdminhashValue));
+                        return ResponseEntity.ok(v1service.getNameFromId(getNewAdminhashValue()));
                     }
                 } else {
                     System.out.println("신규 접속");
-                    newAdminhashValue = id;
+                    setNewAdminhashValue(id);
                     session.setMaxInactiveInterval(-1);
                     session.setAttribute("visited", true);
                     return ResponseEntity.ok("true");
@@ -200,7 +190,7 @@ public class Admin {
         }
 
         // 운영자가 아닌사람이 스케줄 생성 시도
-        System.out.println("잘못된 id 맴버" + "현재 사용자 > " + newAdminhashValue);
+        System.out.println("잘못된 id 맴버" + "현재 사용자 > " + getNewAdminhashValue());
         return ResponseEntity.ok("None");
     }
 
@@ -227,22 +217,22 @@ public class Admin {
                 model.addAttribute("start", start);
                 model.addAttribute("end", end);
 
-                if (newAdminhashValue != null) {
+                if (getNewAdminhashValue() != null) {
                     System.out.println("==누군가 수정 중임.==");
-                    System.out.println(newAdminhashValue);
+                    System.out.println(getNewAdminhashValue());
 
-                    if (newAdminhashValue.equals(id)) {
+                    if (getNewAdminhashValue().equals(id)) {
                         System.out.println("재접속");
                         return "home/modifySchedule";
                     }
                     else {
-                        System.out.println("누군가 쓰고 있음." + newAdminhashValue);
-                        model.addAttribute("flag", v1service.getNameFromId(newAdminhashValue)); // 이름으로 전달 필요.
+                        System.out.println("누군가 쓰고 있음." + getNewAdminhashValue());
+                        model.addAttribute("flag", v1service.getNameFromId(getNewAdminhashValue())); // 이름으로 전달 필요.
                         return "home/admin";
                     }
                 } else {
                     System.out.println("신규 접속");
-                    newAdminhashValue = id;
+                    setNewAdminhashValue(id);
                     return "home/modifySchedule";
                 }
             }
@@ -273,22 +263,22 @@ public class Admin {
                 model.addAttribute("start", start);
                 model.addAttribute("end", end);
 
-                if (newAdminhashValue != null) {
+                if (getNewAdminhashValue() != null) {
                     System.out.println("==누군가 수정 중임.==");
-                    System.out.println(newAdminhashValue);
+                    System.out.println(getNewAdminhashValue());
 
-                    if (newAdminhashValue.equals(id)) {
+                    if (getNewAdminhashValue().equals(id)) {
                         System.out.println("재접속");
                         return "home/deleteSchedule";
                     }
                     else {
-                        System.out.println("누군가 쓰고 있음." + newAdminhashValue);
-                        model.addAttribute("flag", v1service.getNameFromId(newAdminhashValue)); // 이름으로 전달 필요.
+                        System.out.println("누군가 쓰고 있음." + getNewAdminhashValue());
+                        model.addAttribute("flag", v1service.getNameFromId(getNewAdminhashValue())); // 이름으로 전달 필요.
                         return "home/admin";
                     }
                 } else {
                     System.out.println("신규 접속");
-                    newAdminhashValue = id;
+                    setNewAdminhashValue(id);
                     return "home/deleteSchedule";
                 }
             }
@@ -425,11 +415,11 @@ public class Admin {
     // CANCEL : 생성에서 사용하는 cancel 버튼 > id get으로 받고, 맴버 검증 수행 후 취소하기
     @GetMapping("/removeCreate")
     public ResponseEntity<String> remove(@RequestParam(name = "id", required = true) String id, HttpSession session) {
-        System.out.println("현재 생성 중인 사람" + newAdminhashValue);
-        if (id.equals(newAdminhashValue)) {
+        System.out.println("현재 생성 중인 사람" + getNewAdminhashValue());
+        if (id.equals(getNewAdminhashValue())) {
             session.setMaxInactiveInterval(-1);
             session.invalidate();
-            newAdminhashValue = null;
+            setNewAdminhashValue(null);
             System.out.println("생성시 세션이 성공적으로 종료되었습니다.");
             return ResponseEntity.ok("true");
 
@@ -441,10 +431,10 @@ public class Admin {
     // CANCEL : 업데이트, delete 에서 사용하는 취소 버튼 > id get으로 받고, 맴버 검증 수행 후 취소하기
     @GetMapping("/removeModify")
     public ResponseEntity<String> removeModify(@RequestParam(name = "id", required = true) String id, HttpSession session) {
-        System.out.println("현재 수정 중인 사람" + newAdminhashValue);
-        if (id.equals(newAdminhashValue)) {
+        System.out.println("현재 수정 중인 사람" + getNewAdminhashValue());
+        if (id.equals(getNewAdminhashValue())) {
             // 사용할 id를 여기에서 활용할 수 있음
-            newAdminhashValue = null;
+            setNewAdminhashValue(null);
             System.out.println("수정시 세션이 성공적으로 종료되었습니다.");
             return ResponseEntity.ok("true");
 
