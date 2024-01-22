@@ -1,8 +1,8 @@
 package GHOST.sk_ghost.dao;
 
-import GHOST.sk_ghost.dto.LoginDto.InsertNewUser;
-import GHOST.sk_ghost.dto.LoginDto.UpdateUser;
-import GHOST.sk_ghost.dto.LoginDto.UserNameJudgement;
+import GHOST.sk_ghost.dto.loginDto.InsertNewUser;
+import GHOST.sk_ghost.dto.loginDto.UpdateUser;
+import GHOST.sk_ghost.dto.loginDto.UserNameJudgement;
 import GHOST.sk_ghost.dto.OP.AdminShiftParam;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

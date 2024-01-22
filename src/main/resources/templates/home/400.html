@@ -6,20 +6,21 @@
     <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script> Kakao.init('2e39201190179fe7cd5eb25903daba8a'); </script> <!--SDK를 초기화 (애플리케이션>앱설정>앱키:JAVASCRIPTKEY -->
 
-    <script src = "../../JavaScript/unlinkWithKakao.js"></script>
+    <!-- 자바스크립트 함수 정의 -->
+    <script src = "../../JavaScript/logout/unlinkWithKakao.js"></script>
+
     <title>Title</title>
 </head>
 <body>
 <h1>Warning!! 잘못된 접근입니다. 로그인 후 이용해주세요!</h1>
 </body>
-
 <script>
     Kakao.Auth.logout(function() {
         console.log('Successfully logged out');
         setTimeout(function() {
             alert("Goodbye :)")
             window.location.href = "/";
-        }, 500); // 2000 밀리초(2초) 후에 "/"로 이동
+        }, 300); // 300 밀리초(0.3초) 후에 "/"로 이동
 
     }, function(error) {
         console.log('Logout failed, reason: ' + error);

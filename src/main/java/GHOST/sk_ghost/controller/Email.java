@@ -1,6 +1,6 @@
 package GHOST.sk_ghost.controller;
 
-import GHOST.sk_ghost.dto.EmailRequestDto;
+import GHOST.sk_ghost.dto.loginDto.EmailRequestDto;
 import GHOST.sk_ghost.service.EmailService;
 import jakarta.mail.MessagingException;
 import org.springframework.stereotype.Controller;

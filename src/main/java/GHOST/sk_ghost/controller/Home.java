@@ -1,10 +1,13 @@
 package GHOST.sk_ghost.controller;
 
-import GHOST.sk_ghost.dto.LoginDto.InsertNewUser;
-import GHOST.sk_ghost.dto.LoginDto.UpdateUser;
-import GHOST.sk_ghost.dto.LoginDto.UserNameJudgement;
+import GHOST.sk_ghost.dto.OP.CheckIDInDB;
+import GHOST.sk_ghost.dto.loginDto.InsertNewUser;
+import GHOST.sk_ghost.dto.loginDto.UpdateUser;
+import GHOST.sk_ghost.dto.loginDto.UserNameJudgement;
 import GHOST.sk_ghost.dto.OP.AdminShiftParam;
 import GHOST.sk_ghost.service.V1service;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,6 +17,8 @@ import java.util.*;
 
 @Controller
 public class Home {
+    @Getter
+    @Setter
     private String hashValue = null; // OP 가 로그인 시 서버에서 접근 가능하도록 해쉬 생성
 
     @Autowired
@@ -27,8 +32,9 @@ public class Home {
 
     // op가 처음 카카오 로그인 시, DB에 저장된 회원인지 검증한다.
     @PostMapping("/check")
-    public ResponseEntity<String> checkOfUser(@RequestBody Map<String, String> requestBody) {
-        String who = requestBody.get("Who"); // who는 프론트에서 전달 받은 로그인 시도한 사용자의 카카오 id.
+    public ResponseEntity<String> checkOfUser(@RequestBody CheckIDInDB checkIDInDB) {
+        String who = checkIDInDB.getId(); // who는 프론트에서 전달 받은 로그인 시도한 사용자의 카카오 id.
+        System.out.println("??"+who);
         List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
         System.out.println("ROC Member" + lists);
 
@@ -39,8 +45,8 @@ public class Home {
 
             // 로그인 요청한 사용자가 OP인 경우만 OP 페이지 접속 허가 > 운영자는 OP 페이지 접속 불가.
             if (rocMember.equals(who) && ((processInfo.equals("AE")) || processInfo.equals("PMO"))) {
-                hashValue = UUID.randomUUID().toString(); // 해쉬값 생성 후 이 사용자에게 부여한다.(사용자를 식별하는 역할)
-                return ResponseEntity.ok(list.get("name")+ "!@#$%" +hashValue); //정상적으로 DB에 있는 사용자이므로 생성된 해쉬를 프론트로 전달한다.
+                setHashValue(UUID.randomUUID().toString()); // 해쉬값 생성 후 이 사용자에게 부여한다.(사용자를 식별하는 역할)
+                return ResponseEntity.ok(list.get("name")+ "!@#$%" + getHashValue()); //정상적으로 DB에 있는 사용자이므로 생성된 해쉬를 프론트로 전달한다.
             }
         }
         return ResponseEntity.ok("False"); //DB에 없는 사용자가 로그인을 시도했기에 접근을 차단한다.
@@ -90,14 +96,14 @@ public class Home {
     // 호출 예시 ex) http://localhost:8080/OP?uuid=12313213dwf232fe231321 > 서버에서 발급된 해쉬가 올바르게 요청되야 OP페이지로 이동함.
     public String goToOpPage(@RequestParam(value = "uuid", required = true) String uuid, Model model) {
         // 해쉬가 없다면 400 오류 페이지 반환
-        if (hashValue == null) {
+        if (getHashValue() == null) {
             return "home/400";
         }
 
         // 정상적으로 해쉬가 일치하므로 사용자르 OP 페이지로 이동시킨다.
-        if (hashValue.equals(uuid)) {
-            model.addAttribute("uuid", hashValue); //model에 key를 uuid, value를 hashValue로 담아서 프론트로 보냄
-            hashValue = null;
+        if (getHashValue().equals(uuid)) {
+            model.addAttribute("uuid", getHashValue()); //model에 key를 uuid, value를 해쉬로 담아서 프론트로 보냄
+            setHashValue(null);
             return "home/OP";
         }
 
@@ -110,8 +116,8 @@ public class Home {
 
     // op가 질문하기 버튼을 눌렀을 떄 DB에 저장된 회원인지 검증한다.
     @PostMapping("/checkForasking")
-    public ResponseEntity<String> checkForasking(@RequestBody Map<String, String> requestBody) {
-        String who = requestBody.get("Who"); // who는 프론트에서 전달 받은 로그인 시도한 사용자의 카카오 id이다.
+    public ResponseEntity<String> checkForasking(@RequestBody CheckIDInDB checkIDInDB) {
+        String who = checkIDInDB.getId(); // who는 프론트에서 전달 받은 로그인 시도한 사용자의 카카오 id이다.
         List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
         System.out.println(lists);
 
@@ -128,8 +134,8 @@ public class Home {
 
     // op가 처음 카카오 로그인 시, DB에 저장된 회원인지 검증한다.
     @PostMapping("/getMe")
-    public ResponseEntity<String> getMe(@RequestBody Map<String, String> requestBody) {
-        String meId = requestBody.get("id"); // who는 프론트에서 전달 받은 로그인 시도한 사용자의 카카오 id이다.
+    public ResponseEntity<String> getMe(@RequestBody CheckIDInDB checkIDInDB) {
+        String meId = checkIDInDB.getId(); // who는 프론트에서 전달 받은 로그인 시도한 사용자의 카카오 id이다.
         List<Map<String, String>> lists = v1service.userList(); // DB를 매퍼로 조회하여, 현재 사용자의 정보를 가져온다.
 
         for (Map<String, String> list : lists) { // 사용자 검증을 진행한다.
@@ -203,9 +209,9 @@ public class Home {
 
     // ID payload REST > name 반환
     @PostMapping("getUserNameFromId")
-    public ResponseEntity<String> getUserNameFromId(@RequestBody Map<String, String> requestBody) throws Exception {
+    public ResponseEntity<String> getUserNameFromId(@RequestBody CheckIDInDB checkIDInDB) throws Exception {
         try {
-            String name = v1service.getNameFromId(requestBody.get("id"));
+            String name = v1service.getNameFromId(checkIDInDB.getId());
             if (!name.equals("False")) {
                 return ResponseEntity.ok(name);
             }
@@ -220,9 +226,9 @@ public class Home {
 
     // ID payload REST > process 반환
     @PostMapping("getUserInfoFromId")
-    public ResponseEntity<Map<String, String>> getUserInfoFromId(@RequestBody Map<String, String> requestBody) throws Exception {
+    public ResponseEntity<Map<String, String>> getUserInfoFromId(@RequestBody CheckIDInDB checkIDInDB) throws Exception {
         try {
-            Map<String, String> userInfo = v1service.getUserInfoFromId(requestBody.get("id"));
+            Map<String, String> userInfo = v1service.getUserInfoFromId(checkIDInDB.getId());
             System.out.println(userInfo);
             if (!userInfo.isEmpty()) {
                 return ResponseEntity.ok(userInfo);
@@ -233,5 +239,4 @@ public class Home {
             return ResponseEntity.ok(Collections.emptyMap());
         }
     }
-
 }

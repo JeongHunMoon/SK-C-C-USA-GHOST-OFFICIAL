@@ -8,9 +8,8 @@
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, minimum-scale = 1.0, user-scalable=no">
 
   <!-- CSS 정의 -->
-  <link rel = "stylesheet" href = "css/init.css">
+  <link rel = "stylesheet" href = "css/init/init.css">
   <link rel = "stylesheet" href = "css/login/login.css">
-  <link rel = "stylesheet" href = "css/OP/EndReport.css">
   <link rel = "stylesheet" href = "css/login/emailSubmit.css">
   <link rel = "stylesheet" href = "css/login/emailAuth.css">
   <link rel = "stylesheet" href = "css/login/emailAuth.css">
@@ -22,23 +21,23 @@
   <script> Kakao.init('2e39201190179fe7cd5eb25903daba8a'); </script> <!--SDK를 초기화 (애플리케이션>앱설정>앱키:JAVASCRIPTKEY -->
 
   <!-- 자바스크립트 함수 정의 -->
-  <script src = "../../JavaScript/unlinkWithKakao.js"></script>
-  <script src = "../../JavaScript/loginAram.js"></script>
-  <script src = "../../JavaScript/loadingOn.js"></script>
-  <script src = "../../JavaScript/loadingOff.js"></script>
+  <script src = "../../JavaScript/logout/unlinkWithKakao.js"></script>
+  <script src = "../../JavaScript/item/loginAram.js"></script>
+  <script src = "../../JavaScript/item/loadingOn.js"></script>
+  <script src = "../../JavaScript/item/loadingOff.js"></script>
 
-  <script src = "../../JavaScript/loginOPWithKakao.js"></script>
-  <script src = "../../JavaScript/loginWithKakaoForAdmin.js"></script>
-  <script src = "../../JavaScript/unlinkWithKakao.js"></script>
-  <script src = "../../JavaScript/questionFunction.js"></script>
-  <script src = "../../JavaScript/refreshAccessToken.js"></script>
-  <script src = "../../JavaScript/joinFunction.js"></script>
-  <script src = "../../JavaScript/userInfoChangeFuntion.js"></script>
-  <script src = "../../JavaScript/emailSubmit.js"></script>
-  <script src = "../../JavaScript/emailAuth.js"></script>
-  <script src = "../../JavaScript/signUp.js"></script>
+  <script src = "../../JavaScript/signUp/joinFunction.js"></script>
+  <script src = "../../JavaScript/signUp/userInfoChangeFuntion.js"></script>
+  <script src = "../../JavaScript/signUp/emailSubmit.js"></script>
+  <script src = "../../JavaScript/signUp/emailAuth.js"></script>
+  <script src = "../../JavaScript/signUp/signUp.js"></script>
+
+  <script src = "../../JavaScript/login/loginOPWithKakao.js"></script>
+  <script src = "../../JavaScript/login/loginWithKakaoForAdmin.js"></script>
+  <script src = "../../JavaScript/ask/questionFunction.js"></script>
+
+
   <title>SK GHOST MAIN</title>
-
 </head>
 
 <body id = "body">
@@ -53,7 +52,6 @@
       <span id = "change">Edit</span>
     </div>
   </div>
-
 </header>
 
 <!-- 전체 seciton은 top과 bottom으로 구성된다.-->
@@ -81,10 +79,10 @@
     <span id = "text2">SE Login</span>
   </button>
 
-  <!-- 질문 하기 버튼  -->
+  <!-- 질문 하기 버튼
   <button id = "question" onClick="questionFunction()">
     <span id = "text3">Ask me</span>
-  </button>
+  </button>-->
 </section>
 
 <!-- 메인 푸터  -->
@@ -144,5 +142,4 @@
   })
 
 </script>
-
 </html>

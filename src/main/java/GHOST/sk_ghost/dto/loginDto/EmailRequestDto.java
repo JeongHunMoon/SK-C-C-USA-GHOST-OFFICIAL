@@ -1,4 +1,4 @@
-package GHOST.sk_ghost.dto;
+package GHOST.sk_ghost.dto.loginDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
