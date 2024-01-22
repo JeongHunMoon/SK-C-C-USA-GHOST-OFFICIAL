@@ -61,7 +61,7 @@
       <span class = "bntText">Start Work</span>
     </button>
 
-    <button id="custom-endwork-btn" onClick="endReport()">
+    <button id="custom-endwork-btn">
       <span class = "bntText"> End Work</span>
     </button>
   </div>
@@ -94,6 +94,19 @@
       loginAram(statusObj.user.kakao_account.profile.profile_image_url, statusObj.user.properties.nickname)
     }
   })
+</script>
+
+<script>
+  document.getElementById("custom-endwork-btn").addEventListener('click', function() {
+    let btn = document.getElementById("custom-endwork-btn")
+    let btn2 = document.getElementById("custom-startwork-btn")
+    btn.disabled = true;
+    btn.style.opacity = 0.5;
+    btn2.disabled = true;
+    btn2.style.opacity = 0.5;
+
+    endReport()
+  });
 </script>
 
 </html>

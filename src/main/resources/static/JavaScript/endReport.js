@@ -117,10 +117,22 @@ function cancelInput() {
 
     // Remove the input fields and wrapper from the body
     document.body.removeChild(document.getElementById('inputWrapper'));
+    endReportBtnOn()
 }
 
 // 입력된 값이 공백이거나 숫자이면 true를 반화한다. 그 이외 값은 잘못된 입력으로 간주한다.  
 function isValidNumber(value) {
     // Check if the value is a valid number
     return !isNaN(value) || value === '';
+}
+
+
+function endReportBtnOn() {
+    let btn = document.getElementById("custom-endwork-btn")
+    btn.disabled = false;
+    btn.style.opacity = 1;
+
+    let btn2 = document.getElementById("custom-startwork-btn")
+    btn2.disabled = false;
+    btn2.style.opacity = 1;
 }
