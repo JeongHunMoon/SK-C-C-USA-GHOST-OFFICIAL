@@ -1,7 +1,5 @@
 // Admin 페이지에서 search 버튼을 클릭하면 실행되는 함수이다.
 function adminDateSearch() {
-    // 폼 요소를 가져옴
-
     // 시작일과 종료일의 input 요소를 가져옴
     const startDateInput = document.getElementById('date-range-start');
     const endDateInput = document.getElementById('date-range-end');
@@ -20,20 +18,12 @@ function adminDateSearch() {
 
         // 시작일과 종료일이 모두 입력되었고, 시작일이 종료일보다 작은 경우
         if (startDateString && endDateString && startDateString <= endDateString) {
-            // 기존의 카드 값 초기화.
-            // "image-container" id를 가진 div 요소 가져오기
             const imageContainer = document.getElementById('image-container');
-
-            // "schedule_div" 클래스를 가진 모든 div 요소 가져오기
             const scheduleDivs = imageContainer.getElementsByClassName('schedule_div');
 
-            // 값을 console에 출력
             const startDate = new Date(startDateString);
             const endDate = new Date(endDateString);
-            console.log('시작일:', startDateString);
-            console.log('종료일:', endDateString);
             const daysDifference = (endDate - startDate) / (1000 * 60 * 60 * 24);
-            console.log("차이", daysDifference)
 
             if (daysDifference > 180) {
                 startDateInput.value = getCurrentDate();
@@ -48,9 +38,7 @@ function adminDateSearch() {
                 scheduleDivs[0].remove();
             }
 
-            //console.log(getDates(startDate, endDate));
             let cards = getDates(startDate, endDate);
-            console.log(cards)
 
             let xhr1 = new XMLHttpRequest();
             let payloadFront = {"date": cards};
@@ -106,42 +94,6 @@ function adminDateSearch() {
         }
     });
 }
-
-/*
-// 오늘 날짜를 가져오는 함수
-function getCurrentDate() {
-    const today = new Date();
-    const year = today.getFullYear();
-    let month = today.getMonth() + 1;
-    let day = today.getDate();
-
-    // 한 자리수인 경우 앞에 0을 추가
-    month = month < 10 ? '0' + month : month;
-    day = day < 10 ? '0' + day : day;
-
-    return `${year}-${month}-${day}`;
-}
-
-// 끝 날짜를 가져오는 함수
-function getCurrEndDate() {
-    const endDate = new Date();
-    endDate.setDate(endDate.getDate() + 6);
-    return endDate.toISOString().split('T')[0];
-}
-
-// 날짜 범위에 해당하는 날짜들을 배열로 생성하는 함수
-function getDates(startDate, endDate) {
-    const dateArray = [];
-    let currentDate = startDate;
-
-    // 날짜 간의 범위를 계산하며 배열에 추가
-    while (currentDate <= endDate) {
-        dateArray.push(currentDate.toISOString().split('T')[0]);
-        currentDate.setDate(currentDate.getDate() + 1);
-    }
-    return dateArray;
-}
-*/
 
 function btnOff() {
     const dateForm = document.getElementById('dateForm');

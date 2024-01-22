@@ -6,19 +6,6 @@ async function sendFriends() {
     loadingOn();
     let allInfo = []
 
-    function getCurrentDate() {
-        const today = new Date();
-        const year = today.getFullYear();
-        let month = today.getMonth() + 1;
-        let day = today.getDate();
-
-        // 한 자리수인 경우 앞에 0을 추가
-        month = month < 10 ? '0' + month : month;
-        day = day < 10 ? '0' + day : day;
-
-        return `${year}-${month}-${day}`;
-    }
-
     function getNextDate() {
         const today = new Date();
         const nextDate = new Date(today);
@@ -47,7 +34,6 @@ async function sendFriends() {
     else if (isCurrentTimeInEveningRange()) {
         let friendInfor = {"date": getCurrentDate(),  "shift" : "E"};
         xhr_friend.send(JSON.stringify(friendInfor)); // REST Request
-        console.log(friendInfor)
         console.log("Evening 시각")
     }
     else if (isCurrentTimeInNightRange() === 0) {
@@ -75,10 +61,10 @@ async function sendFriends() {
 
         // DB에 금일 대응 운영자가 없으면 아래 함수가 호출됨. > 시스템 오류로 호출되면 안되는 구문이지만 > 시스템 down 방지 차 작성 됨.
         if (shiftAdminInfo.length === 0) {
-            alert("DB에 오늘 운영자가 없네요?\n오늘은 수동으로 출근 보고 해주시고, GHOST 팀에게 이를 알려주세요!");
             button.disabled = false;
             button.style.opacity = 1; // 투명도를 0.5로 설정
             loadingOff();
+            alert("DB에 오늘 운영자가 없네요?\n오늘은 수동으로 출근 보고 해주시고, GHOST 팀에게 이를 알려주세요!");
             window.location.href = '/'; // 메인으로 redirect
             return;
         }
@@ -99,9 +85,6 @@ async function sendFriends() {
 
         // 공정별 정렬 > 전 조 화 모 W 수 공 순서로 정렬
         allInfo.sort((a, b) => a.Sort - b.Sort);
-        console.log("이 분들께 메시지가 전송 돼요! > ");
-        console.log(allInfo);
-
 
         // 각 대응자 마다 모두 받아야할 메시지의 템플릿이 다르므로 전송될 만큼 메시지 REST가 호출된다.
         for (let i = 0; i < allInfo.length; i++) {
@@ -116,20 +99,12 @@ async function sendFriends() {
 
         // 날짜, shift, 금일 운영자 정보 > 프로젝트 방에 보고될 나에게 메시지 전송
         sendToMe(allInfo[0].date, allInfo[0].shift, allInfo)
-
-        button.disabled = false;
-        button.style.opacity = 1; // 투명도를 0.5로 설정
-        loadingOff();
-        //window.location.href = '/'; // 메인으로 redirect
-        console.log("출근 보고 성공")
-        alert("출근 보고 성공.")
     }
 }
 
 // Kakao 메시지 전송 함수
 async function sendKakaoMessage(uuid, messageScript) {
     return new Promise((resolve, reject) => {
-        console.log("메시지 전송 > " + uuid + " : " + messageScript);
         resolve()
         /*
         Kakao.API.request({
@@ -148,9 +123,12 @@ async function sendKakaoMessage(uuid, messageScript) {
             success: function (response) {
                 resolve(response);
             },
-            fail: function (error) {
+            fail: function (error) { // 메시지 보내기 실패지 발생.
+                loadingOff();
+                alert("메시지를 보낼 수 있는 운영자님께는 성공적으로 보냈어요!\n하지만 일부 운영자님은 아직 메시지를 받을 수 없는 상태입니다.\n\n빠른 시일내 운영자님꼐 가입 요청하겠습니다.\n이를 GHOST팀에게 알려주세요!\n\n감사합니다 :)");
+                window.location.href = "/"
                 reject(error);
             },
-        });*/
+        }); */
     });
 }

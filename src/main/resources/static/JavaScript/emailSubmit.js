@@ -52,14 +52,13 @@ function emailSubmitBtn(emailBackground) {
             // REST POST
             xhr_sendEmail.onload = function () {
                 if (xhr_sendEmail.status === 200) {
-                    alert("이메일에서 인증번호를 확인해주세요");
                     loadingOff()
                     emailAuth(xhr_sendEmail.responseText, emailBackground);
                 }
                 else {
-                    alert("이메일 서버에 오류가 있습니다. \n재시도 부탁드립니다.");
                     loadingOff()
                     unlinkWithKakao()
+                    alert("이메일 서버에 오류가 있습니다. \n재시도 부탁드립니다.");
                     window.location.href = "/"
                 }
             };

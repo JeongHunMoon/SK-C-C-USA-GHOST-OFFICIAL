@@ -29,6 +29,7 @@ function signUp(emailBackgroundDiv){
                         <option value="WMS">WMS</option>
                         <option value="COLL">Collection</option>
                         <option value="COMM">Common</option>
+                        <option value="PMO">PMO</option>
                     </select>   
                     <input type = "button" value = "DONE" id = "signUpModalSubmit">
                 </div>
@@ -97,8 +98,8 @@ function memberSubmitBtn(nowUserId, emailBackgroundDiv) {
                             window.location.href = "/"
                         }
                         else {
-                            alert("죄송합니다. 서버에서 매니저님을 생성하는 과정에서 오류가 발생했습니다\n이미 카카오 아이디가 사용 중 인 것 같습니다.\n카카오 계정 변경 후 재시도 부탁드리겠습니다.");
                             unlinkWithKakao()
+                            alert("죄송합니다. 서버에서 매니저님을 생성하는 과정에서 오류가 발생했습니다\n이미 카카오 아이디가 사용 중 인 것 같습니다.\n카카오 계정 변경 후 재시도 부탁드리겠습니다.");
                             window.location.href = "/"
                         }
                     };

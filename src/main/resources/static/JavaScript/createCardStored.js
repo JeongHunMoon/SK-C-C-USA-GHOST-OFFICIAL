@@ -81,7 +81,6 @@ function createCardStored(results, dfe, date, fl) {
     inputTag.setAttribute('id', date + 'ELEC1')
     elec_1_N.appendChild(inputTag)
 
-
     const elec_1_D = elecRow.insertCell();
     inputTag = document.createElement('input')
     inputTag.value = elec_info1.find(item => item.shift === "D")?.name || "";
@@ -119,8 +118,6 @@ function createCardStored(results, dfe, date, fl) {
     elec_2_E.appendChild(inputTag)
     elec_2_E.style.borderRight = "1px solid transparent"
 
-
-
     //조립 정보 가공
     let cell_info1 = []
     let cell_info2 = []
@@ -134,7 +131,6 @@ function createCardStored(results, dfe, date, fl) {
             }
         }
     });
-
 
     //// 조립 ////
     const cellRow = table.insertRow();
@@ -189,7 +185,6 @@ function createCardStored(results, dfe, date, fl) {
     cell_2_E.appendChild(inputTag)
     cell_2_E.style.borderRight = "1px solid transparent"
 
-
     //화성 정보 가공
     let form_info1 = []
     let form_info2 = []
@@ -203,7 +198,6 @@ function createCardStored(results, dfe, date, fl) {
             }
         }
     });
-
 
     //// 화성 ////
     const formRow = table.insertRow();
@@ -235,7 +229,6 @@ function createCardStored(results, dfe, date, fl) {
     form_1_E.appendChild(inputTag)
     form_1_E.style.borderRight = "1px solid transparent"
 
-
     // 화성 2차
     const formRow2 = table.insertRow();
     const form_2 = formRow2.insertCell();
@@ -260,7 +253,6 @@ function createCardStored(results, dfe, date, fl) {
     form_2_E.appendChild(inputTag)
     form_2_E.style.borderRight = "1px solid transparent"
 
-
     //모듈 정보 가공
     let pack_info1 = []
     let pack_info2 = []
@@ -274,7 +266,6 @@ function createCardStored(results, dfe, date, fl) {
             }
         }
     });
-
 
     //// 모듈 ////
     const packRow = table.insertRow();
@@ -329,7 +320,6 @@ function createCardStored(results, dfe, date, fl) {
     pack_2_E.appendChild(inputTag)
     pack_2_E.style.borderRight = "1px solid transparent"
 
-
     //wms 정보 가공
     let wms_info1 = []
     let wms_info2 = []
@@ -347,14 +337,12 @@ function createCardStored(results, dfe, date, fl) {
         }
     });
 
-
     //// wms ////
     const wmsRow = table.insertRow();
     const wms = wmsRow.insertCell();
     wms.textContent = "WMS";
     wms.rowSpan = 3;
     wms.style.borderLeft = "1px solid transparent"
-
 
     const wms_1 = wmsRow.insertCell();
     wms_1.textContent = "1";
@@ -426,7 +414,6 @@ function createCardStored(results, dfe, date, fl) {
     wms_3_E.appendChild(inputTag)
     wms_3_E.style.borderRight = "1px solid transparent"
 
-
     //coll 정보 가공
     let coll_info1 = []
     let coll_info2 = []
@@ -440,7 +427,6 @@ function createCardStored(results, dfe, date, fl) {
             }
         }
     });
-
 
     //// coll ////
     const collRow = table.insertRow();
@@ -495,7 +481,6 @@ function createCardStored(results, dfe, date, fl) {
     coll_2_E.appendChild(inputTag)
     coll_2_E.style.borderRight = "1px solid transparent"
 
-
     //comm 정보 가공
     let comm_info1 = []
     let comm_info2 = []
@@ -546,7 +531,6 @@ function createCardStored(results, dfe, date, fl) {
     comm_2.textContent = "2";
     commRow2.style.borderBottom = "1px solid transparent"
 
-
     const comm_2_N = commRow2.insertCell();
     inputTag = document.createElement('input')
     inputTag.value = comm_info2.find(item => item.shift === "N")?.name || "";
@@ -566,7 +550,6 @@ function createCardStored(results, dfe, date, fl) {
     comm_2_E.appendChild(inputTag)
     comm_2_E.style.borderRight = "1px solid transparent"
 
-
     //form 태그 생성
     const formTag = document.createElement('form')
     formTag.id = "createForm"
@@ -575,7 +558,6 @@ function createCardStored(results, dfe, date, fl) {
 
     formTag.appendChild(table)
     schedule_div.appendChild(formTag)
-
 
     if (fl) { // 생성하기 함수에서 호출한 경우 > 카드를 리턴시킨다.
         // 가져온 input 태그들을 배열로 변환

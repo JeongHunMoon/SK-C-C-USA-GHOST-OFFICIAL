@@ -72,14 +72,20 @@ function sendToMe(nowDate, nowShift, info) {
                             },
                         })
                             .then(function (res) {
-                                console.log('출근 보고 나에게 보내기 성공!');
+                                let button = document.getElementById("custom-startwork-btn");
+                                loadingOff();
+                                alert("출근 보고 성공.")
+                                window.location.href = '/'; // 메인으로 redirect
                             })
                             .catch(function (err) {
+                                loadingOff();
                                 alert("실패\n금일은 수동 출근 보고 부탁드립니다.");
+                                window.location.href = '/'; // 메인으로 redirect
                             });
                     }
                 }
                 else {
+                    loadingOff();
                     alert("죄송합니다. 서버 일시적 오류로 나에게 메시지 보내기가 실패했습니다.\n프로젝트 방에는 수동 보고 부탁드립니다.")
                     window.location.href = "/"
                 }
@@ -89,18 +95,20 @@ function sendToMe(nowDate, nowShift, info) {
 
             // 서버에서 일정시간 응답이 없을 때,
             xhr_me.ontimeout = function () {
+                loadingOff();
                 alert("죄송합니다. 서버 처리 지연으로 나에게 메시지 보내기가 실패했습니다.\n프로젝트 방에는 수동 보고 부탁드립니다.")
                 window.location.href = "/"
             };
 
             // 넷웤이 없는데 요청할때 실행
             xhr_me.onerror = function () {
+                loadingOff();
                 alert("와이파이가 끊겨있습니다. 이에 에게 메시지 보내기가 실패했습니다.\n프로젝트 방에는 수동 보고 부탁드립니다.")
                 window.location.href = "/"
             };
-
         }
         else {
+            loadingOff();
             alert("로그인 세션이 만료되었습니다.\n프로젝트 방에는 수동 보고 부탁드립니다..")
             window.location.href = '/'
         }

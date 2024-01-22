@@ -1,6 +1,5 @@
 // 현재 록인한 정보를 가져와서, 만약 로그인이 안되어 있다면 비정상인 경우이므로 > "/" 메인으로 이동시킨다.
 // 메인으로 이동하는 경우는 로그인 세션이 완료된 경우임로
-
 //최초 사용자(운영자) 이미 카카오 로그인이 되어있는지 판단.
 document.getElementById('slider').disabled = true; // 비활성화
 document.getElementById('startBtnModify').disabled = true; // 비활성화
@@ -32,7 +31,6 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                 e.preventDefault();
             });
         });
-
 
         //디비에 저장된 마지막 날짜를 기준 + 1을 default로 출력
         let date = null;
@@ -87,7 +85,6 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
 
                 // DB에서 조회된 날짜 + 7일 정보 저장.
                 for(let dateVal of dateArray) {
-                    console.log(dateVal)
                     let newYorkTimeZone = "America/New_York";
 
                     // 주어진 날짜를 Date 객체로 변환하고 뉴욕 시간으로 설정
@@ -98,7 +95,6 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                     let dayOfWeek = dateInNewYork.toLocaleDateString("en-US", { weekday: "long" });
                     cardInfo.push(createCardStored([], dayOfWeek, dateVal, true))
                 }
-                console.log(cardInfo)
                 document.getElementById('slider').disabled = false; // 활성화
                 document.getElementById('startBtnModify').disabled = false; // 활성화
 
@@ -115,8 +111,6 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
 
                     // JSON 형식의 문자열을 배열로 파싱
                     let savedDataArray = JSON.parse(results);
-                    console.log("아래 객체는 서버에서 전달 받은 저장된 세션 값")
-                    console.log(savedDataArray)
 
                     // 저장된 데이터가 없음.
                     if (savedDataArray.length !== 0) {
@@ -125,7 +119,6 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                         while (imageContainer.firstChild) {
                             imageContainer.removeChild(imageContainer.firstChild);
                         }
-
 
                         // 주어진 날짜를 Date 객체로 변환하고 뉴욕 시간으로 설정
                         // 날짜의 요일을 가져오기
@@ -144,7 +137,6 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                             let dayOfWeek = dateInNewYork.toLocaleDateString("en-US", { weekday: "long" });
                             imageContainer.appendChild(createCardStored([], dayOfWeek, d, true))
                         }
-
 
                         for(let i = 0; i < savedDataArray.length; i++) {
                             document.getElementById(savedDataArray[i][1]).value = savedDataArray[i][2];
@@ -171,9 +163,6 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                         alert("돌아온 것을 환영합니다. 마저 등록해주세요.")
                         loadingOff();
                     }
-
-                    // 이후에 savedDataArray를 활용하여 원하는 작업 수행
-                    console.log("백언 안함"+ savedDataArray);
                     loadingOff();
                 }
             }
@@ -202,7 +191,6 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
             const slider = document.getElementById('slider');
             const sliderValue = document.getElementById('slider-value');
             const value = slider.value;
-            console.log(value)
 
             sliderValue.textContent = value;
 
@@ -230,7 +218,6 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
         }
         document.getElementById('slider').addEventListener('input', updateValue);
 
-        // 입력 시작 이벤트
         // new 버튼 클릭시 실행되는 이벤트
         const dateForm = document.getElementById('startBtnModify');
         dateForm.addEventListener('click', function(event) {
@@ -262,14 +249,9 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
 
                     else {
                         let payload = start_xhr.responseText
-
                         document.getElementById('slider').style.display = 'flex';
                         document.getElementById('startBtnModify').style.display = 'flex';
-
-                        console.log("누군가 쓰고 있음." + start_xhr.responseText);
                         window.location.href = "/admin?id=" + nowUserId;
-
-                        //alert(payload + " manager 님께서 스케줄 작성 중 입니다.\n 잠시 대기 부탁드립니다.")
                     }
                 }
                 else {
@@ -307,12 +289,9 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
         saveForm.addEventListener('click', function(event) {
             saveForm.disabled = true; // 제출 버튼 활성화
             saveForm.style.opacity = 0.5
-            // DB 에 접속하여 해당 세션은 무조건 있음.
-            // 해당 세션에 데이터를 저장하면 됨.
 
             //현재 DOM에서 정보들을 모두 가져온다.
             let datas = savedwithSession()
-            console.log("프론트", datas)
             if (datas !== "") {
                 let save_xhr = new XMLHttpRequest();
                 save_xhr.open('POST', '/saveData', true);
@@ -356,13 +335,11 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
             }
         })
 
-
         // cancel 이벤트가 발생하면 실행되는 함수
         const cancelForm = document.getElementById('cancelBtnModify');
         cancelForm.addEventListener('click', function(event) {
             cancelForm.disabled = true; // 제출 버튼 활성화
             cancelForm.style.opacity = 0.5
-
 
             let cancelXhr = new XMLHttpRequest();
             cancelXhr.open("GET", "/removeCreate?id="+nowUserId, true);
@@ -384,7 +361,6 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                         alert("잘못된 접근입니다.")
                         window.location.href = "/";
                     }
-
                 }
                 else {
                     cancelForm.disabled = false; // 제출 버튼 활성화

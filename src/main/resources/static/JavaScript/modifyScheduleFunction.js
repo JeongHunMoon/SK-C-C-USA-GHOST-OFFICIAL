@@ -24,11 +24,7 @@ function modifyScheduleFunction() {
             // 값을 console에 출력
             const startDate = new Date(startDateString);
             const endDate = new Date(endDateString);
-            console.log('시작일:', startDateString);
-            console.log('종료일:', endDateString);
-
             let cards = getDates(startDate, endDate);
-            console.log(cards)
 
             let xhr1 = new XMLHttpRequest();
             let payloadFront = {"date": cards};
@@ -39,7 +35,6 @@ function modifyScheduleFunction() {
             xhr1.onload = function () {
                 if (xhr1.status === 200) {
                     let results = JSON.parse(xhr1.response); // 디비에서 해당 날짜의 운영자가 하나도 없는 경우 [] 반환
-                    console.log(results);
 
                     let idx = 0
                     for (let card of cards) {
@@ -56,6 +51,7 @@ function modifyScheduleFunction() {
                     modifyOnBtn()
                 }
                 else {
+                    deleteSession(userId)
                     alert("서버 오류.\n재시도 부탁드립니다.")
                     window.location.href = "/"
                 }
@@ -65,12 +61,14 @@ function modifyScheduleFunction() {
 
             // 서버에서 일정시간 응답이 없을 때,
             xhr1.ontimeout = function () {
+                deleteSession(userId)
                 alert("서버 처리 지연.\n재시도 부탁드립니다.")
                 window.location.href = "/"
             };
 
             // 넷웤이 없는데 요청할때 실행
             xhr1.onerror = function () {
+                deleteSession(userId)
                 alert("인터넷 접속을 확인하세요.\n재시도 부탁드립니다.")
                 window.location.href = "/"
             };
@@ -114,7 +112,7 @@ function modifyScheduleFunction() {
             loadingOff()
             modifyOnBtn()
             window.location.href = "/"
-            alert("로그인 세션이 만료되었습니다. 로그인을 다시해주세요.")
+            alert("로그인 세션이 만료되었습니다. 로그인 후 삭제 수정 페이지에서 cancel을 눌러주세요!")
         }
     })
 }

@@ -2,6 +2,7 @@ package GHOST.sk_ghost.service;
 
 import GHOST.sk_ghost.dao.V1Dao;
 import GHOST.sk_ghost.dto.LoginDto.InsertNewUser;
+import GHOST.sk_ghost.dto.LoginDto.UpdateUser;
 import GHOST.sk_ghost.dto.LoginDto.UserNameJudgement;
 import GHOST.sk_ghost.dto.OP.AdminShiftParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +84,12 @@ public class V1service {
         String userName = v1Dao.getNameFromId(id);
 
         // 이름이 없을 경우 기본값 "홍길동" 반환
-        return (userName != null && !userName.isEmpty()) ? userName : "???";
+        return (userName != null && !userName.isEmpty()) ? userName : "False";
+    }
+
+    // 카카오 id > 사용자의 이름과 공정
+    public Map<String, String> getUserInfoFromId(String id) {
+        return v1Dao.getUserInfoFromId(id);
     }
 
     // 해당 날짜가 history 테이블에 있는지 검사
@@ -121,8 +127,11 @@ public class V1service {
         System.out.println("회원가입시 사용자 이름 디비에 있는지 판단 service : " + bool);
         return bool;
     }
-
     public void insertJoinInfoToDB(InsertNewUser insertNewUser) {
         v1Dao.insertJoinInfoToDB(insertNewUser);
+    }
+
+    public void updateJoinInfoToDB(UpdateUser updateUser) {
+        v1Dao.updateJoinInfoToDB(updateUser);
     }
 }

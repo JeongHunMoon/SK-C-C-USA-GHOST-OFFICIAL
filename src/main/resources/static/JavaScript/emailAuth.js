@@ -8,7 +8,7 @@ function emailAuth(authNum, emailBackground) {
                 <div class = "codeModalHeader"> 이메일 인증이 필요합니다.</div>
                 <div class = "codeModalBody"><span>사내 구성원 인증을 위해 이메일 인증이 필요합니다. 이메일 주소를 통해 인증번호를 확인해 주세요.</span></div>
                 <div class = "codeModalInputContainer">
-                    <span class = "codeModalInputTitle"> 인증번호 </span>    
+                    <span class = "codeModalInputTitle">인증번호</span>    
                     <input type = "text" placeholder = " 6-character input " id="value" class = "codeModalInputBody"></input>
                 </div>
                 <input type = "button" value = "전송" id = "codeModalSubmit"></input>
@@ -22,13 +22,13 @@ function emailAuth(authNum, emailBackground) {
         loadingOn()
         codeSubmitBtn(authNum, emailBackground, codeModalContainer);
     });
+    alert("이메일에서 인증번호를 확인해주세요");
 }
 
 function codeSubmitBtn(authNum, emailBackground, codeModalContainer) {
     // 사용자가 입력한 인증번호 문자열 을 받아온다.
     let inputValue = document.getElementById('value').value.trim();
     inputValue = inputValue.trim(); // 2중 trim
-    //console.log("입력 >" + inputValue, "정답 > " + authNum)
 
     // 공백 입력시
     if (inputValue === "") {

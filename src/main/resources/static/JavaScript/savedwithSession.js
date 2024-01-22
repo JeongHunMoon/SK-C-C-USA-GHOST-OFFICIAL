@@ -13,7 +13,6 @@ function savedwithSession() {
             payload += (elementValue !== "") ? `${formdate}&${elementId}&${elementValue}?` : "";
         }
 
-
         for (let i = 1; i <= 6; i++) {
             let elementId = formdate + "CELL" + i;
             let elementValue = document.getElementById(elementId).value.trim();
