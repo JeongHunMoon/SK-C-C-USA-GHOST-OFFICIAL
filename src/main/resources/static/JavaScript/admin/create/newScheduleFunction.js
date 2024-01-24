@@ -64,7 +64,7 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                 dateInNewYork.toLocaleString("en-US", { timeZone: newYorkTimeZone });
 
                 // 날짜의 요일을 가져오기
-                dayOfWeek = dateInNewYork.toLocaleDateString("en-US", { weekday: "long" });
+                dayOfWeek = dateInNewYork.toLocaleDateString("en-US", { weekday: "short" });
                 Container.appendChild(createCardStored([], dayOfWeek, date, true))
 
 
@@ -92,7 +92,7 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                     dateInNewYork.toLocaleString("en-US", { timeZone: newYorkTimeZone });
 
                     // 날짜의 요일을 가져오기
-                    let dayOfWeek = dateInNewYork.toLocaleDateString("en-US", { weekday: "long" });
+                    let dayOfWeek = dateInNewYork.toLocaleDateString("en-US", { weekday: "short" });
                     cardInfo.push(createCardStored([], dayOfWeek, dateVal, true))
                 }
                 document.getElementById('slider').disabled = false; // 활성화
@@ -134,7 +134,7 @@ Kakao.Auth.getStatusInfo(function(statusObj) {
                         for(let d of setToArray) {
                             let dateInNewYork = new Date(d + "T00:00:00");
                             dateInNewYork.toLocaleString("en-US", { timeZone: newYorkTimeZone });
-                            let dayOfWeek = dateInNewYork.toLocaleDateString("en-US", { weekday: "long" });
+                            let dayOfWeek = dateInNewYork.toLocaleDateString("en-US", { weekday: "short" });
                             imageContainer.appendChild(createCardStored([], dayOfWeek, d, true))
                         }
 

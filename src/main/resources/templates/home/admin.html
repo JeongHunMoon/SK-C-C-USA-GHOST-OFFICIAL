@@ -100,9 +100,9 @@
     if (used !== "") {
         alert("현재 " + used + " 운영자님 스케줄 조정 중이며, 조회만 가능합니다.\n페이지 새로 고침을 통해 완료 여부를 확인할 수 있습니다.")
         loadingOff()
-        usedLogoAlarm.style.fontSize = "20px";
+        usedLogoAlarm.style.fontSize = "1.2rem";
 
-        usedLogoAlarm.innerText = "현재 " + used + " manager님 스케줄 조정 중";
+        usedLogoAlarm.innerText = "현재 " + used + " M님 스케줄 조정 중";
     }
     else {
         let xhr1 = new XMLHttpRequest();
@@ -114,9 +114,9 @@
             if (xhr1.status === 200) {
                 let res = xhr1.responseText
                 if (res !== "False") {
-                    usedLogoAlarm.style.fontSize = "20px";
+                    usedLogoAlarm.style.fontSize = "1.2rem";
                     alert("현재 " + res + " 운영자님 수정 중이며 조회만 가능합니다.\n페이지 새로고침을 통해 완료 여부를 확인할 수 있습니다.")
-                    usedLogoAlarm.innerText = "현재 " + res + " manager님 수정 중";
+                    usedLogoAlarm.innerText = "현재 " + used + " M님 스케줄 조정 중";
                 }
             }
             else {

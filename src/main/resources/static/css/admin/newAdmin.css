@@ -265,7 +265,7 @@
 #saveBtnModify{
     display: flex;
     width: 15%;
-    min-width: 120px;
+    min-width: 110px;
     max-width: 200px;
     height: 50%;
     padding-top: 20px;
