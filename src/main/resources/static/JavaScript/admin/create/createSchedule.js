@@ -41,7 +41,7 @@ function createSchedule() {
                         remove_xhr.onload = function () {
                             if (remove_xhr.status === 200) {
                                 if (remove_xhr.responseText === "true") {
-                                    alert("현재 DB ROC 맴버가 없습니다.. 관리자에게 문의해주세요??")
+                                    alert("현재 DB에 ROC 맴버가 없습니다. 관리자에게 문의해주세요.")
                                     window.location.href = "admin?id="+nowUserId;
                                 }
                                 // 저장

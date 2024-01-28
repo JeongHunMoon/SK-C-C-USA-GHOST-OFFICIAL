@@ -1,4 +1,4 @@
-#changeBackground {
+#viewAllBackground {
     position: fixed;
     top: 0;
     left: 0;
@@ -7,7 +7,7 @@
     background-color: rgba(0, 0, 0, 0.9); /* 투명도 0.5 */
 }
 
-#changeModalExit {
+#viewAllModalExit {
     position: absolute;
     top: 10px;
     left: 10px;
@@ -19,13 +19,13 @@
     cursor: pointer;
 }
 
-#changeModalExit::before {
+#viewAllModalExit::before {
     content: "\2716"; /* 유니코드로 "✖" 기호 */
     font-size: 1.5rem; /* 크기 조절 */
     font-weight: 100; /* 얇게 만들기 */
 }
 
-#changeModalContainer {
+#viewAllModalContainer {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -45,7 +45,7 @@
     background: #FFF;
 }
 
-#changeModalHeader {
+#viewAllModalHeader {
     width: 100%;
     height: fit-content;
     max-width: 250px;
@@ -59,7 +59,7 @@
     line-height: normal;
 }
 
-#changeModalSection {
+#viewAllModalSection {
     margin-top:15px;
     width: 100%;
     max-width: 250px;
@@ -72,33 +72,27 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
+    margin-bottom: 1rem;
 }
 
-#changeModalInputContainer {
-    margin-top:10px;
-    display: flex;
-
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    width: fit-content;
-    height: fit-content;
+#viewAllModalInputContainer {
+    overflow-y: auto; /* 내용이 넘칠 경우 세로 스크롤바 추가 */
+    max-height: 200px; /* 스크롤바가 나타날 최대 높이 설정 */
+    padding: 15px; /* 더 나은 스타일링을 위한 안쪽 여백 추가 */
+    border: 1px solid #ccc; /* 외각 경계선 추가 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 추가 */
+    padding-left: 30px;
+    padding-right: 30px;
 }
 
-#changeModalSubmit {
-    width: 150px;
-    height: 30px;
-    flex-shrink: 0;
-    margin-top : 25px;
-    color: white;
-    font-size: 12px;
-    border-radius: 20px;
-    background: #0063d4;
-    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+#viewAllModalInputContainer p {
+    margin: 0; /* 문단 내용의 기본 마진 제거 */
+    padding: 8px; /* 더 나은 아이템 간격을 위한 안쪽 여백 추가 */
+    border-bottom: 1px solid #ddd; /* 더 나은 가시성과 구분을 위한 아이템 간 경계선 추가 */
 }
+
 @media screen and (max-width: 400px) {
-    #changeModalContainer {
+    #viewAllModalContainer {
         flex-basis: 80%; /* Full width for smaller screens */
     }
 }
