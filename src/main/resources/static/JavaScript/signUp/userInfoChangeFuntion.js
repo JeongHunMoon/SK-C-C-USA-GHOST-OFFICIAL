@@ -27,6 +27,7 @@ function userInfoChangeFuntion() {
                         editBtnOn()
                         unlinkWithKakao()
                         alert("You are not registered in the system.\nPlease click the “Join” button to join.")
+                        window.location.href = "/"
                     }
 
                     // 서버에 등록된 ROC 사람인 경우
@@ -41,6 +42,24 @@ function userInfoChangeFuntion() {
                     window.location.href = "/"
                 }
             }
+
+            xhr_check.timeout = 10000;
+
+            // 서버에서 일정시간 응답이 없을 때,
+            xhr_check.ontimeout = function () {
+                loadingOff()
+                viewBtnOn()
+                alert("서버 처리 지연.\n가입 재시도 부탁드립니다.")
+                window.location.href = "/"
+            };
+
+            // 넷웤이 없는데 요청할때 실행
+            xhr_check.onerror = function () {
+                loadingOff()
+                viewBtnOn()
+                alert("인터넷 접속을 확인하세요.\n가입 재시도 부탁드립니다.")
+                window.location.href = "/"
+            };
         }
 
         // 사용자가 현재 브라우저에 카카오 로그인이 안되어 있는 경우
@@ -92,6 +111,7 @@ function userInfoChangeFuntion() {
                                         editBtnOn()
                                         unlinkWithKakao()
                                         alert("You are not registered in the system.\nPlease click the “Join” button to join.")
+                                        window.location.href = "/"
                                     }
 
                                     // 서버에 등록된 ROC 사람인 경우
@@ -336,6 +356,24 @@ function changeUserInfoBtn(nowUser, changeBackground) {
                 window.location.href = "/"
             }
         }
+
+        getUserName_xhr.timeout = 10000;
+
+        // 서버에서 일정시간 응답이 없을 때,
+        getUserName_xhr.ontimeout = function () {
+            loadingOff()
+            viewBtnOn()
+            alert("서버 처리 지연.\n가입 재시도 부탁드립니다.")
+            window.location.href = "/"
+        };
+
+        // 넷웤이 없는데 요청할때 실행
+        getUserName_xhr.onerror = function () {
+            loadingOff()
+            viewBtnOn()
+            alert("인터넷 접속을 확인하세요.\n가입 재시도 부탁드립니다.")
+            window.location.href = "/"
+        };
     }
 }
 

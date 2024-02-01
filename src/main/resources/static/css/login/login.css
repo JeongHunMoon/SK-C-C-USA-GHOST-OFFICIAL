@@ -52,7 +52,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
 }
 #header_logo {
     width: 137px;
@@ -67,7 +67,7 @@
     line-height: normal;
 }
 
-#join, #change{
+#join, #change, #view{
     width: 50px;
     height: 15px;
     color: white;

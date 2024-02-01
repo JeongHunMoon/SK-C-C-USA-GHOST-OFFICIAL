@@ -105,11 +105,11 @@
 
 #date-range-start, #date-range-end {
     max-width: 180px;
-    width: 35%;
+    width: 33%;
     padding: 3px; /* 내부 여백 추가 */
     padding-top: 1px;
     border: none; /* 테두리 제거 */
-    font-size: 16px; /* 글꼴 크기 조절 */
+    font-size: 0.8rem; /* 글꼴 크기 조절 */
     color: #333; /* 글자색 설정 */
     background-color: white; /* 배경색 설정 */
     outline: none; /* 포커스 시 테두리 제거 */
@@ -274,7 +274,7 @@
 #delete_schedule{
     display: flex;
     width: 15%;
-    min-width: 120px;
+    min-width: 110px;
     max-width: 200px;
     height: 85%;
     padding-top: 20px;

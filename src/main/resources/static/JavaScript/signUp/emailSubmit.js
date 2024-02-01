@@ -43,7 +43,7 @@ function emailSubmitBtn(emailBackground) {
             return regex2.test(inputValue);
         }
 
-        if (testmail(inputValue)  === true) { //정규식 테스트
+        if (IsValidatedEmail(inputValue)  === true) { //정규식 테스트
             // 입력된 이메일 문자열을 서버로 보내서 인증번호를 발신한다
             let xhr_sendEmail = new XMLHttpRequest(); // REST API 통신을 위한 객체
             xhr_sendEmail.open('POST', '/sendEmail', true); // REST 정의

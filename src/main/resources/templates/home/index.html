@@ -15,6 +15,7 @@
   <link rel = "stylesheet" href = "css/login/emailAuth.css">
   <link rel = "stylesheet" href = "css/login/emailSignUp.css">
   <link rel = "stylesheet" href = "css/login/changeInfo.css">
+  <link rel = "stylesheet" href = "css/login/allInfo.css">
 
   <!-- 카카오 API를 사용하기 위한 라이브러리 선언-->
   <script type="text/JavaScript" src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -31,6 +32,7 @@
   <script src = "../../JavaScript/signUp/emailSubmit.js"></script>
   <script src = "../../JavaScript/signUp/emailAuth.js"></script>
   <script src = "../../JavaScript/signUp/signUp.js"></script>
+  <script src = "../../JavaScript/signUp/viewAllInfo.js"></script>
 
   <script src = "../../JavaScript/login/loginOPWithKakao.js"></script>
   <script src = "../../JavaScript/login/loginWithKakaoForAdmin.js"></script>
@@ -50,6 +52,7 @@
     <div id = "index_header_top_article">
       <span id = "join">Join</span>
       <span id = "change">Edit</span>
+      <span id = "view">All</span>
     </div>
   </div>
 </header>
@@ -126,6 +129,14 @@
 
 <script>
   // span 태그를 가져옵니다.
+  let joinSpan = document.getElementById("join");
+
+  // 클릭 이벤트에 대한 리스너를 추가합니다.
+  joinSpan.addEventListener("click", function() {
+    joinFunction();
+  })
+
+  // span 태그를 가져옵니다.
   let changeSpan = document.getElementById("change");
 
   // 클릭 이벤트에 대한 리스너를 추가합니다.
@@ -134,11 +145,11 @@
   })
 
   // span 태그를 가져옵니다.
-  let joinSpan = document.getElementById("join");
+  let viewAllSpan = document.getElementById("view");
 
   // 클릭 이벤트에 대한 리스너를 추가합니다.
-  joinSpan.addEventListener("click", function() {
-    joinFunction();
+  viewAllSpan.addEventListener("click", function() {
+    viewAllInfo();
   })
 
 </script>
