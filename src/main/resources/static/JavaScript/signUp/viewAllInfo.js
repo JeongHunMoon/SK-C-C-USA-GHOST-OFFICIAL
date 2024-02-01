@@ -27,6 +27,7 @@ function viewAllInfo() {
                         viewBtnOn()
                         unlinkWithKakao()
                         alert("You are not registered in the system.\nPlease click the “Join” button to join.")
+                        window.location.href = "/"
                     }
 
                     // 서버에 등록된 ROC 사람인 경우
@@ -41,6 +42,24 @@ function viewAllInfo() {
                     window.location.href = "/"
                 }
             }
+
+            xhr_check.timeout = 10000;
+
+            // 서버에서 일정시간 응답이 없을 때,
+            xhr_check.ontimeout = function () {
+                loadingOff()
+                viewBtnOn()
+                alert("서버 처리 지연.\n가입 재시도 부탁드립니다.")
+                window.location.href = "/"
+            };
+
+            // 넷웤이 없는데 요청할때 실행
+            xhr_check.onerror = function () {
+                loadingOff()
+                viewBtnOn()
+                alert("인터넷 접속을 확인하세요.\n가입 재시도 부탁드립니다.")
+                window.location.href = "/"
+            };
         }
 
         // 사용자가 현재 브라우저에 카카오 로그인이 안되어 있는 경우
@@ -92,6 +111,7 @@ function viewAllInfo() {
                                         viewBtnOn()
                                         unlinkWithKakao()
                                         alert("You are not registered in the system.\nPlease click the “Join” button to join.")
+                                        window.location.href = "/"
                                     }
 
                                     // 서버에 등록된 ROC 사람인 경우
@@ -154,10 +174,8 @@ function viewUserAllInfoFunction(nowUser) {
             viewAllModalContainer.innerHTML = `
                 <div id="viewAllModalExit"></div>    
                 <div id="viewAllModalHeader">미주 RoC All</div>
-                <div id="viewAllModalSection"><span>스케줄 등록 아래 정보로 입력해주세요!</span></div>
-                <div id="viewAllModalInputContainer">
-
-                </div>
+                <div id="viewAllModalSection"><span>현재까지 등록하신 분들의 정보입니다. 스케줄 등록 시 아래 정보로 입력해주세요!</span></div>
+                <div id="viewAllModalInputContainer"></div>
             `;
 
             // 변경된 데이터를 모달에 추가
@@ -192,7 +210,7 @@ function viewUserAllInfoFunction(nowUser) {
             viewBtnOn()
             loadingOff()
         }
-        else if(getUserInfoAll_xhr.status === 200 && rocMembers.length === 0) {
+        else if (getUserInfoAll_xhr.status === 200 && rocMembers.length === 0) {
             alert("현재 DB에 ROC 맴버가 없습니다. 관리자에게 문의해주세요.")
             window.location.href = "admin?id="+nowUser;
         }
@@ -205,22 +223,52 @@ function viewUserAllInfoFunction(nowUser) {
             window.location.href = "/"
         }
     };
+
+    getUserInfoAll_xhr.timeout = 10000;
+
+    // 서버에서 일정시간 응답이 없을 때,
+    getUserInfoAll_xhr.ontimeout = function () {
+        loadingOff()
+        viewBtnOn()
+        alert("서버 처리 지연.\n가입 재시도 부탁드립니다.")
+        window.location.href = "/"
+    };
+
+    // 넷웤이 없는데 요청할때 실행
+    getUserInfoAll_xhr.onerror = function () {
+        loadingOff()
+        viewBtnOn()
+        alert("인터넷 접속을 확인하세요.\n가입 재시도 부탁드립니다.")
+        window.location.href = "/"
+    };
 }
 
 function viewBtnOn() {
     let btn = document.getElementById("viewAllModalExit");
+    let btn2 = document.getElementById("view");
 
     if (btn) {
         btn.disabled = false;
         btn.style.opacity = 1;
     }
+
+    if (btn2) {
+        btn2.disabled = false;
+        btn2.style.opacity = 1;
+    }
 }
 
 function vewBntOff() {
     let btn = document.getElementById("viewAllModalExit");
+    let btn2 = document.getElementById("view");
 
     if (btn) {
         btn.disabled = true;
         btn.style.opacity = 0.5;
+    }
+
+    if (btn2) {
+        btn2.disabled = true;
+        btn2.style.opacity = 0.5;
     }
 }
